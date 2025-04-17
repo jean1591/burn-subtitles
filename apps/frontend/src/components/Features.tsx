@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 export function Features() {
   return (
     <section id="features" className="py-16 bg-white">
-      <div className="container px-4 md:px-6">
+      <div className="container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center text-center space-y-4 mb-12">
           <div className="inline-block rounded-lg bg-amber-100 px-3 py-1 text-sm font-medium">
             <FormattedMessage id="features.title" defaultMessage="Features" />

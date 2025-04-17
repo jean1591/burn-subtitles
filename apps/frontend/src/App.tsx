@@ -52,6 +52,7 @@ export const App = () => {
             </div>
           </div>
         </section>
+
         <Features />
         <HowItWorks />
         <Testimonials />
