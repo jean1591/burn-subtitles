@@ -25,7 +25,8 @@
       "@/contexts/*": ["./src/contexts/*"],
       "@/components/*": ["./src/components/*"],
       "@/lib/*": ["./src/lib/*"],
-      "@/locales/*": ["./src/locales/*"]
+      "@/locales/*": ["./src/locales/*"],
+      "@/routes/*": ["./src/routes/*"]
     }
   },
   "include": ["src"]
