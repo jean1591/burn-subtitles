@@ -1,10 +1,17 @@
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { Module } from "@nestjs/common";
+import { ProcessorModule } from "./processor/processor.module";
+import { PythonModule } from "./python/python.module";
+import { QueueModule } from "./queue/queue.module";
+import { UploadModule } from "./upload/upload.module";
+import { WebsocketModule } from "./websocket/websocket.module";
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    UploadModule,
+    QueueModule,
+    WebsocketModule,
+    ProcessorModule,
+    PythonModule,
+  ],
 })
 export class AppModule {}
