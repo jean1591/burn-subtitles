@@ -13,24 +13,36 @@ def run_command(command, quiet=False):
 
 
 def cleanup_temp_files(base_name):
-    extensions_to_remove = ['.mp3', '.wav', '.txt', '.vtt', '.tsv', '.json']
+    extensions_to_remove = ['.mp3', '.wav', '.txt', '.vtt', '.tsv', '.json', '.srt']
     for ext in extensions_to_remove:
         file_path = f"{base_name}{ext}"
         if os.path.exists(file_path):
             print(f"Deleting {file_path}")
             os.remove(file_path)
+    
+    # Remove uploaded file
+    file_path = f"{base_name}.mp4"
+    if os.path.exists(file_path):
+        print(f"Deleting {file_path}")
+        os.remove(file_path)
+
 
 def main(video_path):
     if not os.path.exists(video_path):
         print(f"Error: {video_path} not found.")
         return
 
-    base_name = os.path.splitext(video_path)[0]
+    # Change working directory to the video's directory
+    video_dir = os.path.dirname(os.path.abspath(video_path))
+    video_filename = os.path.basename(video_path)
+    os.chdir(video_dir)
+
+    base_name = os.path.splitext(video_filename)[0]
 
     # Step 1: Extract audio as WAV
     print("🔊 Extracting audio file...")
     wav_path = f"{base_name}.wav"
-    run_command(f"ffmpeg -i {video_path} -vn -acodec pcm_s16le -ar 16000 -ac 1 {wav_path}", quiet=True)
+    run_command(f"ffmpeg -i {video_filename} -vn -acodec pcm_s16le -ar 16000 -ac 1 {wav_path}", quiet=True)
     print("> Done")
 
     # Step 2: Transcribe with Whisper (auto-generates .srt and others)
@@ -49,7 +61,7 @@ def main(video_path):
     # Step 4: Burn subtitles into the video
     print("🔥 Burning subtiles to video file...")
     output_video = f"{base_name}_with_subs.mp4"
-    run_command(f'ffmpeg -i "{video_path}" -vf "subtitles={srt_path}" -c:v libx264 -c:a copy "{output_video}" -v quiet -hide_banner', quiet=True)
+    run_command(f'ffmpeg -i "{video_filename}" -vf "subtitles={srt_path}" -c:v libx264 -c:a copy "{output_video}" -v quiet -hide_banner', quiet=True)
     print("> Done")
 
     # Step 5: Clean up intermediate files
@@ -59,8 +71,10 @@ def main(video_path):
 
     print(f"\n✅ Done! Output file: {output_video}")
 
+
 if __name__ == "__main__":
+    print(sys.argv)
     if len(sys.argv) != 2:
-        print("Usage: python3 main.py path/to/video.mp4")
+        print("Usage: python3 burn-subtitles.py path/to/video.mp4")
     else:
         main(sys.argv[1])
