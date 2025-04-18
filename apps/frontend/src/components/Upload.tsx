@@ -10,7 +10,6 @@ import type React from "react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 const LANGUAGES = [
   { id: "english", labelId: "languages.english" },
@@ -63,14 +62,32 @@ export function Upload() {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (file && selectedLanguages.length > 0) {
-      // In a real app, you would upload the file to your server here
-      // For now, we'll just redirect to the status page with a UUID
-      const jobId = uuidv4();
-      navigate(`/status/${jobId}`);
+      const formData = new FormData();
+      formData.append("video", file);
+      formData.append("languages", JSON.stringify(selectedLanguages));
+
+      try {
+        const response = await fetch("http://localhost:3000/upload", {
+          method: "POST",
+          body: formData,
+        });
+        if (!response.ok) {
+          throw new Error("Upload failed");
+        }
+        const data = await response.json();
+        if (data.uuid) {
+          navigate(`/status/${data.uuid}`);
+        } else {
+          alert("Unexpected response from server.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Failed to upload video. Please try again.");
+      }
     }
   };
 
