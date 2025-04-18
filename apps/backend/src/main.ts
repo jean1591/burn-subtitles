@@ -3,6 +3,7 @@ import { BullBoardService } from "./queue/bull-board.service";
 import { IoAdapter } from "@nestjs/platform-socket.io";
 import type { NestExpressApplication } from "@nestjs/platform-express";
 import { NestFactory } from "@nestjs/core";
+import { join } from "path";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -10,6 +11,11 @@ async function bootstrap() {
   // Enable CORS globally
   app.enableCors({
     origin: "*",
+  });
+
+  // Serve static files from uploads directory at /videos
+  app.useStaticAssets(join(__dirname, "..", "uploads"), {
+    prefix: "/videos/",
   });
 
   app.useWebSocketAdapter(new IoAdapter(app));

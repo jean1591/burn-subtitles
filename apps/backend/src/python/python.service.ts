@@ -9,7 +9,7 @@ import { spawn } from "child_process";
 export class PythonService {
   private readonly logger = new Logger(PythonService.name);
 
-  processVideo(inputPath: string, outputPath: string): Promise<void> {
+  processVideo(inputPath: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const scriptPath = path.resolve(
         __dirname,

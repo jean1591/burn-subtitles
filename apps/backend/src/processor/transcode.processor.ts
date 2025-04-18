@@ -33,9 +33,7 @@ export class TranscodeProcessor implements OnModuleInit {
         );
         this.websocketGateway.emitProcessingStarted(uuid);
         try {
-          // Determine output path (processed folder)
-          const outputPath = `processed/${uuid}.mp4`;
-          await this.pythonService.processVideo(filepath, outputPath);
+          await this.pythonService.processVideo(filepath);
           this.logger.log(`Processing completed for uuid: ${uuid}`);
           this.websocketGateway.emitProcessingCompleted(
             uuid,
