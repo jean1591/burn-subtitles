@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
 
 const formatTime = (seconds: number) => {
   const hours = Math.floor(seconds / 3600);
@@ -22,9 +23,24 @@ export const StatusPage: React.FC = () => {
   const intl = useIntl();
 
   const { uuid } = useParams<{ uuid: string }>();
-  const [status, setStatus] = useState<
-    "queue" | "started" | "completed" | "failed" | null
-  >(null);
+  const {
+    data: restStatus,
+    isLoading: isRestLoading,
+    isError: isRestError,
+    error: restError,
+  } = useQuery({
+    queryKey: ["status", uuid],
+    queryFn: async () => {
+      if (!uuid) throw new Error("No UUID");
+      const res = await fetch(`http://localhost:3000/status/${uuid}`);
+      if (!res.ok) throw new Error("Job not found");
+      return res.json();
+    },
+    enabled: !!uuid,
+    refetchOnWindowFocus: false,
+  });
+
+  const [status, setStatus] = useState<string | null>(null);
   const [queuePosition, setQueuePosition] = useState<number>(1);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -40,6 +56,39 @@ export const StatusPage: React.FC = () => {
     }
     return "";
   };
+
+  useEffect(() => {
+    if (uuid) {
+      const prev = JSON.parse(localStorage.getItem("burnsub-uuids") || "[]");
+      if (!prev.includes(uuid)) {
+        localStorage.setItem("burnsub-uuids", JSON.stringify([uuid, ...prev]));
+      }
+    }
+  }, [uuid]);
+
+  useEffect(() => {
+    if (restStatus) {
+      setStatus(
+        restStatus.status === "processing_completed"
+          ? "completed"
+          : restStatus.status === "processing_failed"
+          ? "failed"
+          : restStatus.status === "processing_started"
+          ? "started"
+          : restStatus.status === "queue"
+          ? "queue"
+          : restStatus.status
+      );
+      if (restStatus.videoUrl) {
+        setVideoUrl(
+          restStatus.videoUrl.startsWith("http")
+            ? restStatus.videoUrl
+            : `http://localhost:3000${restStatus.videoUrl}`
+        );
+      }
+      if (restStatus.failedReason) setError(restStatus.failedReason);
+    }
+  }, [restStatus]);
 
   useEffect(() => {
     if (!uuid) return;
@@ -68,6 +117,27 @@ export const StatusPage: React.FC = () => {
       socket.disconnect();
     };
   }, [uuid]);
+
+  if (isRestLoading) {
+    return (
+      <main className="flex-1 container px-4 md:px-6 py-12">
+        <div className="max-w-3xl mx-auto text-center py-12 text-lg text-gray-600">
+          Loading status...
+        </div>
+      </main>
+    );
+  }
+  if (isRestError) {
+    return (
+      <main className="flex-1 container px-4 md:px-6 py-12">
+        <div className="max-w-3xl mx-auto text-center py-12 text-lg text-red-600">
+          {restError instanceof Error
+            ? restError.message
+            : "Error loading status."}
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="flex-1 container px-4 md:px-6 py-12">
