@@ -1,11 +1,18 @@
+import * as fs from "fs";
+
 import { AppModule } from "./app.module";
 import { BullBoardService } from "./queue/bull-board.service";
 import { IoAdapter } from "@nestjs/platform-socket.io";
 import type { NestExpressApplication } from "@nestjs/platform-express";
 import { NestFactory } from "@nestjs/core";
-import { join } from "path";
 
 async function bootstrap() {
+  // Ensure uploads directory exists
+  const uploadsPath = require("path").resolve(__dirname, "../../uploads");
+  if (!fs.existsSync(uploadsPath)) {
+    fs.mkdirSync(uploadsPath, { recursive: true });
+  }
+
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // Enable CORS globally
@@ -14,7 +21,7 @@ async function bootstrap() {
   });
 
   // Serve static files from uploads directory at /videos
-  app.useStaticAssets(join(__dirname, "..", "uploads"), {
+  app.useStaticAssets(uploadsPath, {
     prefix: "/videos/",
   });
 
