@@ -6,6 +6,7 @@ import {
   UseInterceptors,
   HttpException,
   HttpStatus,
+  Req,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { UploadService } from "./upload.service";
@@ -27,11 +28,15 @@ export class UploadController {
       limits: { fileSize: 1024 * 1024 * 1024 }, // 1GB limit
     })
   )
-  async uploadVideo(@UploadedFile() file: Multer.File) {
+  async uploadVideo(@UploadedFile() file: Multer.File, @Req() req) {
     if (!file) {
       throw new HttpException("No file uploaded", HttpStatus.BAD_REQUEST);
     }
-
-    return this.uploadService.handleUpload(file);
+    // Get uuid from form data
+    const uuid = req.body?.uuid;
+    if (!uuid) {
+      throw new HttpException("No uuid provided", HttpStatus.BAD_REQUEST);
+    }
+    return this.uploadService.handleUpload(file, uuid);
   }
 }
