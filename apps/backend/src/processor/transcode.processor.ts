@@ -37,7 +37,7 @@ export class TranscodeProcessor implements OnModuleInit {
           this.logger.log(`Processing completed for uuid: ${uuid}`);
           this.websocketGateway.emitProcessingCompleted(
             uuid,
-            `/videos/${uuid}.mp4`
+            `/videos/${uuid}_with_subs.mp4`
           );
         } catch (error) {
           this.logger.error(`Processing failed for uuid: ${uuid}`, error.stack);
