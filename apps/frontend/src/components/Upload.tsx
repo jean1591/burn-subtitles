@@ -10,6 +10,7 @@ import type React from "react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const LANGUAGES = [
   { id: "english", labelId: "languages.english" },
@@ -26,6 +27,7 @@ export function Upload() {
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([
     "english",
   ]);
+  const [uploading, setUploading] = useState(false);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -64,12 +66,14 @@ export function Upload() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (file && selectedLanguages.length > 0) {
+      setUploading(true);
+      // Generate UUID
+      const newUuid = uuidv4();
       const formData = new FormData();
       formData.append("video", file);
       formData.append("languages", JSON.stringify(selectedLanguages));
-
+      formData.append("uuid", newUuid); // Pass UUID to backend
       try {
         const response = await fetch("http://localhost:3000/upload", {
           method: "POST",
@@ -87,6 +91,8 @@ export function Upload() {
       } catch (err) {
         console.error(err);
         alert("Failed to upload video. Please try again.");
+      } finally {
+        setUploading(false);
       }
     }
   };
@@ -179,7 +185,7 @@ export function Upload() {
       <Button
         type="submit"
         className="w-full bg-amber-600 hover:bg-amber-700 text-white"
-        disabled={!file || selectedLanguages.length === 0}
+        disabled={!file || selectedLanguages.length === 0 || uploading}
       >
         <FormattedMessage
           id="upload.button"

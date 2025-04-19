@@ -46,6 +46,12 @@ export const StatusPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const timeRemaining = 3600; // 1 hour in seconds
   const socketRef = useRef<Socket | null>(null);
+  const [statusEvents, setStatusEvents] = useState<
+    {
+      timestamp: number;
+      message: string;
+    }[]
+  >([]);
 
   const getOrdinalSuffix = (position: number) => {
     if (intl.locale === "en") {
@@ -87,20 +93,113 @@ export const StatusPage: React.FC = () => {
         );
       }
       if (restStatus.failedReason) setError(restStatus.failedReason);
+
+      // Reconstruct event log based on current status
+      const events = [];
+      const now = Date.now();
+      // Always start with 'added to queue'
+      events.push({
+        timestamp: now - 30000, // fudge timestamps for visual order
+        message: intl.formatMessage({
+          id: "status.addedToQueueEvent",
+          defaultMessage: "Video added to queue",
+        }),
+      });
+      if (
+        restStatus.status === "processing_started" ||
+        restStatus.status === "processing_completed" ||
+        restStatus.status === "processing_failed"
+      ) {
+        events.push({
+          timestamp: now - 20000,
+          message: intl.formatMessage({
+            id: "status.startedEvent",
+            defaultMessage: "Processing started",
+          }),
+        });
+      }
+      if (restStatus.status === "processing_completed") {
+        events.push({
+          timestamp: now - 10000,
+          message: intl.formatMessage({
+            id: "status.completedEvent",
+            defaultMessage: "Processing completed",
+          }),
+        });
+      }
+      if (restStatus.status === "processing_failed") {
+        events.push({
+          timestamp: now - 10000,
+          message: intl.formatMessage({
+            id: "status.failedEvent",
+            defaultMessage: "Processing failed",
+          }),
+        });
+      }
+      setStatusEvents(events);
     }
-  }, [restStatus]);
+  }, [restStatus, intl]);
 
   useEffect(() => {
     if (!uuid) return;
     const socket = io("http://localhost:3000");
     socketRef.current = socket;
     socket.emit("register", { uuid });
-    socket.on("video_added_to_queue", () => setStatus("queue"));
+    socket.on("video_added_to_queue", () => {
+      setStatus("queue");
+      setStatusEvents((prev) => {
+        const msg = intl.formatMessage({
+          id: "status.addedToQueueEvent",
+          defaultMessage: "Video added to queue",
+        });
+        if (prev[prev.length - 1]?.message === msg) return prev;
+        return [
+          ...prev,
+          {
+            timestamp: Date.now(),
+            message: msg,
+          },
+        ];
+      });
+    });
     socket.on("queue_position_update", (payload: { position: number }) => {
       setQueuePosition(payload.position ?? 1);
       setStatus("queue");
+      setStatusEvents((prev) => {
+        const msg = intl.formatMessage(
+          {
+            id: "status.positionInQueueEvent",
+            defaultMessage: "Position in queue: {position}",
+          },
+          { position: payload.position ?? 1 }
+        );
+        if (prev[prev.length - 1]?.message === msg) return prev;
+        return [
+          ...prev,
+          {
+            timestamp: Date.now(),
+            message: msg,
+          },
+        ];
+      });
     });
-    socket.on("processing_started", () => setStatus("started"));
+    socket.on("processing_started", () => {
+      setStatus("started");
+      setStatusEvents((prev) => {
+        const msg = intl.formatMessage({
+          id: "status.startedEvent",
+          defaultMessage: "Processing started",
+        });
+        if (prev[prev.length - 1]?.message === msg) return prev;
+        return [
+          ...prev,
+          {
+            timestamp: Date.now(),
+            message: msg,
+          },
+        ];
+      });
+    });
     socket.on("processing_completed", (payload: { videoUrl: string }) => {
       setStatus("completed");
       setVideoUrl(
@@ -108,15 +207,43 @@ export const StatusPage: React.FC = () => {
           ? payload.videoUrl
           : `http://localhost:3000${payload.videoUrl}`
       );
+      setStatusEvents((prev) => {
+        const msg = intl.formatMessage({
+          id: "status.completedEvent",
+          defaultMessage: "Processing completed",
+        });
+        if (prev[prev.length - 1]?.message === msg) return prev;
+        return [
+          ...prev,
+          {
+            timestamp: Date.now(),
+            message: msg,
+          },
+        ];
+      });
     });
     socket.on("processing_failed", (payload: { error: string }) => {
       setStatus("failed");
       setError(payload.error || "Unknown error");
+      setStatusEvents((prev) => {
+        const msg = intl.formatMessage({
+          id: "status.failedEvent",
+          defaultMessage: "Processing failed",
+        });
+        if (prev[prev.length - 1]?.message === msg) return prev;
+        return [
+          ...prev,
+          {
+            timestamp: Date.now(),
+            message: msg,
+          },
+        ];
+      });
     });
     return () => {
       socket.disconnect();
     };
-  }, [uuid]);
+  }, [uuid, intl]);
 
   if (isRestLoading) {
     return (
@@ -147,6 +274,36 @@ export const StatusPage: React.FC = () => {
         </h1>
 
         <div className="bg-white p-6 rounded-xl border border-amber-100 mb-8">
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              <FormattedMessage
+                id="status.eventLog"
+                defaultMessage="Status Updates"
+              />
+            </h3>
+            <ul className="space-y-1 text-sm max-h-40 overflow-y-auto">
+              {statusEvents.length === 0 ? (
+                <li className="text-gray-400">
+                  <FormattedMessage
+                    id="status.noEvents"
+                    defaultMessage="No status updates yet."
+                  />
+                </li>
+              ) : (
+                statusEvents.map((event, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-center gap-2 text-gray-700"
+                  >
+                    <span className="font-mono text-xs text-gray-400">
+                      {new Date(event.timestamp).toLocaleTimeString()}
+                    </span>
+                    <span>{event.message}</span>
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-800">
               <FormattedMessage id="status.jobId" defaultMessage="Job ID" />:{" "}
