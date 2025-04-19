@@ -10,6 +10,7 @@ import {
 } from "@nestjs/websockets";
 import { Logger } from "@nestjs/common";
 import { Server, Socket } from "socket.io";
+import Redis from "ioredis";
 
 @WebSocketGateway({
   cors: {
@@ -27,6 +28,7 @@ export class WebsocketGateway
   private uuidToSocketId: Map<string, string> = new Map();
   // Map socket ID to UUID (for cleanup)
   private socketIdToUuid: Map<string, string> = new Map();
+  private readonly redis = new Redis({ host: "localhost", port: 6379 });
 
   handleConnection(client: Socket) {
     this.logger.log(`Client connected: ${client.id}`);
@@ -75,22 +77,52 @@ export class WebsocketGateway
 
   // Broadcast events
   emitVideoAdded(uuid: string) {
+    const event = {
+      type: "video_added_to_queue",
+      timestamp: Date.now(),
+      payload: { uuid },
+    };
+    this.redis.rpush(`job:events:${uuid}`, JSON.stringify(event));
     this.sendToClient(uuid, "video_added_to_queue", { uuid });
   }
 
   emitQueuePositionUpdate(uuid: string, position: number) {
+    const event = {
+      type: "queue_position_update",
+      timestamp: Date.now(),
+      payload: { uuid, position },
+    };
+    this.redis.rpush(`job:events:${uuid}`, JSON.stringify(event));
     this.sendToClient(uuid, "queue_position_update", { uuid, position });
   }
 
   emitProcessingStarted(uuid: string) {
+    const event = {
+      type: "processing_started",
+      timestamp: Date.now(),
+      payload: { uuid },
+    };
+    this.redis.rpush(`job:events:${uuid}`, JSON.stringify(event));
     this.sendToClient(uuid, "processing_started", { uuid });
   }
 
   emitProcessingCompleted(uuid: string, videoUrl: string) {
+    const event = {
+      type: "processing_completed",
+      timestamp: Date.now(),
+      payload: { uuid, videoUrl },
+    };
+    this.redis.rpush(`job:events:${uuid}`, JSON.stringify(event));
     this.sendToClient(uuid, "processing_completed", { uuid, videoUrl });
   }
 
   emitProcessingFailed(uuid: string, error: string) {
+    const event = {
+      type: "processing_failed",
+      timestamp: Date.now(),
+      payload: { uuid, error },
+    };
+    this.redis.rpush(`job:events:${uuid}`, JSON.stringify(event));
     this.sendToClient(uuid, "processing_failed", { uuid, error });
   }
 }
