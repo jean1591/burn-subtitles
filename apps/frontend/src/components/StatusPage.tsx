@@ -9,6 +9,12 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 
+type BackendEvent = {
+  type: string;
+  timestamp: number;
+  payload?: Record<string, unknown>;
+};
+
 const formatTime = (seconds: number) => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -94,49 +100,61 @@ export const StatusPage: React.FC = () => {
       }
       if (restStatus.failedReason) setError(restStatus.failedReason);
 
-      // Reconstruct event log based on current status
-      const events = [];
-      const now = Date.now();
-      // Always start with 'added to queue'
-      events.push({
-        timestamp: now - 30000, // fudge timestamps for visual order
-        message: intl.formatMessage({
-          id: "status.addedToQueueEvent",
-          defaultMessage: "Video added to queue",
-        }),
-      });
-      if (
-        restStatus.status === "processing_started" ||
-        restStatus.status === "processing_completed" ||
-        restStatus.status === "processing_failed"
-      ) {
-        events.push({
-          timestamp: now - 20000,
-          message: intl.formatMessage({
-            id: "status.startedEvent",
-            defaultMessage: "Processing started",
-          }),
-        });
+      // Use event log from backend
+      if (Array.isArray(restStatus.events)) {
+        setStatusEvents(
+          (restStatus.events as BackendEvent[]).map((event) => {
+            let message = "";
+            switch (event.type) {
+              case "video_added_to_queue":
+                message = intl.formatMessage({
+                  id: "status.addedToQueueEvent",
+                  defaultMessage: "Video added to queue",
+                });
+                break;
+              case "queue_position_update":
+                message = intl.formatMessage(
+                  {
+                    id: "status.positionInQueueEvent",
+                    defaultMessage: "Position in queue: {position}",
+                  },
+                  {
+                    position:
+                      event.payload &&
+                      typeof event.payload.position === "number"
+                        ? event.payload.position
+                        : 1,
+                  }
+                );
+                break;
+              case "processing_started":
+                message = intl.formatMessage({
+                  id: "status.startedEvent",
+                  defaultMessage: "Processing started",
+                });
+                break;
+              case "processing_completed":
+                message = intl.formatMessage({
+                  id: "status.completedEvent",
+                  defaultMessage: "Processing completed",
+                });
+                break;
+              case "processing_failed":
+                message = intl.formatMessage({
+                  id: "status.failedEvent",
+                  defaultMessage: "Processing failed",
+                });
+                break;
+              default:
+                message = event.type;
+            }
+            return {
+              timestamp: event.timestamp,
+              message,
+            };
+          })
+        );
       }
-      if (restStatus.status === "processing_completed") {
-        events.push({
-          timestamp: now - 10000,
-          message: intl.formatMessage({
-            id: "status.completedEvent",
-            defaultMessage: "Processing completed",
-          }),
-        });
-      }
-      if (restStatus.status === "processing_failed") {
-        events.push({
-          timestamp: now - 10000,
-          message: intl.formatMessage({
-            id: "status.failedEvent",
-            defaultMessage: "Processing failed",
-          }),
-        });
-      }
-      setStatusEvents(events);
     }
   }, [restStatus, intl]);
 
