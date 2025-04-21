@@ -4,7 +4,10 @@ import Redis from "ioredis";
 
 @Controller("status")
 export class StatusController {
-  private readonly redis = new Redis({ host: "localhost", port: 6379 });
+  private readonly redis = new Redis({
+    host: process.env.REDIS_HOST || "redis",
+    port: 6379,
+  });
   constructor(private readonly queueService: QueueService) {}
 
   @Get(":uuid")

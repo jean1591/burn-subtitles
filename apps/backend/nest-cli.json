@@ -13,8 +13,8 @@
     "tsConfigPath": "./tsconfig.build.json",
     "webpack": false,
     "deleteOutDir": true,
-    "assets": [],
-    "watchAssets": false,
+    "assets": ["**/*.hbs", "**/*.json"],
+    "watchAssets": true,
     "plugins": []
   }
 }

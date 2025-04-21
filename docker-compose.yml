@@ -19,10 +19,11 @@ services:
     depends_on:
       - redis
     environment:
+      - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
+      - LETSENCRYPT_HOST=titro.app
+      - REDIS_HOST=redis
       - VIRTUAL_HOST=titro.app
       - VIRTUAL_PORT=3000
-      - LETSENCRYPT_HOST=titro.app
-      - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
     expose:
       - "3000"
 
