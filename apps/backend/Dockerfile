@@ -11,7 +11,7 @@ COPY apps/backend/package*.json ./
 RUN npm install
 
 # Copy app source
-COPY apps/backend .
+COPY . .
 
 # Build the NestJS app
 RUN npm run build

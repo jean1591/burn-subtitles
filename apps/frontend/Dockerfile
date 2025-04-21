@@ -12,7 +12,7 @@ FROM nginx:alpine
 # Copy the React build to the nginx html folder
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy a default nginx config (optional)
+# Copy a default nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
