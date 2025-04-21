@@ -28,7 +28,10 @@ export class WebsocketGateway
   private uuidToSocketId: Map<string, string> = new Map();
   // Map socket ID to UUID (for cleanup)
   private socketIdToUuid: Map<string, string> = new Map();
-  private readonly redis = new Redis({ host: "localhost", port: 6379 });
+  private readonly redis = new Redis({
+    host: process.env.REDIS_HOST || "redis",
+    port: 6379,
+  });
 
   handleConnection(client: Socket) {
     this.logger.log(`Client connected: ${client.id}`);

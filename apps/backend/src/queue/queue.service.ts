@@ -6,7 +6,7 @@ import type { JobType } from "bullmq";
 
 const queueOptions: QueueOptions = {
   connection: {
-    host: "localhost",
+    host: process.env.REDIS_HOST || "redis",
     port: 6379,
   },
 };
