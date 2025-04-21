@@ -8,13 +8,15 @@ interface ServerEvent {
   payload: unknown;
 }
 
+const apiUrl = process.env.VITE_APP_API_URL || "http://localhost:3000";
+
 export const WsTestPage: React.FC = () => {
   const [uuid, setUuid] = useState("");
   const [log, setLog] = useState<ServerEvent[]>([]);
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
-    const socket = io("http://localhost:3000");
+    const socket = io(apiUrl);
     socketRef.current = socket;
 
     socket.on("connect", () => {

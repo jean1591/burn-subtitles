@@ -25,6 +25,8 @@ const formatTime = (seconds: number) => {
     .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 };
 
+const apiUrl = process.env.VITE_APP_API_URL || "http://localhost:3000";
+
 export const StatusPage: React.FC = () => {
   const intl = useIntl();
 
@@ -38,7 +40,7 @@ export const StatusPage: React.FC = () => {
     queryKey: ["status", uuid],
     queryFn: async () => {
       if (!uuid) throw new Error("No UUID");
-      const res = await fetch(`http://localhost:3000/status/${uuid}`);
+      const res = await fetch(`${apiUrl}/status/${uuid}`);
       if (!res.ok) throw new Error("Job not found");
       return res.json();
     },
@@ -95,7 +97,7 @@ export const StatusPage: React.FC = () => {
         setVideoUrl(
           restStatus.videoUrl.startsWith("http")
             ? restStatus.videoUrl
-            : `http://localhost:3000${restStatus.videoUrl}`
+            : `${apiUrl}/${restStatus.videoUrl}`
         );
       }
       if (restStatus.failedReason) setError(restStatus.failedReason);
@@ -160,7 +162,7 @@ export const StatusPage: React.FC = () => {
 
   useEffect(() => {
     if (!uuid) return;
-    const socket = io("http://localhost:3000");
+    const socket = io(apiUrl);
     socketRef.current = socket;
     socket.emit("register", { uuid });
     socket.on("video_added_to_queue", () => {
@@ -223,7 +225,7 @@ export const StatusPage: React.FC = () => {
       setVideoUrl(
         payload.videoUrl.startsWith("http")
           ? payload.videoUrl
-          : `http://localhost:3000${payload.videoUrl}`
+          : `${apiUrl}/${payload.videoUrl}`
       );
       setStatusEvents((prev) => {
         const msg = intl.formatMessage({

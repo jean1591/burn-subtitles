@@ -38,10 +38,11 @@ services:
     depends_on:
       - backend
     environment:
+      - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
+      - LETSENCRYPT_HOST=www.titro.app
       - VIRTUAL_HOST=www.titro.app
       - VIRTUAL_PORT=5173
-      - LETSENCRYPT_HOST=www.titro.app
-      - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
+      - VITE_APP_API_URL=http://backend:3000
     expose:
       - "5173"
 

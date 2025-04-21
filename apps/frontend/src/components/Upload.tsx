@@ -20,6 +20,8 @@ const LANGUAGES = [
   { id: "italian", labelId: "languages.italian" },
 ];
 
+const apiUrl = process.env.VITE_APP_API_URL || "http://localhost:3000";
+
 export function Upload() {
   const navigate = useNavigate();
   const [isDragging, setIsDragging] = useState(false);
@@ -75,7 +77,7 @@ export function Upload() {
       formData.append("languages", JSON.stringify(selectedLanguages));
       formData.append("uuid", newUuid); // Pass UUID to backend
       try {
-        const response = await fetch("http://localhost:3000/upload", {
+        const response = await fetch(`${apiUrl}/upload`, {
           method: "POST",
           body: formData,
         });
