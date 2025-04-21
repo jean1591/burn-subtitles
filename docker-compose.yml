@@ -1,0 +1,87 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./apps/backend
+    container_name: backend
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      - redis
+    environment:
+      - VIRTUAL_HOST=titro.app
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=titro.app
+      - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
+    expose:
+      - "3000"
+
+  frontend:
+    build:
+      context: ./apps/frontend
+    container_name: frontend
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - backend
+    environment:
+      - VIRTUAL_HOST=www.titro.app
+      - VIRTUAL_PORT=5173
+      - LETSENCRYPT_HOST=www.titro.app
+      - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
+    expose:
+      - "5173"
+
+  workers:
+    build:
+      context: ./workers
+    container_name: workers
+    restart: always
+    volumes:
+      - ./uploads:/app/uploads
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost.d:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+      - ./uploads:/app/uploads
+      - /etc/nginx/conf.d
+    environment:
+      - DEFAULT_HOST=titro.app
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-proxy-le
+    restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+      - DEFAULT_EMAIL=jr.titro.app@mailo.com
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost.d:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
