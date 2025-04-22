@@ -24,8 +24,8 @@ services:
       - REDIS_HOST=redis
       - VIRTUAL_HOST=titro.app
       - VIRTUAL_PORT=3000
-    expose:
-      - "3000"
+    ports:
+      - "3000:3000"
 
   frontend:
     build:
@@ -43,8 +43,8 @@ services:
       - VIRTUAL_HOST=www.titro.app
       - VIRTUAL_PORT=5173
       - VITE_APP_API_URL=http://backend:3000
-    expose:
-      - "5173"
+    ports:
+      - "5173:5173"
 
   workers:
     build:
