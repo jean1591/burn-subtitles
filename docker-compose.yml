@@ -20,9 +20,9 @@ services:
       - redis
     environment:
       - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
-      - LETSENCRYPT_HOST=titro.app
+      - LETSENCRYPT_HOST=dev.titro.app
       - REDIS_HOST=redis
-      - VIRTUAL_HOST=titro.app
+      - VIRTUAL_HOST=dev.titro.app
       - VIRTUAL_PORT=3000
     ports:
       - "3000:3000"
@@ -39,8 +39,8 @@ services:
       - backend
     environment:
       - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
-      - LETSENCRYPT_HOST=www.titro.app
-      - VIRTUAL_HOST=www.titro.app
+      - LETSENCRYPT_HOST=www.dev.titro.app
+      - VIRTUAL_HOST=www.dev.titro.app
       - VIRTUAL_PORT=5173
       - VITE_APP_API_URL=http://backend:3000
     ports:
@@ -87,3 +87,4 @@ services:
       - ./certs:/etc/nginx/certs
       - ./vhost.d:/etc/nginx/vhost.d
       - ./html:/usr/share/nginx/html
+      - ./acme:/etc/acme.sh
