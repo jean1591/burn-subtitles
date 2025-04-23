@@ -11,7 +11,11 @@ RUN npm install
 # Install Python3, pip, ffmpeg, and git (for whisper)
 RUN apk add --no-cache python3 py3-pip ffmpeg git
 
-# Install whisper
+# Create and activate a virtual environment
+RUN python3 -m venv /venv
+ENV PATH="/venv/bin:$PATH"
+
+# Now install whisper in the venv
 RUN pip install git+https://github.com/openai/whisper.git
 
 # Copy the rest of the app source
