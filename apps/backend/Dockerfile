@@ -19,8 +19,8 @@ COPY . .
 
 RUN npm run build
 
-# Copy the burn-subtitles.py script from the workers directory
-COPY ../../workers/burn-subtitles.py ./workers/burn-subtitles.py
+# Copy the burn-subtitles.py script from the local workers directory
+COPY ./workers/burn-subtitles.py ./workers/burn-subtitles.py
 
 EXPOSE 3000
 

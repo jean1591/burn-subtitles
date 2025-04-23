@@ -13,7 +13,7 @@ export class PythonService {
     return new Promise((resolve, reject) => {
       const scriptPath = path.resolve(
         __dirname,
-        "../../../../../workers/burn-subtitles.py"
+        "../workers/burn-subtitles.py"
       );
       const pythonExecutable = "python";
       const args = [scriptPath, inputPath];
