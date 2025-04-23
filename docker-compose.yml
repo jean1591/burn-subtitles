@@ -45,19 +45,6 @@ services:
     ports:
       - "5173:5173"
 
-  workers:
-    build:
-      context: ./workers
-      dockerfile: Dockerfile
-    container_name: workers
-    restart: always
-    volumes:
-      - ./uploads:/app/uploads
-    env_file:
-      - .env
-    depends_on:
-      - redis
-
   nginx-proxy:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
