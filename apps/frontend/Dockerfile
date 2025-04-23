@@ -4,16 +4,15 @@ FROM node:18 AS builder
 WORKDIR /app
 COPY . .
 RUN npm install
+ARG VITE_APP_API_URL
 RUN npm run build
 
-# Step 2: Serve the static build with nginx
-FROM nginx:alpine
+# Step 2: Serve with a lightweight server that can handle env vars
+FROM node:18-alpine
 
-# Copy the React build to the nginx html folder
-COPY --from=builder /app/dist /usr/share/nginx/html
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+RUN npm install -g serve
 
-# Copy a default nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 5173
+CMD ["serve", "-s", "dist", "-l", "5173"]

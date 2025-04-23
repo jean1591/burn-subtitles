@@ -31,6 +31,8 @@ services:
     build:
       context: ./apps/frontend
       dockerfile: Dockerfile
+      args:
+        - VITE_APP_API_URL=https://titro.app # Use HTTPS here
     container_name: frontend
     restart: always
     env_file:
@@ -42,7 +44,6 @@ services:
       - LETSENCRYPT_HOST=www.titro.app
       - VIRTUAL_HOST=www.titro.app
       - VIRTUAL_PORT=5173
-      - VITE_APP_API_URL=http://backend:3000
     ports:
       - "5173:5173"
 
