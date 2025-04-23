@@ -4,14 +4,14 @@ FROM python:3.11-slim
 # Set the working directory to /app
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies including ffmpeg
 RUN apt-get update && \
-    apt-get install -y ffmpeg && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better caching
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Install whisper CLI globally
+RUN pip install --no-cache-dir openai-whisper
 
 # Copy all the necessary files to the container
 COPY . .
