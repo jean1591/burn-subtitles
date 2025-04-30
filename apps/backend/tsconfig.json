@@ -1,19 +1,22 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
     "declaration": true,
-    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "target": "ES2021",
-    "strictNullChecks": true,
-    "sourceMap": true,
+    "incremental": true,
+    "module": "commonjs",
+    "noFallthroughCasesInSwitch": false,
+    "noImplicitAny": false,
     "outDir": "./dist",
+    "removeComments": true,
     "rootDir": "./",
-    "baseUrl": "./",
     "skipLibCheck": true,
-    "incremental": true
+    "sourceMap": true,
+    "strictBindCallApply": false,
+    "strictNullChecks": false,
+    "target": "ES2021"
   }
 }
