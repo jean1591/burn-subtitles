@@ -7,6 +7,7 @@ import { Queue } from 'bull';
 import { Job } from 'bull';
 import { OpenAI } from 'openai';
 import { RedisService } from '../redis/redis.service';
+import { StatusGateway } from '../gateway/status.gateway';
 
 interface TranslationJob {
   jobId: string;
@@ -23,6 +24,7 @@ export class TranslationProcessor {
   constructor(
     private readonly redisService: RedisService,
     @InjectQueue('zip') private readonly zipQueue: Queue,
+    private readonly statusGateway: StatusGateway,
   ) {
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
@@ -54,6 +56,12 @@ export class TranslationProcessor {
             status: 'done',
             outputPath,
           });
+          this.statusGateway.emitJobDone(
+            batchId,
+            jobId,
+            filenameNoExt,
+            targetLang,
+          );
           await this.checkAndQueueZipJob(batchId);
           return;
         }
@@ -88,6 +96,7 @@ export class TranslationProcessor {
         status: 'done',
         outputPath,
       });
+      this.statusGateway.emitJobDone(batchId, jobId, filenameNoExt, targetLang);
 
       // Check if all jobs are done and queue zip job if needed
       await this.checkAndQueueZipJob(batchId);
@@ -292,6 +301,7 @@ export class TranslationProcessor {
         zipStatus: 'queued',
       });
       await this.zipQueue.add({ batch_id: batchId });
+      this.statusGateway.emitBatchComplete(batchId);
     }
   }
 }
