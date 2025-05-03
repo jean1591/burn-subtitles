@@ -1,6 +1,7 @@
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { QueueModule } from './queue/queue.module';
+import { StatusGateway } from './gateway/status.gateway';
 import { UploadModule } from './upload/upload.module';
 
 @Module({
@@ -12,6 +13,6 @@ import { UploadModule } from './upload/upload.module';
     QueueModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [StatusGateway],
 })
 export class AppModule {}

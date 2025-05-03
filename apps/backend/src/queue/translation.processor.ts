@@ -1,7 +1,8 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
-import { Process, Processor } from '@nestjs/bull';
+import { Process, Processor, InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 
 import { Job } from 'bull';
 import { OpenAI } from 'openai';
@@ -19,7 +20,10 @@ interface TranslationJob {
 export class TranslationProcessor {
   private readonly openai: OpenAI;
 
-  constructor(private readonly redisService: RedisService) {
+  constructor(
+    private readonly redisService: RedisService,
+    @InjectQueue('zip') private readonly zipQueue: Queue,
+  ) {
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
@@ -65,11 +69,13 @@ export class TranslationProcessor {
       const sourceLang = await this.detectLanguage(lines);
 
       // Translate the content
-      const translatedContent = await this.translateSrt(
+      const translatedContent = await this.translateSrt({
         lines,
         sourceLang,
         targetLang,
-      );
+        batchId,
+        filePath,
+      });
 
       // Ensure output directory exists
       await fs.mkdir(outputDir, { recursive: true });
@@ -112,7 +118,6 @@ export class TranslationProcessor {
     }
 
     const response = await this.openai.chat.completions.create({
-      // TODO: check which version is more appropriated
       model: 'gpt-3.5-turbo',
       messages: [
         {
@@ -131,11 +136,19 @@ export class TranslationProcessor {
     return response.choices[0].message.content.trim();
   }
 
-  private async translateSrt(
-    lines: string[],
-    sourceLang: string,
-    targetLang: string,
-  ): Promise<string> {
+  private async translateSrt({
+    lines,
+    sourceLang,
+    targetLang,
+    batchId,
+    filePath,
+  }: {
+    lines: string[];
+    sourceLang: string;
+    targetLang: string;
+    batchId: string;
+    filePath: string;
+  }): Promise<string> {
     const translatedLines: string[] = [];
     const blocks: { lines: string[]; originalLines: string[] }[] = [];
     let currentBlock: string[] = [];
@@ -192,28 +205,38 @@ export class TranslationProcessor {
         targetLang,
       );
 
+      if (translatedTexts.length !== batch.length) {
+        console.error(
+          `Mismatch: expected ${batch.length} translations, got ${translatedTexts.length}.`,
+        );
+      }
+
       // Reconstruct the SRT file
       for (let j = 0; j < batch.length; j++) {
         const block = batch[j];
-        const translatedTextLines = translatedTexts[j].split('\n');
-        const translatedBlock: string[] = [];
-        let textLineIndex = 0;
-
-        for (const line of block.originalLines) {
-          if (block.lines.includes(line)) {
-            // This is a line that was translated
-            // Replace with the corresponding translated line(s)
-            if (textLineIndex < translatedTextLines.length) {
-              translatedBlock.push(translatedTextLines[textLineIndex]);
-              textLineIndex++;
+        const translatedText = translatedTexts[j];
+        if (typeof translatedText !== 'string') {
+          // Log error and fallback to original text
+          console.error(
+            `Missing translation for block ${j} in batch (batchId: ${batchId}, file: ${filePath}). Using original text.`,
+          );
+          translatedLines.push(...block.lines);
+        } else {
+          const translatedTextLines = translatedText.split('\n');
+          const translatedBlock: string[] = [];
+          let textLineIndex = 0;
+          for (const line of block.originalLines) {
+            if (block.lines.includes(line)) {
+              if (textLineIndex < translatedTextLines.length) {
+                translatedBlock.push(translatedTextLines[textLineIndex]);
+                textLineIndex++;
+              }
+            } else {
+              translatedBlock.push(line);
             }
-          } else {
-            // This is a number, timestamp, or empty line
-            translatedBlock.push(line);
           }
+          translatedLines.push(...translatedBlock);
         }
-        // Add the reconstructed block to the main output
-        translatedLines.push(...translatedBlock);
       }
     }
 
@@ -268,7 +291,7 @@ export class TranslationProcessor {
       await this.redisService.hset(`batch:${batchId}`, {
         zipStatus: 'queued',
       });
-      // Note: The zip job processor will be implemented separately
+      await this.zipQueue.add({ batch_id: batchId });
     }
   }
 }
