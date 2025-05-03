@@ -20,11 +20,13 @@ export class UploadController {
     @UploadedFiles() files: File[],
     @Body() body: UploadFilesDto,
   ) {
-    const batchId = await this.uploadService.processUpload(
+    console.log('🚀 ~ body:', body.targetLangs);
+
+    /* const batchId = await this.uploadService.processUpload(
       files,
       body.targetLangs,
-    );
+    ); */
 
-    return { batchId };
+    return { batchId: '12' };
   }
 }

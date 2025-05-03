@@ -1,125 +1,72 @@
-import { CheckCircle, Clock, Download, Globe, Zap } from "lucide-react";
-
-import { FormattedMessage } from "react-intl";
+import { CheckCircle, Clock, Download, Globe, Shield } from "lucide-react";
 
 export function Features() {
   return (
-    <section id="features" className="py-16 bg-white">
-      <div className="container px-4 md:px-6 mx-auto">
-        <div className="flex flex-col items-center text-center space-y-4 mb-12">
-          <div className="inline-block rounded-lg bg-amber-100 px-3 py-1 text-sm font-medium">
-            <FormattedMessage id="features.title" defaultMessage="Features" />
-          </div>
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gray-800">
-            <FormattedMessage
-              id="features.heading"
-              defaultMessage="Why Choose SubtitlePro?"
-            />
+    <section id="features" className="bg-amber-50 py-12 md:py-16 lg:py-20">
+      <div className="container mx-auto">
+        <div className="text-center max-w-3xl mb-12">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-neutral-900">
+            Why Choose Our Subtitle Translator
           </h2>
-          <p className="max-w-[700px] text-gray-600 md:text-lg">
-            <FormattedMessage
-              id="features.description"
-              defaultMessage="Our advanced AI technology makes adding subtitles to your videos quick, accurate, and hassle-free."
-            />
+          <p className="mt-4 text-lg text-neutral-600">
+            Fast, accurate, and easy-to-use subtitle translation for all your
+            needs
           </p>
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <div className="bg-amber-50 p-6 rounded-xl border border-amber-100">
-            <Globe className="h-10 w-10 text-amber-600 mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-800">
-              <FormattedMessage
-                id="features.multipleLanguages.title"
-                defaultMessage="Multiple Languages"
-              />
-            </h3>
-            <p className="text-gray-600">
-              <FormattedMessage
-                id="features.multipleLanguages.description"
-                defaultMessage="Generate subtitles in 5 different languages with a single upload. Perfect for reaching a global audience."
-              />
+          <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
+            <Globe className="h-10 w-10 text-amber-500 mb-4" />
+            <h3 className="text-xl font-medium mb-2">Multiple Languages</h3>
+            <p className="text-neutral-600">
+              Translate your subtitles into 5 different languages with high
+              accuracy and natural phrasing.
             </p>
           </div>
 
-          <div className="bg-amber-50 p-6 rounded-xl border border-amber-100">
-            <Zap className="h-10 w-10 text-amber-600 mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-800">
-              <FormattedMessage
-                id="features.fastProcessing.title"
-                defaultMessage="Fast Processing"
-              />
-            </h3>
-            <p className="text-gray-600">
-              <FormattedMessage
-                id="features.fastProcessing.description"
-                defaultMessage="Our advanced AI processes your videos quickly, so you don't have to wait long for your subtitled content."
-              />
+          <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
+            <Clock className="h-10 w-10 text-amber-500 mb-4" />
+            <h3 className="text-xl font-medium mb-2">Fast Processing</h3>
+            <p className="text-neutral-600">
+              Get your translated subtitles quickly with our efficient
+              processing system.
             </p>
           </div>
 
-          <div className="bg-amber-50 p-6 rounded-xl border border-amber-100">
-            <CheckCircle className="h-10 w-10 text-amber-600 mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-800">
-              <FormattedMessage
-                id="features.highAccuracy.title"
-                defaultMessage="High Accuracy"
-              />
-            </h3>
-            <p className="text-gray-600">
-              <FormattedMessage
-                id="features.highAccuracy.description"
-                defaultMessage="State-of-the-art speech recognition ensures your subtitles are accurate and properly synchronized."
-              />
+          <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
+            <CheckCircle className="h-10 w-10 text-amber-500 mb-4" />
+            <h3 className="text-xl font-medium mb-2">High Quality</h3>
+            <p className="text-neutral-600">
+              Our translation engine ensures accurate and contextually
+              appropriate translations.
             </p>
           </div>
 
-          <div className="bg-amber-50 p-6 rounded-xl border border-amber-100">
-            <Clock className="h-10 w-10 text-amber-600 mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-800">
-              <FormattedMessage
-                id="features.realTimeStatus.title"
-                defaultMessage="Real-time Status"
-              />
-            </h3>
-            <p className="text-gray-600">
-              <FormattedMessage
-                id="features.realTimeStatus.description"
-                defaultMessage="Track the progress of your subtitle generation in real-time with our intuitive status page."
-              />
+          <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
+            <Download className="h-10 w-10 text-amber-500 mb-4" />
+            <h3 className="text-xl font-medium mb-2">Easy Download</h3>
+            <p className="text-neutral-600">
+              Download all your translated subtitle files in a convenient zip
+              package.
             </p>
           </div>
 
-          <div className="bg-amber-50 p-6 rounded-xl border border-amber-100">
-            <Download className="h-10 w-10 text-amber-600 mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-800">
-              <FormattedMessage
-                id="features.easyDownload.title"
-                defaultMessage="Easy Download"
-              />
-            </h3>
-            <p className="text-gray-600">
-              <FormattedMessage
-                id="features.easyDownload.description"
-                defaultMessage="Download your subtitled video with one click once processing is complete."
-              />
+          <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
+            <Shield className="h-10 w-10 text-amber-500 mb-4" />
+            <h3 className="text-xl font-medium mb-2">Privacy First</h3>
+            <p className="text-neutral-600">
+              Your subtitle files are processed securely and deleted after 7
+              days.
             </p>
           </div>
 
-          <div className="bg-amber-50 p-6 rounded-xl border border-amber-100">
-            <div className="h-10 w-10 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold mb-4">
-              F
+          <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
+            <div className="h-10 w-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-800 font-bold mb-4">
+              $0
             </div>
-            <h3 className="text-xl font-bold mb-2 text-gray-800">
-              <FormattedMessage
-                id="features.freeService.title"
-                defaultMessage="Free Service"
-              />
-            </h3>
-            <p className="text-gray-600">
-              <FormattedMessage
-                id="features.freeService.description"
-                defaultMessage="Our service is completely free to use with no login required. Videos are processed in order of submission."
-              />
+            <h3 className="text-xl font-medium mb-2">Free Service</h3>
+            <p className="text-neutral-600">
+              No registration or payment required. Just upload and translate.
             </p>
           </div>
         </div>

@@ -25,7 +25,7 @@ const formatTime = (seconds: number) => {
     .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 };
 
-const apiUrl = process.env.VITE_APP_API_URL || "http://localhost:3000";
+const apiUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3000";
 
 export const StatusPage: React.FC = () => {
   const intl = useIntl();
