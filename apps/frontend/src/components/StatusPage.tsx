@@ -35,6 +35,30 @@ interface Job {
   status: "queued" | "in_progress" | "done" | "error";
 }
 
+// Spinner component for loading states
+const Spinner: React.FC<{ className?: string }> = ({ className = "" }) => (
+  <svg
+    className={`animate-spin h-5 w-5 text-amber-500 ${className}`}
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <circle
+      className="opacity-25"
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      strokeWidth="4"
+    ></circle>
+    <path
+      className="opacity-75"
+      fill="currentColor"
+      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+    ></path>
+  </svg>
+);
+
 export const StatusPage: React.FC = () => {
   const intl = useIntl();
 
@@ -212,10 +236,29 @@ export const StatusPage: React.FC = () => {
   }, [uuid, intl]);
 
   if (isRestLoading) {
+    // Show skeleton cards for jobs loading
     return (
       <main className="flex-1 container px-4 md:px-6 py-12">
-        <div className="max-w-3xl mx-auto text-center py-12 text-lg text-gray-600">
-          Loading status...
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-3xl font-bold mb-8 text-gray-800">
+            <FormattedMessage id="status.title" defaultMessage="Video Status" />
+          </h1>
+          <div className="bg-white p-6 rounded-xl border border-amber-100 mb-8">
+            <div className="space-y-4">
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-4 p-4 rounded-lg bg-amber-50 border border-amber-100 animate-pulse"
+                >
+                  <div className="h-6 w-6 rounded-full bg-amber-200" />
+                  <div className="flex-1">
+                    <div className="h-4 w-1/3 bg-amber-100 rounded mb-2" />
+                    <div className="h-3 w-1/4 bg-amber-100 rounded" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </main>
     );
@@ -308,6 +351,73 @@ export const StatusPage: React.FC = () => {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Job Progress List */}
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              <FormattedMessage
+                id="status.translationProgress"
+                defaultMessage="Translation Progress"
+              />
+            </h3>
+            <ul className="space-y-3">
+              {jobs.length === 0 ? (
+                <li className="text-gray-400 text-sm">
+                  <FormattedMessage
+                    id="status.noJobs"
+                    defaultMessage="No translation jobs yet."
+                  />
+                </li>
+              ) : (
+                jobs.map((job) => (
+                  <li
+                    key={job.jobId + job.language}
+                    className="flex items-center gap-4 p-4 rounded-lg bg-amber-50 border border-amber-100"
+                  >
+                    <div>
+                      {job.status === "done" ? (
+                        <CheckCircle className="h-6 w-6 text-green-600" />
+                      ) : job.status === "error" ? (
+                        <AlertCircle className="h-6 w-6 text-red-600" />
+                      ) : (
+                        <Spinner />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-gray-800 truncate">
+                        {job.fileName}
+                      </div>
+                      <div className="text-sm text-amber-700 font-mono">
+                        {job.language.toUpperCase()}
+                      </div>
+                    </div>
+                    <div>
+                      {job.status === "done" && (
+                        <span className="text-green-700 text-xs font-semibold uppercase">
+                          Done
+                        </span>
+                      )}
+                      {job.status === "in_progress" && (
+                        <span className="text-amber-700 text-xs font-semibold uppercase">
+                          Translating…
+                        </span>
+                      )}
+                      {job.status === "queued" && (
+                        <span className="text-amber-500 text-xs font-semibold uppercase">
+                          Queued
+                        </span>
+                      )}
+                      {job.status === "error" && (
+                        <span className="text-red-700 text-xs font-semibold uppercase">
+                          Error
+                        </span>
+                      )}
+                    </div>
+                  </li>
+                ))
+              )}
+            </ul>
           </div>
 
           <Alert
