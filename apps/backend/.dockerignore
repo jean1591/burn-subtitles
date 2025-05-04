@@ -1,0 +1,43 @@
+# Dependency directories
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Build outputs
+dist
+build
+
+# Environment files
+.env
+.env.*
+*.env
+
+# Various temp and log files
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.swp
+*.swo
+
+# Test coverage
+coverage
+.nyc_output
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Upload directories (since they're mounted as volumes)
+uploads/*
+!uploads/.gitkeep
+
+# Docker files (no need to copy these into the image)
+Dockerfile
+.dockerignore 
