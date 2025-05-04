@@ -95,4 +95,78 @@ export class UploadService {
 
     return batchId;
   }
+
+  async getBatchStatus(uuid: string) {
+    // Fetch batch metadata
+    const batch = await this.redisService.hgetall(`batch:${uuid}`);
+    if (!batch || Object.keys(batch).length === 0) {
+      return { status: 'not_found', message: 'Batch not found' };
+    }
+
+    // Fetch all job IDs for this batch
+    const jobIds = await this.redisService.lrange(`batch:${uuid}:jobs`, 0, -1);
+    const jobs = [];
+
+    let allDone = true;
+    let anyError = false;
+
+    for (const jobId of jobIds) {
+      const job = await this.redisService.hgetall(`job:${jobId}`);
+      if (job.status !== 'done') {
+        allDone = false;
+      }
+      if (job.status === 'error') {
+        anyError = true;
+      }
+
+      jobs.push({
+        jobId: job.jobId,
+        fileName: job.filePath ? job.filePath.split('/').pop() : undefined,
+        language: job.targetLang,
+        status: job.status,
+        error: job.error || undefined,
+      });
+    }
+
+    // Determine overall status
+    let status = 'processing_started';
+    if (anyError) {
+      status = 'processing_failed';
+    } else if (allDone) {
+      status = 'processing_completed';
+    } else if (jobs.every((j) => j.status === 'queued')) {
+      status = 'queue';
+    }
+
+    // Check zip status and URL
+    let zipReady = false;
+    let zipUrl = null;
+
+    if (batch.zipStatus === 'queued' || batch.zipStatus === 'done') {
+      const zipPath = path.join('uploads', uuid, 'results.zip');
+
+      if (
+        await fs
+          .stat(zipPath)
+          .then(() => true)
+          .catch(() => false)
+      ) {
+        zipReady = true;
+        zipUrl = `/uploads/${uuid}/results.zip`;
+      }
+    }
+
+    return {
+      status,
+      jobs,
+      zipReady,
+      zipUrl,
+      createdAt: batch.createdAt ? Number(batch.createdAt) : undefined,
+      targetLangs: batch.targetLangs,
+      totalJobs: batch.totalJobs ? Number(batch.totalJobs) : jobs.length,
+      failedReason: anyError
+        ? jobs.find((j) => j.status === 'error')?.error
+        : undefined,
+    };
+  }
 }

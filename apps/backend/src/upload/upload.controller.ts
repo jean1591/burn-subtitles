@@ -4,6 +4,8 @@ import {
   UseInterceptors,
   UploadedFiles,
   Body,
+  Get,
+  Param,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
@@ -20,13 +22,22 @@ export class UploadController {
     @UploadedFiles() files: File[],
     @Body() body: UploadFilesDto,
   ) {
-    console.log('🚀 ~ body:', body.targetLangs);
-
-    /* const batchId = await this.uploadService.processUpload(
+    const batchId = await this.uploadService.processUpload(
       files,
       body.targetLangs,
-    ); */
+    );
 
-    return { batchId: '12' };
+    return { batchId };
+  }
+
+  @Get('/status/:uuid')
+  async getStatus(@Param('uuid') uuid: string) {
+    const result = await this.uploadService.getBatchStatus(uuid);
+
+    if (result.status === 'not_found') {
+      return { status: 'not_found', message: 'Batch not found' };
+    }
+
+    return result;
   }
 }

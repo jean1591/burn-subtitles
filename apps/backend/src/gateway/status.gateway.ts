@@ -30,8 +30,8 @@ export class StatusGateway implements OnGatewayInit {
     this.server.emit('batchComplete', { batchId });
   }
 
-  emitZipReady(batchId: string) {
-    this.server.emit('zipReady', { batchId });
+  emitZipReady(batchId: string, zipUrl: string) {
+    this.server.emit('zipReady', { batchId, zipUrl });
   }
 
   afterInit() {

@@ -24,7 +24,7 @@ export class ZipProcessor {
       'uploads',
       `results-${batch_id}.zip`,
     );
-    const finalZip = path.join(uploadsDir, 'results.zip');
+    const zipUrl = path.join(uploadsDir, 'results.zip');
 
     try {
       // Delete the 'original' folder if it exists
@@ -45,11 +45,11 @@ export class ZipProcessor {
       await zip(uploadsDir, tempZip);
 
       // Move the zip file into the batch folder as results.zip
-      await fs.promises.rename(tempZip, finalZip);
+      await fs.promises.rename(tempZip, zipUrl);
 
-      this.logger.log(`Created zip for batch ${batch_id} at ${finalZip}`);
+      this.logger.log(`Created zip for batch ${batch_id} at ${zipUrl}`);
       // Notify via WebSocket
-      this.statusGateway.emitZipReady(batch_id);
+      this.statusGateway.emitZipReady(batch_id, zipUrl);
     } catch (err) {
       this.logger.error(`Failed to create zip for batch ${batch_id}: ${err}`);
       throw err;
