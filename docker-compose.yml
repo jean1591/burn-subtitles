@@ -15,7 +15,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./uploads:/app/uploads
+      - ./apps/backend/uploads:/app/uploads
     depends_on:
       - redis
     environment:
@@ -41,9 +41,12 @@ services:
       - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
       - LETSENCRYPT_HOST=titro.app,www.titro.app
       - VIRTUAL_HOST=titro.app,www.titro.app
-      - VIRTUAL_PORT=5173
+      - VIRTUAL_PORT=80
+    # For jwilder/nginx-proxy, we don't need the frontend to expose port 80 on the host
+    # as nginx-proxy will handle the routing internally
+    # However, we do need to expose it in the container network
     ports:
-      - "5173:5173"
+      - "5173:80" # Map container's 80 port to host's 5173 to avoid conflict with nginx-proxy
 
   nginx-proxy:
     image: jwilder/nginx-proxy
@@ -57,7 +60,7 @@ services:
       - ./certs:/etc/nginx/certs
       - ./vhost.d:/etc/nginx/vhost.d
       - ./html:/usr/share/nginx/html
-      - ./uploads:/app/uploads
+      - ./apps/backend/uploads:/app/uploads
     environment:
       - DEFAULT_HOST=titro.app
 
