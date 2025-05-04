@@ -18,7 +18,7 @@ export function LanguageSelector({
 }: {
   onChange?: (languages: string[]) => void;
 }) {
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [, setSelectedLanguages] = useState<string[]>([]);
 
   const handleLanguageChange = (language: string, checked: boolean) => {
     setSelectedLanguages((prev) => {
