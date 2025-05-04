@@ -2,16 +2,36 @@ import {
   OnGatewayInit,
   WebSocketGateway,
   WebSocketServer,
+  SubscribeMessage,
+  MessageBody,
 } from '@nestjs/websockets';
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Server } from 'socket.io';
 
 @Injectable()
-@WebSocketGateway({ namespace: '/status', cors: true })
+@WebSocketGateway({
+  namespace: '/status',
+  cors: {
+    origin: [
+      'https://titro.app',
+      'https://www.titro.app',
+      'http://localhost:5173',
+    ],
+    credentials: true,
+  },
+})
 export class StatusGateway implements OnGatewayInit {
+  private readonly logger = new Logger(StatusGateway.name);
+
   @WebSocketServer()
   server: Server;
+
+  @SubscribeMessage('register')
+  handleRegister(@MessageBody() data: { batchId: string }): void {
+    this.logger.log(`Client registered for batch: ${data.batchId}`);
+    // We could join a room here based on batchId if needed
+  }
 
   emitJobDone(
     batchId: string,
@@ -24,17 +44,20 @@ export class StatusGateway implements OnGatewayInit {
       jobId,
       details: { fileName, language },
     });
+    this.logger.debug(`Emitted jobDone for batch ${batchId}, job ${jobId}`);
   }
 
   emitBatchComplete(batchId: string) {
     this.server.emit('batchComplete', { batchId });
+    this.logger.debug(`Emitted batchComplete for batch ${batchId}`);
   }
 
   emitZipReady(batchId: string, zipUrl: string) {
     this.server.emit('zipReady', { batchId, zipUrl });
+    this.logger.debug(`Emitted zipReady for batch ${batchId}, url: ${zipUrl}`);
   }
 
   afterInit() {
-    // Optionally log or perform setup
+    this.logger.log('WebSocket gateway initialized');
   }
 }

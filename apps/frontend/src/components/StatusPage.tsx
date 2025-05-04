@@ -202,10 +202,31 @@ export const StatusPage: React.FC = () => {
 
   useEffect(() => {
     if (!uuid) return;
+
+    console.log(`Attempting to connect to WebSocket at: ${apiUrl}/status`);
+
     // Connect to /status namespace
-    const socket = io(`${apiUrl}/status`);
+    const socket = io(`${apiUrl}/status`, {
+      transports: ["websocket", "polling"], // Try WebSocket first, then fallback to polling
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
+    });
+
     socketRef.current = socket;
-    socket.emit("register", { batchId: uuid });
+
+    socket.on("connect", () => {
+      console.log("WebSocket connected successfully");
+      socket.emit("register", { batchId: uuid });
+      console.log(`Registered for batch: ${uuid}`);
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("WebSocket connection error:", err);
+    });
+
+    socket.on("disconnect", (reason) => {
+      console.log(`WebSocket disconnected: ${reason}`);
+    });
 
     socket.on(
       "jobDone",
@@ -214,6 +235,7 @@ export const StatusPage: React.FC = () => {
         jobId: string;
         details: { fileName: string; language: string };
       }) => {
+        console.log(`Received jobDone event for job: ${payload.jobId}`);
         setJobs((prev) =>
           prev.map((job) =>
             job.jobId === payload.jobId ? { ...job, status: "done" } : job

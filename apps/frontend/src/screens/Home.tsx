@@ -27,30 +27,51 @@ export const HomePage = () => {
       return;
     }
 
+    console.log(`Using API URL: ${apiUrl}`);
+
     // Call the upload endpoint to get a batch ID
     const formData = new FormData();
 
     // Add each file to the form data
     files.forEach((file) => {
       formData.append("files", file);
+      console.log(`Adding file: ${file.name}, size: ${file.size} bytes`);
     });
 
     // Add the selected languages
     formData.append("targetLangs", selectedLanguages.join(","));
+    console.log(`Selected languages: ${selectedLanguages.join(",")}`);
 
-    // Make the API call
-    const response = await fetch(`${apiUrl}/upload`, {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      console.log(`Making request to: ${apiUrl}/upload`);
 
-    if (!response.ok) {
-      console.error("Upload failed:", await response.text());
-      return;
+      // Make the API call
+      const response = await fetch(`${apiUrl}/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      console.log(`Response status: ${response.status}`);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Upload failed:", errorText);
+        alert(`Upload failed: ${errorText || response.statusText}`);
+        return;
+      }
+
+      const data = await response.json();
+      console.log(`Got response data with batchId: ${data.batchId}`);
+
+      navigate(`/status/${data.batchId}`);
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert(
+        `Upload error: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
     }
-
-    const { batchId } = await response.json();
-    navigate(`/status/${batchId}`);
   };
 
   return (

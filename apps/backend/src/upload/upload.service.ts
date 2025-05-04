@@ -48,6 +48,8 @@ export class UploadService {
 
     // Generate batch ID and create directory
     const batchId = uuidv4();
+    console.log('🚀 ~ processUpload ~ batchId:', batchId);
+
     const uploadDir = path.join('uploads', batchId, 'original');
     await fs.mkdir(uploadDir, { recursive: true });
 
@@ -86,6 +88,8 @@ export class UploadService {
       }
     }
 
+    console.log('🚀 ~ processUpload ~ jobs:', jobs);
+
     // Store batch metadata
     await this.redisService.hset(`batch:${batchId}`, {
       createdAt: Date.now(),
@@ -102,6 +106,8 @@ export class UploadService {
     if (!batch || Object.keys(batch).length === 0) {
       return { status: 'not_found', message: 'Batch not found' };
     }
+
+    console.log('🚀 ~ getBatchStatus ~ batch:', batch);
 
     // Fetch all job IDs for this batch
     const jobIds = await this.redisService.lrange(`batch:${uuid}:jobs`, 0, -1);
@@ -127,6 +133,8 @@ export class UploadService {
         error: job.error || undefined,
       });
     }
+
+    console.log('🚀 ~ getBatchStatus ~ jobs:', jobs);
 
     // Determine overall status
     let status = 'processing_started';
