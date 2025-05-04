@@ -18,8 +18,8 @@ FROM nginx:alpine
 # Copy the built app to nginx serve directory
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy a custom nginx config if you need it (optional)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy custom nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

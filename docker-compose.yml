@@ -23,6 +23,8 @@ services:
       - redis
     environment:
       - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
+      - LETSENCRYPT_HOST=api.titro.app
+      - VIRTUAL_HOST=api.titro.app
       - REDIS_HOST=redis
       - VIRTUAL_PORT=3000
     ports:
@@ -33,7 +35,7 @@ services:
       context: ./apps/frontend
       dockerfile: Dockerfile
       args:
-        - VITE_APP_API_URL=https://titro.app # Use HTTPS here
+        - VITE_APP_API_URL=https://api.titro.app
     container_name: frontend
     restart: always
     env_file:
@@ -45,6 +47,8 @@ services:
       - LETSENCRYPT_HOST=titro.app,www.titro.app
       - VIRTUAL_HOST=titro.app,www.titro.app
       - VIRTUAL_PORT=80
+    volumes:
+      - ./apps/frontend/nginx.conf:/etc/nginx/conf.d/default.conf
     # Port mapping - uncomment for local development only
     # In production, nginx-proxy will handle the routing based on VIRTUAL_HOST
     # ports:
