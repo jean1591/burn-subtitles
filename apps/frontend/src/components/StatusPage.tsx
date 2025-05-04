@@ -129,12 +129,40 @@ export const StatusPage: React.FC = () => {
       );
       if (restStatus.jobs) setJobs(restStatus.jobs);
       if (restStatus.zipReady) setZipReady(true);
-      if (restStatus.zipUrl)
-        setZipUrl(
-          restStatus.zipUrl.startsWith("http")
-            ? restStatus.zipUrl
-            : `${apiUrl}/${restStatus.zipUrl}`
-        );
+      if (restStatus.zipUrl) {
+        // Ensure zipUrl is a proper URL - fix the path
+        let formattedUrl = restStatus.zipUrl;
+
+        // If it's an absolute path from the filesystem, convert to a proper API URL
+        if (
+          formattedUrl.startsWith("/") ||
+          formattedUrl.includes(":\\") ||
+          formattedUrl.startsWith("\\")
+        ) {
+          // Extract just the batch ID and filename from the path
+          const pathParts = formattedUrl.split("/");
+          const batchId = pathParts[pathParts.indexOf("uploads") + 1];
+
+          if (batchId) {
+            formattedUrl = `${apiUrl}/uploads/${batchId}/results.zip`;
+          } else {
+            // Fallback - use the relative URL if we can't extract the batch ID
+            formattedUrl = `${apiUrl}${
+              formattedUrl.startsWith("/") ? "" : "/"
+            }${formattedUrl}`;
+          }
+        } else if (!formattedUrl.startsWith("http")) {
+          // If it's a relative URL, add the API base URL
+          formattedUrl = `${apiUrl}${
+            formattedUrl.startsWith("/") ? "" : "/"
+          }${formattedUrl}`;
+        }
+
+        console.log("Original zipUrl:", restStatus.zipUrl);
+        console.log("Formatted zipUrl:", formattedUrl);
+
+        setZipUrl(formattedUrl);
+      }
       if (restStatus.failedReason) setError(restStatus.failedReason);
       if (Array.isArray(restStatus.events)) {
         setStatusEvents(
@@ -234,6 +262,52 @@ export const StatusPage: React.FC = () => {
       socket.disconnect();
     };
   }, [uuid, intl]);
+
+  // Keep the direct URL generation function for reliable downloads
+  const generateCorrectZipUrl = () => {
+    if (!uuid) return null;
+    return `${apiUrl}/uploads/${uuid}/results.zip`;
+  };
+
+  // Clean up the download handler
+  const handleDownloadZip = async () => {
+    const directUrl = generateCorrectZipUrl();
+
+    if (!directUrl) {
+      alert("Unable to download: missing batch ID");
+      return;
+    }
+
+    try {
+      const response = await fetch(directUrl, {
+        method: "GET",
+        headers: {
+          Accept: "application/zip",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Download failed: ${response.status}`);
+      }
+
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = "results.zip";
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up
+      window.URL.revokeObjectURL(blobUrl);
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading zip:", error);
+      alert("Failed to download the file. Please try again.");
+    }
+  };
 
   if (isRestLoading) {
     // Show skeleton cards for jobs loading
@@ -487,15 +561,13 @@ export const StatusPage: React.FC = () => {
                 {zipReady && zipUrl && (
                   <Button
                     className="bg-amber-600 hover:bg-amber-700 text-white flex items-center gap-2 px-4 py-2 rounded"
-                    asChild
+                    onClick={handleDownloadZip}
                   >
-                    <a href={zipUrl} download>
-                      <Download className="h-4 w-4" />
-                      <FormattedMessage
-                        id="status.downloadAll"
-                        defaultMessage="Download All Translations"
-                      />
-                    </a>
+                    <Download className="h-4 w-4" />
+                    <FormattedMessage
+                      id="status.downloadAll"
+                      defaultMessage="Download All Translations"
+                    />
                   </Button>
                 )}
                 <p className="text-sm text-gray-600">
