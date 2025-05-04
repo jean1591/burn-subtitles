@@ -26,8 +26,9 @@ RUN npm install --production
 
 # Copy built app from builder stage
 COPY --from=builder /app/dist/ ./dist/
-# Copy env files if they exist
-COPY --from=builder /app/.env ./.env
+
+# Create empty .env file to ensure it exists
+RUN touch .env
 
 # Create uploads directory
 RUN mkdir -p uploads
