@@ -27,6 +27,14 @@ const formatTime = (seconds: number) => {
 
 const apiUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3000";
 
+// Types for job and zip status
+interface Job {
+  jobId: string;
+  fileName: string;
+  language: string;
+  status: "queued" | "in_progress" | "done" | "error";
+}
+
 export const StatusPage: React.FC = () => {
   const intl = useIntl();
 
@@ -40,7 +48,7 @@ export const StatusPage: React.FC = () => {
     queryKey: ["status", uuid],
     queryFn: async () => {
       if (!uuid) throw new Error("No UUID");
-      const res = await fetch(`${apiUrl}/status/${uuid}`);
+      const res = await fetch(`${apiUrl}/upload/status/${uuid}`);
       if (!res.ok) throw new Error("Job not found");
       return res.json();
     },
@@ -49,8 +57,10 @@ export const StatusPage: React.FC = () => {
   });
 
   const [status, setStatus] = useState<string | null>(null);
-  const [queuePosition, setQueuePosition] = useState<number>(1);
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [queuePosition] = useState<number>(1);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [zipReady, setZipReady] = useState(false);
+  const [zipUrl, setZipUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const timeRemaining = 3600; // 1 hour in seconds
   const socketRef = useRef<Socket | null>(null);
@@ -93,58 +103,36 @@ export const StatusPage: React.FC = () => {
           ? "queue"
           : restStatus.status
       );
-      if (restStatus.videoUrl) {
-        setVideoUrl(
-          restStatus.videoUrl.startsWith("http")
-            ? restStatus.videoUrl
-            : `${apiUrl}/${restStatus.videoUrl}`
+      if (restStatus.jobs) setJobs(restStatus.jobs);
+      if (restStatus.zipReady) setZipReady(true);
+      if (restStatus.zipUrl)
+        setZipUrl(
+          restStatus.zipUrl.startsWith("http")
+            ? restStatus.zipUrl
+            : `${apiUrl}/${restStatus.zipUrl}`
         );
-      }
       if (restStatus.failedReason) setError(restStatus.failedReason);
-
-      // Use event log from backend
       if (Array.isArray(restStatus.events)) {
         setStatusEvents(
           (restStatus.events as BackendEvent[]).map((event) => {
             let message = "";
             switch (event.type) {
-              case "video_added_to_queue":
+              case "jobDone":
                 message = intl.formatMessage({
-                  id: "status.addedToQueueEvent",
-                  defaultMessage: "Video added to queue",
+                  id: "status.jobDoneEvent",
+                  defaultMessage: "A translation finished.",
                 });
                 break;
-              case "queue_position_update":
-                message = intl.formatMessage(
-                  {
-                    id: "status.positionInQueueEvent",
-                    defaultMessage: "Position in queue: {position}",
-                  },
-                  {
-                    position:
-                      event.payload &&
-                      typeof event.payload.position === "number"
-                        ? event.payload.position
-                        : 1,
-                  }
-                );
-                break;
-              case "processing_started":
+              case "batchComplete":
                 message = intl.formatMessage({
-                  id: "status.startedEvent",
-                  defaultMessage: "Processing started",
+                  id: "status.batchCompleteEvent",
+                  defaultMessage: "All translations completed.",
                 });
                 break;
-              case "processing_completed":
+              case "zipReady":
                 message = intl.formatMessage({
-                  id: "status.completedEvent",
-                  defaultMessage: "Processing completed",
-                });
-                break;
-              case "processing_failed":
-                message = intl.formatMessage({
-                  id: "status.failedEvent",
-                  defaultMessage: "Processing failed",
+                  id: "status.zipReadyEvent",
+                  defaultMessage: "Download is ready.",
                 });
                 break;
               default:
@@ -162,103 +150,61 @@ export const StatusPage: React.FC = () => {
 
   useEffect(() => {
     if (!uuid) return;
-    const socket = io(apiUrl);
+    // Connect to /status namespace
+    const socket = io(`${apiUrl}/status`);
     socketRef.current = socket;
-    socket.emit("register", { uuid });
-    socket.on("video_added_to_queue", () => {
-      setStatus("queue");
-      setStatusEvents((prev) => {
-        const msg = intl.formatMessage({
-          id: "status.addedToQueueEvent",
-          defaultMessage: "Video added to queue",
-        });
-        if (prev[prev.length - 1]?.message === msg) return prev;
-        return [
-          ...prev,
-          {
-            timestamp: Date.now(),
-            message: msg,
-          },
-        ];
-      });
-    });
-    socket.on("queue_position_update", (payload: { position: number }) => {
-      setQueuePosition(payload.position ?? 1);
-      setStatus("queue");
-      setStatusEvents((prev) => {
-        const msg = intl.formatMessage(
-          {
-            id: "status.positionInQueueEvent",
-            defaultMessage: "Position in queue: {position}",
-          },
-          { position: payload.position ?? 1 }
+    socket.emit("register", { batchId: uuid });
+
+    socket.on(
+      "jobDone",
+      (payload: {
+        batchId: string;
+        jobId: string;
+        details: { fileName: string; language: string };
+      }) => {
+        setJobs((prev) =>
+          prev.map((job) =>
+            job.jobId === payload.jobId ? { ...job, status: "done" } : job
+          )
         );
-        if (prev[prev.length - 1]?.message === msg) return prev;
-        return [
+        setStatusEvents((prev) => [
           ...prev,
           {
             timestamp: Date.now(),
-            message: msg,
+            message: intl.formatMessage({
+              id: "status.jobDoneEvent",
+              defaultMessage: `Translation done: ${payload.details.fileName} (${payload.details.language})`,
+            }),
           },
-        ];
-      });
-    });
-    socket.on("processing_started", () => {
-      setStatus("started");
-      setStatusEvents((prev) => {
-        const msg = intl.formatMessage({
-          id: "status.startedEvent",
-          defaultMessage: "Processing started",
-        });
-        if (prev[prev.length - 1]?.message === msg) return prev;
-        return [
-          ...prev,
-          {
-            timestamp: Date.now(),
-            message: msg,
-          },
-        ];
-      });
-    });
-    socket.on("processing_completed", (payload: { videoUrl: string }) => {
+        ]);
+      }
+    );
+    socket.on("batchComplete", () => {
       setStatus("completed");
-      setVideoUrl(
-        payload.videoUrl.startsWith("http")
-          ? payload.videoUrl
-          : `${apiUrl}/${payload.videoUrl}`
-      );
-      setStatusEvents((prev) => {
-        const msg = intl.formatMessage({
-          id: "status.completedEvent",
-          defaultMessage: "Processing completed",
-        });
-        if (prev[prev.length - 1]?.message === msg) return prev;
-        return [
-          ...prev,
-          {
-            timestamp: Date.now(),
-            message: msg,
-          },
-        ];
-      });
+      setStatusEvents((prev) => [
+        ...prev,
+        {
+          timestamp: Date.now(),
+          message: intl.formatMessage({
+            id: "status.batchCompleteEvent",
+            defaultMessage: "All translations completed.",
+          }),
+        },
+      ]);
     });
-    socket.on("processing_failed", (payload: { error: string }) => {
-      setStatus("failed");
-      setError(payload.error || "Unknown error");
-      setStatusEvents((prev) => {
-        const msg = intl.formatMessage({
-          id: "status.failedEvent",
-          defaultMessage: "Processing failed",
-        });
-        if (prev[prev.length - 1]?.message === msg) return prev;
-        return [
-          ...prev,
-          {
-            timestamp: Date.now(),
-            message: msg,
-          },
-        ];
-      });
+    socket.on("zipReady", (payload) => {
+      setZipReady(true);
+      setZipUrl(payload.zipUrl);
+      setStatusEvents((prev) => [
+        ...prev,
+        {
+          timestamp: Date.now(),
+          message: intl.formatMessage({
+            id: "status.zipReadyEvent",
+            defaultMessage: "Download is ready.",
+          }),
+        },
+      ]);
     });
     return () => {
       socket.disconnect();
@@ -345,7 +291,7 @@ export const StatusPage: React.FC = () => {
                   <p className="text-amber-700">
                     <FormattedMessage
                       id="status.inLine"
-                      defaultMessage="Your video is currently {position}{suffix} in line. Estimated wait time: {minutes} minutes."
+                      defaultMessage="Your files are currently {position}{suffix} in line. Estimated wait time: {minutes} minutes."
                       values={{
                         position: queuePosition,
                         suffix: getOrdinalSuffix(queuePosition),
@@ -400,7 +346,7 @@ export const StatusPage: React.FC = () => {
               {status === "queue" && (
                 <FormattedMessage
                   id="status.queueMessage"
-                  defaultMessage="Your video is waiting in the queue. We'll process it as soon as possible."
+                  defaultMessage="Your files are waiting in the queue. We'll process them as soon as possible."
                 />
               )}
               {status === "started" && (
@@ -412,14 +358,14 @@ export const StatusPage: React.FC = () => {
               {status === "completed" && (
                 <FormattedMessage
                   id="status.completedMessage"
-                  defaultMessage="Your video is ready! Download it now."
+                  defaultMessage="All translations are completed! Download the ZIP now."
                 />
               )}
               {status === "failed" &&
                 (error || (
                   <FormattedMessage
                     id="status.failedMessage"
-                    defaultMessage="We encountered an error while processing your video. Please try again."
+                    defaultMessage="We encountered an error while processing your files. Please try again."
                   />
                 ))}
             </AlertDescription>
@@ -428,70 +374,24 @@ export const StatusPage: React.FC = () => {
           {status === "completed" && (
             <div className="space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                {videoUrl ? (
+                {zipReady && zipUrl && (
                   <Button
                     className="bg-amber-600 hover:bg-amber-700 text-white flex items-center gap-2 px-4 py-2 rounded"
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      const confirmed = window.confirm(
-                        intl.formatMessage({
-                          id: "status.downloadConfirm",
-                          defaultMessage:
-                            "Do you want to save the processed video to your computer?",
-                        })
-                      );
-                      if (!confirmed) return;
-                      // Try to fetch the file to check if it exists
-                      try {
-                        const response = await fetch(videoUrl, {
-                          method: "HEAD",
-                        });
-                        if (!response.ok) {
-                          window.alert(
-                            intl.formatMessage({
-                              id: "status.downloadNotFound",
-                              defaultMessage:
-                                "The processed video file was not found. Please try again later or refresh the page.",
-                            })
-                          );
-                          return;
-                        }
-                        // Create a temporary link to trigger download
-                        const a = document.createElement("a");
-                        a.href = videoUrl;
-                        a.download = `${uuid}_with_subs.mp4`;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                      } catch {
-                        window.alert(
-                          intl.formatMessage({
-                            id: "status.downloadError",
-                            defaultMessage:
-                              "An error occurred while trying to download the video.",
-                          })
-                        );
-                      }
-                    }}
+                    asChild
                   >
-                    <Download className="h-4 w-4" />
-                    <FormattedMessage
-                      id="status.download"
-                      defaultMessage="Download Video"
-                    />
+                    <a href={zipUrl} download>
+                      <Download className="h-4 w-4" />
+                      <FormattedMessage
+                        id="status.downloadAll"
+                        defaultMessage="Download All Translations"
+                      />
+                    </a>
                   </Button>
-                ) : (
-                  <span className="text-red-600">
-                    <FormattedMessage
-                      id="status.downloadNotReady"
-                      defaultMessage="The processed video is not available yet. Please wait or refresh."
-                    />
-                  </span>
                 )}
                 <p className="text-sm text-gray-600">
                   <FormattedMessage
                     id="status.deleteNotice"
-                    defaultMessage="Your file will be deleted in"
+                    defaultMessage="Your files will be deleted in"
                   />{" "}
                   {formatTime(timeRemaining)}
                 </p>
@@ -541,7 +441,7 @@ export const StatusPage: React.FC = () => {
                 <AlertDescription>
                   <FormattedMessage
                     id="status.failedMessage"
-                    defaultMessage="We encountered an error while processing your video. Please try again."
+                    defaultMessage="We encountered an error while processing your files. Please try again."
                   />
                 </AlertDescription>
               </Alert>
