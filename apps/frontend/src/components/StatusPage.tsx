@@ -1,4 +1,3 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle, Download, FileText } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useParams } from "react-router-dom";
@@ -6,7 +5,9 @@ import { Socket, io } from "socket.io-client";
 import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { DetailsPanel } from "./status/DetailsPanel";
 import React from "react";
+import { StatusPill } from "./status/StatusPill";
 import { useQuery } from "@tanstack/react-query";
 
 /* const formatTime = (seconds: number) => {
@@ -22,7 +23,7 @@ import { useQuery } from "@tanstack/react-query";
 const apiUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3000";
 
 // Types for job and zip status
-interface Job {
+export interface Job {
   jobId: string;
   fileName: string;
   language: string;
@@ -105,7 +106,9 @@ export const StatusPage: React.FC = () => {
   useEffect(() => {
     if (restStatus) {
       setStatus(
-        restStatus.status === "processing_completed"
+        restStatus.status === "processing_completed" && !restStatus.zipReady
+          ? "zipping"
+          : restStatus.status === "processing_completed"
           ? "completed"
           : restStatus.status === "processing_failed"
           ? "failed"
@@ -115,6 +118,7 @@ export const StatusPage: React.FC = () => {
           ? "queue"
           : restStatus.status
       );
+
       if (restStatus.jobs) setJobs(restStatus.jobs);
       if (restStatus.zipReady) setZipReady(true);
       if (restStatus.zipUrl) {
@@ -260,28 +264,13 @@ export const StatusPage: React.FC = () => {
               Translation status
             </h1>
 
-            <div className="px-4 py-1 rounded-full bg-green-50">
-              <p className="font-medium text-green-800">Completed</p>
-            </div>
+            <StatusPill status={status} />
           </div>
 
           {/* Divider */}
           <div className="h-[1px] bg-gray-100 mt-8" />
 
-          <Alert className="mb-6 bg-green-50 border-green-200">
-            <AlertTitle>
-              <p className="text-xl font-semibold text-green-800">
-                Your translations are ready!
-              </p>
-            </AlertTitle>
-
-            <AlertDescription>
-              <p className="text-lg text-green-800">
-                Download the zip file containing all your translated subtitle
-                files.
-              </p>
-            </AlertDescription>
-          </Alert>
+          <DetailsPanel status={status} jobs={jobs} />
 
           {/* Job Progress List */}
           <div>
@@ -291,10 +280,7 @@ export const StatusPage: React.FC = () => {
             <ul className="space-y-3">
               {jobs.length === 0 ? (
                 <li className="text-gray-400 text-sm">
-                  <FormattedMessage
-                    id="status.noJobs"
-                    defaultMessage="No translation jobs yet."
-                  />
+                  No translation jobs yet.
                 </li>
               ) : (
                 jobs.map((job) => (
@@ -323,19 +309,15 @@ export const StatusPage: React.FC = () => {
             </ul>
           </div>
 
-          {status === "completed" && (
+          {status === "completed" && zipReady && zipUrl && (
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-              {zipReady && zipUrl && (
-                <Button
-                  className="bg-amber-500 hover:bg-amber-600 text-white flex items-center gap-4 py-6 px-8 rounded-lg"
-                  onClick={handleDownloadZip}
-                >
-                  <Download className="size-5" />
-                  <p className="text-lg font-medium">
-                    Download All Translations
-                  </p>
-                </Button>
-              )}
+              <Button
+                className="bg-amber-500 hover:bg-amber-600 text-white flex items-center gap-4 py-6 px-8 rounded-lg"
+                onClick={handleDownloadZip}
+              >
+                <Download className="size-5" />
+                <p className="text-lg font-medium">Download All Translations</p>
+              </Button>
             </div>
           )}
 
