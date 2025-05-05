@@ -143,7 +143,7 @@ export class UploadService {
 
       jobs.push({
         jobId: job.jobId,
-        fileName: job.filePath ? job.filePath.split('/').pop() : undefined,
+        fileName: job.outputPath ? job.outputPath.split('/').pop() : undefined,
         language: job.targetLang,
         status: job.status,
         error: job.error || undefined,
