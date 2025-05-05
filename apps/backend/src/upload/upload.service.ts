@@ -67,6 +67,12 @@ export class UploadService {
       for (const targetLang of targetLanguages) {
         const jobId = uuidv4();
 
+        // Calculate output path in advance
+        const filenameNoExt = path.parse(sanitizedFilename).name;
+        const outputDir = path.join('uploads', batchId, filenameNoExt);
+        const outputFilename = `${filenameNoExt}.${targetLang}.srt`;
+        const outputPath = path.join(outputDir, outputFilename);
+
         // Create job metadata
         const jobData = {
           jobId,
@@ -74,6 +80,7 @@ export class UploadService {
           filePath,
           targetLang,
           status: 'queued',
+          outputPath,
         };
 
         // Store job in Redis
@@ -134,6 +141,7 @@ export class UploadService {
 
     for (const jobId of jobIds) {
       const job = await this.redisService.hgetall(`job:${jobId}`);
+
       if (job.status !== 'done') {
         allDone = false;
       }

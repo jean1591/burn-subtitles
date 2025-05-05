@@ -15,11 +15,13 @@ interface TranslationJob {
   filePath: string;
   targetLang: string;
   status: string;
+  outputPath: string;
 }
 
 @Processor('translation')
 export class TranslationProcessor {
   private readonly openai: OpenAI;
+  private readonly testMode: boolean;
 
   constructor(
     private readonly redisService: RedisService,
@@ -29,11 +31,22 @@ export class TranslationProcessor {
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
+    this.testMode = process.env.TEST_MODE === 'true';
   }
 
   @Process('translate')
   async handleTranslation(job: Job<TranslationJob>) {
-    const { jobId, batchId, filePath, targetLang } = job.data;
+    const { jobId, batchId, filePath, targetLang, outputPath } = job.data;
+
+    // Test mode logic to simulate job statuses
+    if (this.testMode) {
+      console.warn('Test mode is enabled');
+      const handled = await this.handleTestMode(job);
+
+      if (handled) {
+        return;
+      }
+    }
 
     try {
       // Update job status to in_progress
@@ -42,9 +55,6 @@ export class TranslationProcessor {
       // Check if output file already exists
       const originalFilename = path.basename(filePath);
       const filenameNoExt = path.parse(originalFilename).name;
-      const outputDir = path.join('uploads', batchId, filenameNoExt);
-      const outputFilename = `${filenameNoExt}.${targetLang}.srt`;
-      const outputPath = path.join(outputDir, outputFilename);
 
       try {
         await fs.access(outputPath);
@@ -54,7 +64,6 @@ export class TranslationProcessor {
           // File exists and has content, skip translation
           await this.redisService.hset(`job:${jobId}`, {
             status: 'done',
-            outputPath,
           });
           this.statusGateway.emitJobDone(
             batchId,
@@ -86,6 +95,7 @@ export class TranslationProcessor {
       });
 
       // Ensure output directory exists
+      const outputDir = path.dirname(outputPath);
       await fs.mkdir(outputDir, { recursive: true });
 
       // Write translated file
@@ -94,7 +104,6 @@ export class TranslationProcessor {
       // Update job status to done
       await this.redisService.hset(`job:${jobId}`, {
         status: 'done',
-        outputPath,
       });
       this.statusGateway.emitJobDone(batchId, jobId, filenameNoExt, targetLang);
 
@@ -303,5 +312,57 @@ export class TranslationProcessor {
       await this.zipQueue.add({ batch_id: batchId });
       this.statusGateway.emitBatchComplete(batchId);
     }
+  }
+
+  /**
+   * Handles test mode simulation of translation jobs.
+   * Maps target languages to specific statuses:
+   * - 'fr' (French): Sets status to 'queued'
+   * - 'es' (Spanish): Sets status to 'in_progress'
+   * - 'de' (German): Sets status to 'done' with a dummy output path
+   * - 'it' (Italian): Sets status to 'error' with test error message
+   * - Any other language: Proceeds with normal processing
+   *
+   * @param job - The translation job to process
+   * @returns Promise<boolean> - True if job was handled in test mode, false if normal processing should continue
+   */
+  private async handleTestMode(job: Job<TranslationJob>): Promise<boolean> {
+    const { jobId, batchId, filePath, targetLang } = job.data;
+    const originalFilename = path.basename(filePath);
+    const filenameNoExt = path.parse(originalFilename).name;
+
+    // Simulate different job statuses based on target language
+    switch (targetLang) {
+      case 'fr':
+        await this.redisService.hset(`job:${jobId}`, { status: 'queued' });
+        break;
+      case 'es':
+        await this.redisService.hset(`job:${jobId}`, { status: 'in_progress' });
+        break;
+      case 'de':
+        await this.redisService.hset(`job:${jobId}`, {
+          status: 'done',
+        });
+        this.statusGateway.emitJobDone(
+          batchId,
+          jobId,
+          filenameNoExt,
+          targetLang,
+        );
+        await this.checkAndQueueZipJob(batchId);
+        break;
+      case 'it':
+        await this.redisService.hset(`job:${jobId}`, {
+          status: 'error',
+          error: 'Test mode simulated error',
+        });
+        break;
+      default:
+        // For any other language, proceed with normal processing
+        return false;
+    }
+
+    // Return true if we handled the job in test mode
+    return ['fr', 'es', 'de', 'it'].includes(targetLang);
   }
 }
