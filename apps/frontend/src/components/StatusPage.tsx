@@ -158,9 +158,6 @@ export const StatusPage: React.FC = () => {
           }${formattedUrl}`;
         }
 
-        console.log("Original zipUrl:", restStatus.zipUrl);
-        console.log("Formatted zipUrl:", formattedUrl);
-
         setZipUrl(formattedUrl);
       }
       if (restStatus.failedReason) setError(restStatus.failedReason);
@@ -203,8 +200,6 @@ export const StatusPage: React.FC = () => {
   useEffect(() => {
     if (!uuid) return;
 
-    console.log(`Attempting to connect to WebSocket at: ${apiUrl}/status`);
-
     // Connect to /status namespace
     const socket = io(`${apiUrl}/status`, {
       transports: ["websocket", "polling"], // Try WebSocket first, then fallback to polling
@@ -215,9 +210,7 @@ export const StatusPage: React.FC = () => {
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      console.log("WebSocket connected successfully");
       socket.emit("register", { batchId: uuid });
-      console.log(`Registered for batch: ${uuid}`);
     });
 
     socket.on("connect_error", (err) => {
@@ -225,7 +218,7 @@ export const StatusPage: React.FC = () => {
     });
 
     socket.on("disconnect", (reason) => {
-      console.log(`WebSocket disconnected: ${reason}`);
+      console.info(`WebSocket disconnected: ${reason}`);
     });
 
     socket.on(
@@ -235,7 +228,6 @@ export const StatusPage: React.FC = () => {
         jobId: string;
         details: { fileName: string; language: string };
       }) => {
-        console.log(`Received jobDone event for job: ${payload.jobId}`);
         setJobs((prev) =>
           prev.map((job) =>
             job.jobId === payload.jobId ? { ...job, status: "done" } : job

@@ -22,8 +22,6 @@ export class UploadController {
     @UploadedFiles() files: File[],
     @Body() body: UploadFilesDto,
   ) {
-    console.log('🚀 ~ body:', body.targetLangs);
-
     const batchId = await this.uploadService.processUpload(
       files,
       body.targetLangs,

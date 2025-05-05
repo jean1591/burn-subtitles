@@ -48,33 +48,24 @@ export class UploadService {
 
     // Generate batch ID and create directory
     const batchId = uuidv4();
-    console.log('🚀 ~ processUpload ~ batchId:', batchId);
 
     const uploadDir = path.join('uploads', batchId, 'original');
-    console.log('Creating directory:', uploadDir);
     await fs.mkdir(uploadDir, { recursive: true });
-    console.log('Directory created successfully');
 
     // Save files and create jobs
     const jobs: string[] = [];
     const targetLanguages = targetLangs.split(',');
-    console.log('Target languages:', targetLanguages);
 
     for (const file of files) {
-      console.log('Processing file:', file.originalname);
       const sanitizedFilename = sanitizeFilename(file.originalname);
       const filePath = path.join(uploadDir, sanitizedFilename);
 
       // Save file
-      console.log('Writing file to:', filePath);
       await fs.writeFile(filePath, file.buffer);
-      console.log('File written successfully');
 
       // Create jobs for each target language
       for (const targetLang of targetLanguages) {
-        console.log('Creating job for language:', targetLang);
         const jobId = uuidv4();
-        console.log('Generated jobId:', jobId);
 
         // Create job metadata
         const jobData = {
@@ -86,56 +77,44 @@ export class UploadService {
         };
 
         // Store job in Redis
-        console.log('Storing job in Redis:', jobId);
         try {
           await this.redisService.hset(`job:${jobId}`, jobData);
-          console.log('Job stored successfully in Redis');
         } catch (error) {
           console.error('Error storing job in Redis:', error);
           throw error;
         }
 
-        console.log('Adding job to batch list in Redis');
         try {
           await this.redisService.rpush(`batch:${batchId}:jobs`, jobId);
-          console.log('Job added to batch list successfully');
         } catch (error) {
           console.error('Error adding job to batch list:', error);
           throw error;
         }
 
         // Enqueue translation job
-        console.log('Adding job to translation queue');
         try {
           await this.translationQueue.add('translate', jobData);
-          console.log('Job added to queue successfully');
         } catch (error) {
           console.error('Error adding job to queue:', error);
           throw error;
         }
 
         jobs.push(jobId);
-        console.log('Job creation complete for:', jobId);
       }
     }
 
-    console.log('🚀 ~ processUpload ~ jobs:', jobs);
-
     // Store batch metadata
-    console.log('Storing batch metadata in Redis');
     try {
       await this.redisService.hset(`batch:${batchId}`, {
         createdAt: Date.now(),
         targetLangs,
         totalJobs: jobs.length,
       });
-      console.log('Batch metadata stored successfully');
     } catch (error) {
       console.error('Error storing batch metadata:', error);
       throw error;
     }
 
-    console.log('Upload processing complete, returning batchId:', batchId);
     return batchId;
   }
 
@@ -145,8 +124,6 @@ export class UploadService {
     if (!batch || Object.keys(batch).length === 0) {
       return { status: 'not_found', message: 'Batch not found' };
     }
-
-    console.log('🚀 ~ getBatchStatus ~ batch:', batch);
 
     // Fetch all job IDs for this batch
     const jobIds = await this.redisService.lrange(`batch:${uuid}:jobs`, 0, -1);
@@ -172,8 +149,6 @@ export class UploadService {
         error: job.error || undefined,
       });
     }
-
-    console.log('🚀 ~ getBatchStatus ~ jobs:', jobs);
 
     // Determine overall status
     let status = 'processing_started';
