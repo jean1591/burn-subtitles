@@ -143,6 +143,7 @@ export class UploadService {
 
     let allDone = true;
     let anyError = false;
+    let anyInProgress = false;
 
     for (const jobId of jobIds) {
       const job = await this.redisService.hgetall(`job:${jobId}`);
@@ -152,6 +153,9 @@ export class UploadService {
       }
       if (job.status === JobStatus.ERROR) {
         anyError = true;
+      }
+      if (job.status === JobStatus.IN_PROGRESS) {
+        anyInProgress = true;
       }
 
       jobs.push({
@@ -169,6 +173,8 @@ export class UploadService {
       status = ProcessStatus.PROCESSING_FAILED;
     } else if (allDone) {
       status = ProcessStatus.PROCESSING_COMPLETED;
+    } else if (anyInProgress) {
+      status = ProcessStatus.PROCESSING_STARTED;
     } else if (jobs.every((j) => j.status === JobStatus.QUEUED)) {
       status = ProcessStatus.QUEUE;
     }

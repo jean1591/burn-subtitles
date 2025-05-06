@@ -210,6 +210,25 @@ export const StatusPage: React.FC = () => {
       }
     );
 
+    socket.on(
+      EventTypes.JOB_STARTED,
+      (payload: {
+        batchId: string;
+        jobId: string;
+        details: { fileName: string; language: string };
+      }) => {
+        setJobs((prev) =>
+          prev.map((job) =>
+            job.jobId === payload.jobId
+              ? { ...job, status: JobStatus.IN_PROGRESS }
+              : job
+          )
+        );
+        // Always set status to STARTED when at least one job is in progress
+        setStatus(UIStatus.STARTED);
+      }
+    );
+
     socket.on(EventTypes.BATCH_COMPLETE, () => {
       setStatus(UIStatus.ZIPPING);
     });

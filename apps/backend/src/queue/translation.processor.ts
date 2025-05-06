@@ -55,10 +55,19 @@ export class TranslationProcessor {
         status: JobStatus.IN_PROGRESS,
       });
 
-      // Check if output file already exists
+      // Extract file name for emitting events
       const originalFilename = path.basename(filePath);
       const filenameNoExt = path.parse(originalFilename).name;
 
+      // Emit job started event
+      this.statusGateway.emitJobStarted(
+        batchId,
+        jobId,
+        filenameNoExt,
+        targetLang,
+      );
+
+      // Check if output file already exists
       try {
         await fs.access(outputPath);
         // File exists, check if it's valid
@@ -347,6 +356,12 @@ export class TranslationProcessor {
         await this.redisService.hset(`job:${jobId}`, {
           status: JobStatus.IN_PROGRESS,
         });
+        this.statusGateway.emitJobStarted(
+          batchId,
+          jobId,
+          filenameNoExt,
+          targetLang,
+        );
         break;
       case 'de':
         await this.redisService.hset(`job:${jobId}`, {

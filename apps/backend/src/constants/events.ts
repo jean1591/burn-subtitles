@@ -5,6 +5,7 @@ export enum EventTypes {
   CONNECT_ERROR = 'connect_error',
   DISCONNECT = 'disconnect',
   JOB_DONE = 'jobDone',
+  JOB_STARTED = 'jobStarted',
   REGISTER = 'register',
   ZIP_READY = 'zipReady',
 }

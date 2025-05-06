@@ -34,6 +34,20 @@ export class StatusGateway implements OnGatewayInit {
     // We could join a room here based on batchId if needed
   }
 
+  emitJobStarted(
+    batchId: string,
+    jobId: string,
+    fileName: string,
+    language: string,
+  ) {
+    this.server.emit(EventTypes.JOB_STARTED, {
+      batchId,
+      jobId,
+      details: { fileName, language },
+    });
+    this.logger.debug(`Emitted jobStarted for batch ${batchId}, job ${jobId}`);
+  }
+
   emitJobDone(
     batchId: string,
     jobId: string,
