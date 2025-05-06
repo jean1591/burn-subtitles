@@ -66,18 +66,20 @@ const getStatus = (restStatus: {
   status: string;
   zipReady: boolean;
 }): UIStatus | string => {
-  return restStatus.status === ProcessStatus.PROCESSING_COMPLETED &&
-    !restStatus.zipReady
-    ? UIStatus.ZIPPING
-    : restStatus.status === ProcessStatus.PROCESSING_COMPLETED
-    ? UIStatus.COMPLETED
-    : restStatus.status === ProcessStatus.PROCESSING_FAILED
-    ? UIStatus.FAILED
-    : restStatus.status === ProcessStatus.PROCESSING_STARTED
-    ? UIStatus.STARTED
-    : restStatus.status === ProcessStatus.QUEUE
-    ? UIStatus.QUEUE
-    : restStatus.status;
+  switch (restStatus.status) {
+    case ProcessStatus.QUEUE:
+      return UIStatus.QUEUE;
+    case ProcessStatus.PROCESSING_STARTED:
+      return UIStatus.STARTED;
+    case ProcessStatus.PROCESSING_COMPLETED:
+      return UIStatus.COMPLETED;
+    case ProcessStatus.PROCESSING_FAILED:
+      return UIStatus.FAILED;
+    case ProcessStatus.ZIPPING:
+      return UIStatus.ZIPPING;
+    default:
+      return restStatus.status;
+  }
 };
 
 export const StatusPage: React.FC = () => {
@@ -207,16 +209,20 @@ export const StatusPage: React.FC = () => {
         );
       }
     );
+
     socket.on(EventTypes.BATCH_COMPLETE, () => {
-      setStatus(UIStatus.COMPLETED);
+      setStatus(UIStatus.ZIPPING);
     });
+
     socket.on(
       EventTypes.ZIP_READY,
       (payload: { batchId: string; zipUrl: string }) => {
         setZipReady(true);
         setZipUrl(payload.zipUrl);
+        setStatus(UIStatus.COMPLETED);
       }
     );
+
     return () => {
       socket.disconnect();
     };
