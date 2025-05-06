@@ -297,8 +297,8 @@ export const StatusPage: React.FC = () => {
   };
 
   return (
-    <main className="flex-1 container px-4 md:px-6 py-12">
-      <div className="max-w-3xl mx-auto">
+    <main className="bg-[#FDF8F3]">
+      <div className="py-12 max-w-3xl mx-auto">
         <div className="bg-white p-6 rounded-xl border border-gray-100 mb-8 space-y-8">
           {/* Translation Status */}
           <div className="flex items-center justify-between mb-4">

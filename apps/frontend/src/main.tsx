@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { AppRouter } from "./routes/AppRouter.tsx";
 import { BrowserRouter } from "react-router-dom";
+import { Footer } from "./components/Footer.tsx";
 import { Header } from "./components/Header.tsx";
 import { LanguageProvider } from "./contexts/languageContext.tsx";
 import { StrictMode } from "react";
@@ -16,8 +17,13 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <LanguageProvider>
         <QueryClientProvider client={queryClient}>
-          <Header />
-          <AppRouter />
+          <div className="flex flex-col h-screen">
+            <Header />
+            <div className="flex-1">
+              <AppRouter />
+            </div>
+            <Footer />
+          </div>
         </QueryClientProvider>
       </LanguageProvider>
     </BrowserRouter>

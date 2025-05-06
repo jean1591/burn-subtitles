@@ -4,7 +4,7 @@ import { Subtitles } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-white border-t border-amber-100">
+    <footer className="mx-auto bg-white border-t border-amber-100">
       <div className="container px-4 md:px-6 py-12">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-4">
@@ -72,24 +72,19 @@ export function Footer() {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link to="#" className="text-gray-600 hover:text-amber-600">
-                  <FormattedMessage id="footer.terms" defaultMessage="Terms" />
+                <Link
+                  to="/privacy-policy"
+                  className="text-gray-600 hover:text-amber-600"
+                >
+                  Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-gray-600 hover:text-amber-600">
-                  <FormattedMessage
-                    id="footer.privacy"
-                    defaultMessage="Privacy"
-                  />
-                </Link>
-              </li>
-              <li>
-                <Link to="#" className="text-gray-600 hover:text-amber-600">
-                  <FormattedMessage
-                    id="footer.cookies"
-                    defaultMessage="Cookies"
-                  />
+                <Link
+                  to="/terms-of-service"
+                  className="text-gray-600 hover:text-amber-600"
+                >
+                  Terms of Service
                 </Link>
               </li>
             </ul>
