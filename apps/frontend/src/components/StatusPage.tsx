@@ -1,4 +1,5 @@
-import { AlertCircle, CheckCircle, Download, FileText } from "lucide-react";
+import { AlertCircle, CheckCircle, FileText } from "lucide-react";
+import { DownloadButton, ZippingButton } from "./status/DownloadButton";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   JobStatus,
@@ -9,7 +10,6 @@ import { Link, useParams } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
 import { useEffect, useRef, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { DetailsPanel } from "./status/DetailsPanel";
 import { EventTypes } from "../constants/events";
 import React from "react";
@@ -351,16 +351,10 @@ export const StatusPage: React.FC = () => {
             </ul>
           </div>
 
+          {status === UIStatus.ZIPPING ? <ZippingButton /> : null}
+
           {status === "completed" && zipReady && zipUrl && (
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-              <Button
-                className="bg-amber-500 hover:bg-amber-600 text-white flex items-center gap-4 py-6 px-8 rounded-lg"
-                onClick={handleDownloadZip}
-              >
-                <Download className="size-5" />
-                <p className="text-lg font-medium">Download All Translations</p>
-              </Button>
-            </div>
+            <DownloadButton handleDownloadZip={handleDownloadZip} />
           )}
 
           {/* Divider */}
