@@ -1,3 +1,5 @@
+import { UIStatus } from "../../constants/process-status";
+
 export const StatusPill = ({ status }: { status: string | null }) => {
   return (
     <div className={`px-4 py-1 rounded-full ${getStatusColor(status)}`}>
@@ -8,15 +10,15 @@ export const StatusPill = ({ status }: { status: string | null }) => {
 
 const getStatusColor = (status: string | null) => {
   switch (status) {
-    case "completed":
+    case UIStatus.COMPLETED:
       return "bg-green-50 text-green-800";
-    case "zipping":
+    case UIStatus.ZIPPING:
       return "bg-green-50 text-green-800";
-    case "started":
+    case UIStatus.STARTED:
       return "bg-blue-50 text-blue-800";
-    case "queue":
+    case UIStatus.QUEUE:
       return "bg-amber-50 text-amber-800";
-    case "error":
+    case UIStatus.ERROR:
       return "bg-red-50 text-red-800";
     default:
       return "bg-gray-50 text-gray-800";
@@ -25,15 +27,15 @@ const getStatusColor = (status: string | null) => {
 
 const getStatusText = (status: string | null) => {
   switch (status) {
-    case "completed":
+    case UIStatus.COMPLETED:
       return "Completed";
-    case "zipping":
+    case UIStatus.ZIPPING:
       return "Creating ZIP";
-    case "started":
+    case UIStatus.STARTED:
       return "In Progress";
-    case "queue":
+    case UIStatus.QUEUE:
       return "Queued";
-    case "error":
+    case UIStatus.ERROR:
       return "Error";
     default:
       return "Unknown";

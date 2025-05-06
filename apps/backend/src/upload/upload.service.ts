@@ -7,6 +7,11 @@ import * as path from 'path';
 import * as fs from 'fs/promises';
 import { sanitizeFilename } from '../utils/filename.util';
 import { File } from 'multer';
+import {
+  JobStatus,
+  ProcessStatus,
+  ZipStatus,
+} from '../constants/process-status';
 
 @Injectable()
 export class UploadService {
@@ -79,7 +84,7 @@ export class UploadService {
           batchId,
           filePath,
           targetLang,
-          status: 'queued',
+          status: JobStatus.QUEUED,
           outputPath,
         };
 
@@ -142,10 +147,10 @@ export class UploadService {
     for (const jobId of jobIds) {
       const job = await this.redisService.hgetall(`job:${jobId}`);
 
-      if (job.status !== 'done') {
+      if (job.status !== JobStatus.DONE) {
         allDone = false;
       }
-      if (job.status === 'error') {
+      if (job.status === JobStatus.ERROR) {
         anyError = true;
       }
 
@@ -159,20 +164,23 @@ export class UploadService {
     }
 
     // Determine overall status
-    let status = 'processing_started';
+    let status = ProcessStatus.PROCESSING_STARTED;
     if (anyError) {
-      status = 'processing_failed';
+      status = ProcessStatus.PROCESSING_FAILED;
     } else if (allDone) {
-      status = 'processing_completed';
-    } else if (jobs.every((j) => j.status === 'queued')) {
-      status = 'queue';
+      status = ProcessStatus.PROCESSING_COMPLETED;
+    } else if (jobs.every((j) => j.status === JobStatus.QUEUED)) {
+      status = ProcessStatus.QUEUE;
     }
 
     // Check zip status and URL
     let zipReady = false;
     let zipUrl = null;
 
-    if (batch.zipStatus === 'queued' || batch.zipStatus === 'done') {
+    if (
+      batch.zipStatus === ZipStatus.QUEUED ||
+      batch.zipStatus === ZipStatus.DONE
+    ) {
       const zipPath = path.join('uploads', uuid, 'results.zip');
 
       if (
@@ -195,7 +203,7 @@ export class UploadService {
       targetLangs: batch.targetLangs,
       totalJobs: batch.totalJobs ? Number(batch.totalJobs) : jobs.length,
       failedReason: anyError
-        ? jobs.find((j) => j.status === 'error')?.error
+        ? jobs.find((j) => j.status === JobStatus.ERROR)?.error
         : undefined,
     };
   }

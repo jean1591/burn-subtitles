@@ -1,5 +1,10 @@
 import { AlertCircle, CheckCircle, Download, FileText } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
+import {
+  JobStatus,
+  ProcessStatus,
+  UIStatus,
+} from "../constants/process-status";
 import { Link, useParams } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
 import { useEffect, useRef, useState } from "react";
@@ -28,7 +33,7 @@ export interface Job {
   jobId: string;
   fileName: string;
   language: string;
-  status: "queued" | "in_progress" | "done" | "error";
+  status: JobStatus;
 }
 
 // Spinner component for loading states
@@ -56,6 +61,24 @@ const Spinner = () => (
     ></path>
   </svg>
 );
+
+const getStatus = (restStatus: {
+  status: string;
+  zipReady: boolean;
+}): UIStatus | string => {
+  return restStatus.status === ProcessStatus.PROCESSING_COMPLETED &&
+    !restStatus.zipReady
+    ? UIStatus.ZIPPING
+    : restStatus.status === ProcessStatus.PROCESSING_COMPLETED
+    ? UIStatus.COMPLETED
+    : restStatus.status === ProcessStatus.PROCESSING_FAILED
+    ? UIStatus.FAILED
+    : restStatus.status === ProcessStatus.PROCESSING_STARTED
+    ? UIStatus.STARTED
+    : restStatus.status === ProcessStatus.QUEUE
+    ? UIStatus.QUEUE
+    : restStatus.status;
+};
 
 export const StatusPage: React.FC = () => {
   const intl = useIntl();
@@ -106,19 +129,7 @@ export const StatusPage: React.FC = () => {
 
   useEffect(() => {
     if (restStatus) {
-      setStatus(
-        restStatus.status === "processing_completed" && !restStatus.zipReady
-          ? "zipping"
-          : restStatus.status === "processing_completed"
-          ? "completed"
-          : restStatus.status === "processing_failed"
-          ? "failed"
-          : restStatus.status === "processing_started"
-          ? "started"
-          : restStatus.status === "queue"
-          ? "queue"
-          : restStatus.status
-      );
+      setStatus(getStatus(restStatus));
 
       if (restStatus.jobs) setJobs(restStatus.jobs);
       if (restStatus.zipReady) setZipReady(true);
@@ -189,13 +200,15 @@ export const StatusPage: React.FC = () => {
       }) => {
         setJobs((prev) =>
           prev.map((job) =>
-            job.jobId === payload.jobId ? { ...job, status: "done" } : job
+            job.jobId === payload.jobId
+              ? { ...job, status: JobStatus.DONE }
+              : job
           )
         );
       }
     );
     socket.on(EventTypes.BATCH_COMPLETE, () => {
-      setStatus("completed");
+      setStatus(UIStatus.COMPLETED);
     });
     socket.on(
       EventTypes.ZIP_READY,

@@ -8,6 +8,7 @@ import { Job } from 'bull';
 import { OpenAI } from 'openai';
 import { RedisService } from '../redis/redis.service';
 import { StatusGateway } from '../gateway/status.gateway';
+import { JobStatus, ZipStatus } from '../constants/process-status';
 
 interface TranslationJob {
   jobId: string;
@@ -50,7 +51,9 @@ export class TranslationProcessor {
 
     try {
       // Update job status to in_progress
-      await this.redisService.hset(`job:${jobId}`, { status: 'in_progress' });
+      await this.redisService.hset(`job:${jobId}`, {
+        status: JobStatus.IN_PROGRESS,
+      });
 
       // Check if output file already exists
       const originalFilename = path.basename(filePath);
@@ -63,7 +66,7 @@ export class TranslationProcessor {
         if (stats.size > 0) {
           // File exists and has content, skip translation
           await this.redisService.hset(`job:${jobId}`, {
-            status: 'done',
+            status: JobStatus.DONE,
           });
           this.statusGateway.emitJobDone(
             batchId,
@@ -103,7 +106,7 @@ export class TranslationProcessor {
 
       // Update job status to done
       await this.redisService.hset(`job:${jobId}`, {
-        status: 'done',
+        status: JobStatus.DONE,
       });
       this.statusGateway.emitJobDone(batchId, jobId, filenameNoExt, targetLang);
 
@@ -112,7 +115,7 @@ export class TranslationProcessor {
     } catch (error) {
       // Update job status to error
       await this.redisService.hset(`job:${jobId}`, {
-        status: 'error',
+        status: JobStatus.ERROR,
         error: error.message,
       });
       throw error;
@@ -298,19 +301,21 @@ export class TranslationProcessor {
     let allDone = true;
     for (const jobId of jobIds) {
       const job = await this.redisService.hgetall(`job:${jobId}`);
-      if (job.status !== 'done') {
+      if (job.status !== JobStatus.DONE) {
         allDone = false;
         break;
       }
     }
 
     if (allDone) {
+      // Emit batch complete event
+      this.statusGateway.emitBatchComplete(batchId);
+
       // Queue zip job
       await this.redisService.hset(`batch:${batchId}`, {
-        zipStatus: 'queued',
+        zipStatus: ZipStatus.QUEUED,
       });
       await this.zipQueue.add({ batch_id: batchId });
-      this.statusGateway.emitBatchComplete(batchId);
     }
   }
 
@@ -334,14 +339,18 @@ export class TranslationProcessor {
     // Simulate different job statuses based on target language
     switch (targetLang) {
       case 'fr':
-        await this.redisService.hset(`job:${jobId}`, { status: 'queued' });
+        await this.redisService.hset(`job:${jobId}`, {
+          status: JobStatus.QUEUED,
+        });
         break;
       case 'es':
-        await this.redisService.hset(`job:${jobId}`, { status: 'in_progress' });
+        await this.redisService.hset(`job:${jobId}`, {
+          status: JobStatus.IN_PROGRESS,
+        });
         break;
       case 'de':
         await this.redisService.hset(`job:${jobId}`, {
-          status: 'done',
+          status: JobStatus.DONE,
         });
         this.statusGateway.emitJobDone(
           batchId,
@@ -353,7 +362,7 @@ export class TranslationProcessor {
         break;
       case 'it':
         await this.redisService.hset(`job:${jobId}`, {
-          status: 'error',
+          status: JobStatus.ERROR,
           error: 'Test mode simulated error',
         });
         break;

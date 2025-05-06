@@ -5,7 +5,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Process, Processor } from '@nestjs/bull';
 
 import { Job } from 'bull';
+import { RedisService } from '../redis/redis.service';
 import { StatusGateway } from '../gateway/status.gateway';
+import { ZipStatus } from '../constants/process-status';
 import { zip } from 'zip-a-folder';
 
 @Processor('zip')
@@ -13,7 +15,10 @@ import { zip } from 'zip-a-folder';
 export class ZipProcessor {
   private readonly logger = new Logger(ZipProcessor.name);
 
-  constructor(private readonly statusGateway: StatusGateway) {}
+  constructor(
+    private readonly statusGateway: StatusGateway,
+    private readonly redisService: RedisService,
+  ) {}
 
   @Process()
   async handleZipJob(job: Job) {
@@ -46,6 +51,11 @@ export class ZipProcessor {
 
       // Move the zip file into the batch folder as results.zip
       await fs.promises.rename(tempZip, zipUrl);
+
+      // Update zip status to done
+      await this.redisService.hset(`batch:${batch_id}`, {
+        zipStatus: ZipStatus.DONE,
+      });
 
       this.logger.log(`Created zip for batch ${batch_id} at ${zipUrl}`);
       // Notify via WebSocket

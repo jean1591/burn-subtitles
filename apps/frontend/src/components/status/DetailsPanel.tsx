@@ -1,4 +1,5 @@
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { JobStatus, UIStatus } from "../../constants/process-status";
 
 import { Job } from "../StatusPage";
 
@@ -10,13 +11,13 @@ export const DetailsPanel = ({
   jobs: Job[];
 }) => {
   switch (status) {
-    case "completed":
+    case UIStatus.COMPLETED:
       return <DonePanel />;
-    case "zipping":
+    case UIStatus.ZIPPING:
       return <ZippingPanel />;
-    case "queue":
+    case UIStatus.QUEUE:
       return <QueuePanel />;
-    case "started":
+    case UIStatus.STARTED:
       return <InProgressPanel jobs={jobs} />;
     default:
       return null;
@@ -77,7 +78,7 @@ const QueuePanel = () => {
 };
 
 const InProgressPanel = ({ jobs }: { jobs: Job[] }) => {
-  const current = jobs.filter((job) => job.status === "done").length;
+  const current = jobs.filter((job) => job.status === JobStatus.DONE).length;
   const total = jobs.length;
   return (
     <Alert className="mb-6 bg-amber-50 border-amber-200">
