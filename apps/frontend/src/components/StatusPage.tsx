@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { DetailsPanel } from "./status/DetailsPanel";
+import { EventTypes } from "../constants/events";
 import React from "react";
 import { StatusPill } from "./status/StatusPill";
 import { useQuery } from "@tanstack/react-query";
@@ -167,20 +168,20 @@ export const StatusPage: React.FC = () => {
 
     socketRef.current = socket;
 
-    socket.on("connect", () => {
-      socket.emit("register", { batchId: uuid });
+    socket.on(EventTypes.CONNECT, () => {
+      socket.emit(EventTypes.REGISTER, { batchId: uuid });
     });
 
-    socket.on("connect_error", (err) => {
+    socket.on(EventTypes.CONNECT_ERROR, (err: Error) => {
       console.error("WebSocket connection error:", err);
     });
 
-    socket.on("disconnect", (reason) => {
+    socket.on(EventTypes.DISCONNECT, (reason: string) => {
       console.info(`WebSocket disconnected: ${reason}`);
     });
 
     socket.on(
-      "jobDone",
+      EventTypes.JOB_DONE,
       (payload: {
         batchId: string;
         jobId: string;
@@ -193,13 +194,16 @@ export const StatusPage: React.FC = () => {
         );
       }
     );
-    socket.on("batchComplete", () => {
+    socket.on(EventTypes.BATCH_COMPLETE, () => {
       setStatus("completed");
     });
-    socket.on("zipReady", (payload) => {
-      setZipReady(true);
-      setZipUrl(payload.zipUrl);
-    });
+    socket.on(
+      EventTypes.ZIP_READY,
+      (payload: { batchId: string; zipUrl: string }) => {
+        setZipReady(true);
+        setZipUrl(payload.zipUrl);
+      }
+    );
     return () => {
       socket.disconnect();
     };

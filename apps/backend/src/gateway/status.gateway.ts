@@ -8,6 +8,7 @@ import {
 
 import { Injectable, Logger } from '@nestjs/common';
 import { Server } from 'socket.io';
+import { EventTypes } from '../constants/events';
 
 @Injectable()
 @WebSocketGateway({
@@ -27,7 +28,7 @@ export class StatusGateway implements OnGatewayInit {
   @WebSocketServer()
   server: Server;
 
-  @SubscribeMessage('register')
+  @SubscribeMessage(EventTypes.REGISTER)
   handleRegister(@MessageBody() data: { batchId: string }): void {
     this.logger.log(`Client registered for batch: ${data.batchId}`);
     // We could join a room here based on batchId if needed
@@ -39,7 +40,7 @@ export class StatusGateway implements OnGatewayInit {
     fileName: string,
     language: string,
   ) {
-    this.server.emit('jobDone', {
+    this.server.emit(EventTypes.JOB_DONE, {
       batchId,
       jobId,
       details: { fileName, language },
@@ -48,12 +49,12 @@ export class StatusGateway implements OnGatewayInit {
   }
 
   emitBatchComplete(batchId: string) {
-    this.server.emit('batchComplete', { batchId });
+    this.server.emit(EventTypes.BATCH_COMPLETE, { batchId });
     this.logger.debug(`Emitted batchComplete for batch ${batchId}`);
   }
 
   emitZipReady(batchId: string, zipUrl: string) {
-    this.server.emit('zipReady', { batchId, zipUrl });
+    this.server.emit(EventTypes.ZIP_READY, { batchId, zipUrl });
     this.logger.debug(`Emitted zipReady for batch ${batchId}, url: ${zipUrl}`);
   }
 
