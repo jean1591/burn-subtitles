@@ -1,4 +1,3 @@
-import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import { Subtitles } from "lucide-react";
 
@@ -11,34 +10,24 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <Subtitles className="h-6 w-6 text-amber-600" />
               <span className="text-xl font-semibold text-gray-800">
-                <FormattedMessage id="app.name" defaultMessage="SubtitlePro" />
+                SubtitlePro
               </span>
             </div>
             <p className="text-gray-600">
-              <FormattedMessage
-                id="footer.description"
-                defaultMessage="Automatically add subtitles to your videos in multiple languages. Free, no login required."
-              />
+              Automatically add subtitles to your videos in multiple languages.
+              Free, no login required.
             </p>
           </div>
 
           <div>
-            <h3 className="font-medium text-gray-800 mb-4">
-              <FormattedMessage
-                id="footer.resources"
-                defaultMessage="Resources"
-              />
-            </h3>
+            <h3 className="font-medium text-gray-800 mb-4">Resources</h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="#features"
                   className="text-gray-600 hover:text-amber-600"
                 >
-                  <FormattedMessage
-                    id="nav.features"
-                    defaultMessage="Features"
-                  />
+                  Features
                 </Link>
               </li>
               <li>
@@ -46,10 +35,7 @@ export function Footer() {
                   to="#how-it-works"
                   className="text-gray-600 hover:text-amber-600"
                 >
-                  <FormattedMessage
-                    id="nav.howItWorks"
-                    defaultMessage="How It Works"
-                  />
+                  How It Works
                 </Link>
               </li>
               <li>
@@ -57,19 +43,14 @@ export function Footer() {
                   to="#testimonials"
                   className="text-gray-600 hover:text-amber-600"
                 >
-                  <FormattedMessage
-                    id="nav.testimonials"
-                    defaultMessage="Testimonials"
-                  />
+                  Testimonials
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-medium text-gray-800 mb-4">
-              <FormattedMessage id="footer.legal" defaultMessage="Legal" />
-            </h3>
+            <h3 className="font-medium text-gray-800 mb-4">Legal</h3>
             <ul className="space-y-2">
               <li>
                 <Link
@@ -93,11 +74,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-amber-100 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-600">
-            <FormattedMessage
-              id="footer.copyright"
-              defaultMessage="© {year} SubtitlePro. All rights reserved."
-              values={{ year: new Date().getFullYear() }}
-            />
+            {`© ${new Date().getFullYear()} SubtitlePro. All rights reserved.`}
           </p>
           <div className="flex gap-4">
             <Link to="#" className="text-gray-600 hover:text-amber-600">

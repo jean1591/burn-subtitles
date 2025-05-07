@@ -1,6 +1,5 @@
 import { AlertCircle, CheckCircle, FileText } from "lucide-react";
 import { DownloadButton, ZippingButton } from "./status/DownloadButton";
-import { FormattedMessage, useIntl } from "react-intl";
 import {
   JobStatus,
   ProcessStatus,
@@ -83,8 +82,6 @@ const getStatus = (restStatus: {
 };
 
 export const StatusPage: React.FC = () => {
-  const intl = useIntl();
-
   const { uuid } = useParams<{ uuid: string }>();
   const { data: restStatus } = useQuery({
     queryKey: ["status", uuid],
@@ -167,7 +164,7 @@ export const StatusPage: React.FC = () => {
         setZipUrl(formattedUrl);
       }
     }
-  }, [restStatus, intl]);
+  }, [restStatus]);
 
   useEffect(() => {
     if (!uuid) return;
@@ -245,7 +242,7 @@ export const StatusPage: React.FC = () => {
     return () => {
       socket.disconnect();
     };
-  }, [uuid, intl]);
+  }, [uuid]);
 
   // Keep the direct URL generation function for reliable downloads
   const generateCorrectZipUrl = () => {
@@ -370,10 +367,7 @@ export const StatusPage: React.FC = () => {
             to="/"
             className="text-amber-600 hover:text-amber-700 font-medium"
           >
-            <FormattedMessage
-              id="status.backToHome"
-              defaultMessage="← Back to Home"
-            />
+            ← Back to Home
           </Link>
         </div>
       </div>
