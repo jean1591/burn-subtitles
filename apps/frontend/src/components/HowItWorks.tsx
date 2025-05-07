@@ -37,7 +37,7 @@ export function HowItWorks() {
                 <p className="text-neutral-600">
                   <FormattedMessage
                     id="howItWorks.step1.description"
-                    defaultMessage="Drag and drop your subtitle files or browse to select them. We support .srt, .vtt, and .sub formats."
+                    defaultMessage="Drag and drop your subtitle files or browse to select them. We support .srt format."
                   />
                 </p>
               </div>

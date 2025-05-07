@@ -44,7 +44,7 @@
   "howItWorks.title": "How It Works",
   "howItWorks.subtitle": "Translate your subtitle files in just a few simple steps",
   "howItWorks.step1.title": "Upload Your Files",
-  "howItWorks.step1.description": "Drag and drop your subtitle files or browse to select them. We support .srt, .vtt, and .sub formats.",
+  "howItWorks.step1.description": "Drag and drop your subtitle files or browse to select them. We support .srt format.",
   "howItWorks.step1.dropzone": "Drop your subtitle files here",
   "howItWorks.step2.title": "Select Languages",
   "howItWorks.step2.description": "Choose the languages you want your subtitles translated into. You can select multiple languages at once.",
