@@ -1,13 +1,21 @@
+import { FormattedMessage } from "react-intl";
+
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="py-12 md:py-16 lg:py-20">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-neutral-900">
-            How It Works
+            <FormattedMessage
+              id="howItWorks.title"
+              defaultMessage="How It Works"
+            />
           </h2>
           <p className="mt-4 text-lg text-neutral-600">
-            Translate your subtitle files in just a few simple steps
+            <FormattedMessage
+              id="howItWorks.subtitle"
+              defaultMessage="Translate your subtitle files in just a few simple steps"
+            />
           </p>
         </div>
 
@@ -20,17 +28,27 @@ export function HowItWorks() {
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold mb-4 md:ml-auto">
                   1
                 </div>
-                <h3 className="text-xl font-medium mb-2">Upload Your Files</h3>
+                <h3 className="text-xl font-medium mb-2">
+                  <FormattedMessage
+                    id="howItWorks.step1.title"
+                    defaultMessage="Upload Your Files"
+                  />
+                </h3>
                 <p className="text-neutral-600">
-                  Drag and drop your subtitle files or browse to select them. We
-                  support .srt, .vtt, and .sub formats.
+                  <FormattedMessage
+                    id="howItWorks.step1.description"
+                    defaultMessage="Drag and drop your subtitle files or browse to select them. We support .srt, .vtt, and .sub formats."
+                  />
                 </p>
               </div>
               <div className="bg-neutral-100 h-48 rounded-lg flex items-center justify-center md:pl-12">
                 <div className="bg-white p-4 rounded-lg border border-neutral-200 shadow-sm w-full max-w-xs">
                   <div className="border-2 border-dashed border-neutral-200 rounded p-4 text-center">
                     <p className="text-sm text-neutral-500">
-                      Drop your subtitle files here
+                      <FormattedMessage
+                        id="howItWorks.step1.dropzone"
+                        defaultMessage="Drop your subtitle files here"
+                      />
                     </p>
                   </div>
                 </div>
@@ -60,10 +78,17 @@ export function HowItWorks() {
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold mb-4">
                   2
                 </div>
-                <h3 className="text-xl font-medium mb-2">Select Languages</h3>
+                <h3 className="text-xl font-medium mb-2">
+                  <FormattedMessage
+                    id="howItWorks.step2.title"
+                    defaultMessage="Select Languages"
+                  />
+                </h3>
                 <p className="text-neutral-600">
-                  Choose the languages you want your subtitles translated into.
-                  You can select multiple languages at once.
+                  <FormattedMessage
+                    id="howItWorks.step2.description"
+                    defaultMessage="Choose the languages you want your subtitles translated into. You can select multiple languages at once."
+                  />
                 </p>
               </div>
             </div>
@@ -73,10 +98,17 @@ export function HowItWorks() {
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold mb-4 md:ml-auto">
                   3
                 </div>
-                <h3 className="text-xl font-medium mb-2">Track Progress</h3>
+                <h3 className="text-xl font-medium mb-2">
+                  <FormattedMessage
+                    id="howItWorks.step3.title"
+                    defaultMessage="Track Progress"
+                  />
+                </h3>
                 <p className="text-neutral-600">
-                  Monitor your translation status with a unique link. You'll see
-                  your position in the queue and when processing begins.
+                  <FormattedMessage
+                    id="howItWorks.step3.description"
+                    defaultMessage="Monitor your translation status with a unique link. You'll see your position in the queue and when processing begins."
+                  />
                 </p>
               </div>
               <div className="bg-neutral-100 h-48 rounded-lg flex items-center justify-center md:pl-12">
@@ -86,7 +118,10 @@ export function HowItWorks() {
                       <div className="h-full bg-amber-500 w-1/2 rounded-full"></div>
                     </div>
                     <p className="text-sm text-center">
-                      Processing: 50% complete
+                      <FormattedMessage
+                        id="howItWorks.step3.progress"
+                        defaultMessage="Processing: 50% complete"
+                      />
                     </p>
                   </div>
                 </div>
@@ -114,7 +149,10 @@ export function HowItWorks() {
                       </svg>
                     </div>
                     <p className="text-sm font-medium">
-                      Download translations.zip
+                      <FormattedMessage
+                        id="howItWorks.step4.downloadText"
+                        defaultMessage="Download results.zip"
+                      />
                     </p>
                   </div>
                 </div>
@@ -123,11 +161,17 @@ export function HowItWorks() {
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold mb-4">
                   4
                 </div>
-                <h3 className="text-xl font-medium mb-2">Download Results</h3>
+                <h3 className="text-xl font-medium mb-2">
+                  <FormattedMessage
+                    id="howItWorks.step4.title"
+                    defaultMessage="Download Results"
+                  />
+                </h3>
                 <p className="text-neutral-600">
-                  Once processing is complete, download a zip file containing
-                  all your translated subtitle files. Files are available for 7
-                  days.
+                  <FormattedMessage
+                    id="howItWorks.step4.description"
+                    defaultMessage="Once processing is complete, download a zip file containing all your translated subtitle files. Files are available for 7 days."
+                  />
                 </p>
               </div>
             </div>

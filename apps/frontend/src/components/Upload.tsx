@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { FormattedMessage } from "react-intl";
 import type React from "react";
 import { Upload as UploadIcon } from "lucide-react";
 import { useState } from "react";
@@ -67,16 +68,27 @@ export function Upload({ onUpload }: { onUpload?: (files: File[]) => void }) {
       >
         <div className="flex flex-col items-center justify-center gap-2">
           <UploadIcon className="h-10 w-10 text-amber-500" />
-          <h3 className="text-lg font-medium">Upload subtitle files</h3>
+          <h3 className="text-lg font-medium">
+            <FormattedMessage
+              id="upload.title"
+              defaultMessage="Upload subtitle files"
+            />
+          </h3>
           <p className="text-sm text-neutral-500">
-            Drag and drop or click to browse
+            <FormattedMessage
+              id="upload.dragAndDrop"
+              defaultMessage="Drag and drop or click to browse"
+            />
           </p>
           <Button
             variant="outline"
             className="mt-2"
             onClick={() => document.getElementById("file-upload")?.click()}
           >
-            Select Files
+            <FormattedMessage
+              id="upload.selectFiles"
+              defaultMessage="Select Files"
+            />
           </Button>
           <input
             id="file-upload"
@@ -87,7 +99,10 @@ export function Upload({ onUpload }: { onUpload?: (files: File[]) => void }) {
             onChange={handleFileChange}
           />
           <p className="text-xs text-neutral-500 mt-2">
-            Supported format: .srt
+            <FormattedMessage
+              id="upload.supportedFormat"
+              defaultMessage="Supported format: .srt"
+            />
           </p>
         </div>
       </div>
@@ -95,7 +110,11 @@ export function Upload({ onUpload }: { onUpload?: (files: File[]) => void }) {
       {files.length > 0 && (
         <div className="bg-neutral-50 rounded-lg border border-neutral-200 p-3">
           <h4 className="text-sm font-medium mb-2">
-            Selected Files ({files.length})
+            <FormattedMessage
+              id="upload.selectedFiles"
+              defaultMessage="Selected Files ({count})"
+              values={{ count: files.length }}
+            />
           </h4>
           <ul className="space-y-2 max-h-32 overflow-y-auto">
             {files.map((file, index) => (

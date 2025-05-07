@@ -1,3 +1,4 @@
+import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import { Subtitles } from "lucide-react";
 
@@ -10,24 +11,37 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <Subtitles className="h-6 w-6 text-amber-600" />
               <span className="text-xl font-semibold text-gray-800">
-                SubtitlePro
+                <FormattedMessage
+                  id="footer.appName"
+                  defaultMessage="SubtitlePro"
+                />
               </span>
             </div>
             <p className="text-gray-600">
-              Automatically add subtitles to your videos in multiple languages.
-              Free, no login required.
+              <FormattedMessage
+                id="footer.description"
+                defaultMessage="Automatically add subtitles to your videos in multiple languages. Free, no login required."
+              />
             </p>
           </div>
 
           <div>
-            <h3 className="font-medium text-gray-800 mb-4">Resources</h3>
+            <h3 className="font-medium text-gray-800 mb-4">
+              <FormattedMessage
+                id="footer.resources.title"
+                defaultMessage="Resources"
+              />
+            </h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="#features"
                   className="text-gray-600 hover:text-amber-600"
                 >
-                  Features
+                  <FormattedMessage
+                    id="footer.resources.features"
+                    defaultMessage="Features"
+                  />
                 </Link>
               </li>
               <li>
@@ -35,7 +49,10 @@ export function Footer() {
                   to="#how-it-works"
                   className="text-gray-600 hover:text-amber-600"
                 >
-                  How It Works
+                  <FormattedMessage
+                    id="footer.resources.howItWorks"
+                    defaultMessage="How It Works"
+                  />
                 </Link>
               </li>
               <li>
@@ -43,21 +60,32 @@ export function Footer() {
                   to="#testimonials"
                   className="text-gray-600 hover:text-amber-600"
                 >
-                  Testimonials
+                  <FormattedMessage
+                    id="footer.resources.testimonials"
+                    defaultMessage="Testimonials"
+                  />
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-medium text-gray-800 mb-4">Legal</h3>
+            <h3 className="font-medium text-gray-800 mb-4">
+              <FormattedMessage
+                id="footer.legal.title"
+                defaultMessage="Legal"
+              />
+            </h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="/privacy-policy"
                   className="text-gray-600 hover:text-amber-600"
                 >
-                  Privacy Policy
+                  <FormattedMessage
+                    id="footer.legal.privacyPolicy"
+                    defaultMessage="Privacy Policy"
+                  />
                 </Link>
               </li>
               <li>
@@ -65,7 +93,10 @@ export function Footer() {
                   to="/terms-of-service"
                   className="text-gray-600 hover:text-amber-600"
                 >
-                  Terms of Service
+                  <FormattedMessage
+                    id="footer.legal.termsOfService"
+                    defaultMessage="Terms of Service"
+                  />
                 </Link>
               </li>
             </ul>
@@ -74,11 +105,20 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-amber-100 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-600">
-            {`© ${new Date().getFullYear()} SubtitlePro. All rights reserved.`}
+            <FormattedMessage
+              id="footer.copyright"
+              defaultMessage="© {year} SubtitlePro. All rights reserved."
+              values={{ year: new Date().getFullYear() }}
+            />
           </p>
           <div className="flex gap-4">
             <Link to="#" className="text-gray-600 hover:text-amber-600">
-              <span className="sr-only">Twitter</span>
+              <span className="sr-only">
+                <FormattedMessage
+                  id="footer.social.twitter"
+                  defaultMessage="Twitter"
+                />
+              </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -95,7 +135,12 @@ export function Footer() {
               </svg>
             </Link>
             <Link to="#" className="text-gray-600 hover:text-amber-600">
-              <span className="sr-only">Facebook</span>
+              <span className="sr-only">
+                <FormattedMessage
+                  id="footer.social.facebook"
+                  defaultMessage="Facebook"
+                />
+              </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -112,7 +157,12 @@ export function Footer() {
               </svg>
             </Link>
             <Link to="#" className="text-gray-600 hover:text-amber-600">
-              <span className="sr-only">Instagram</span>
+              <span className="sr-only">
+                <FormattedMessage
+                  id="footer.social.instagram"
+                  defaultMessage="Instagram"
+                />
+              </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"

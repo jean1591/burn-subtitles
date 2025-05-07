@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Features } from "@/components/Features";
+import { FormattedMessage } from "react-intl";
 import { HowItWorks } from "@/components/HowItWorks";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { Upload } from "@/components/Upload";
@@ -72,19 +73,29 @@ export const HomePage = () => {
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="space-y-4">
               <div className="inline-flex items-center rounded-full border border-amber-200 bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">
-                Automatic Translation
+                <FormattedMessage
+                  id="home.automaticTranslation"
+                  defaultMessage="Automatic Translation"
+                />
               </div>
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-neutral-900">
-                Translate Subtitles in Multiple Languages
+                <FormattedMessage
+                  id="home.title"
+                  defaultMessage="Translate Subtitles in Multiple Languages"
+                />
               </h1>
               <p className="text-lg text-neutral-600 md:text-xl">
-                Upload your subtitle files and get accurate translations in
-                minutes. No manual work needed. No login required.
+                <FormattedMessage
+                  id="home.description"
+                  defaultMessage="Upload your subtitle files and get accurate translations in minutes. No manual work needed. No login required."
+                />
               </p>
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-amber-800">
                 <p className="text-sm">
-                  Note: Your files will be processed in order of submission.
-                  You&apos;ll be able to track your position in the queue.
+                  <FormattedMessage
+                    id="home.queueNote"
+                    defaultMessage="Note: Your files will be processed in order of submission. You'll be able to track your position in the queue."
+                  />
                 </p>
               </div>
             </div>
@@ -93,15 +104,19 @@ export const HomePage = () => {
 
               <div className="mt-6">
                 <h3 className="text-base font-medium mb-3">
-                  Select subtitle languages:
+                  <FormattedMessage
+                    id="home.selectLanguages"
+                    defaultMessage="Select subtitle languages:"
+                  />
                 </h3>
                 <LanguageSelector onChange={handleLanguageChange} />
               </div>
               <div className="mt-6 text-sm text-neutral-600">
                 <p>
-                  Free service: Files are processed in order of submission.
-                  You&apos;ll receive a unique link to track your file&apos;s
-                  status in the queue.
+                  <FormattedMessage
+                    id="home.freeServiceNote"
+                    defaultMessage="Free service: Files are processed in order of submission. You'll receive a unique link to track your file's status in the queue."
+                  />
                 </p>
               </div>
               <Button
@@ -109,7 +124,10 @@ export const HomePage = () => {
                 onClick={handleTranslate}
                 disabled={files.length === 0 || selectedLanguages.length === 0}
               >
-                Translate Subtitles
+                <FormattedMessage
+                  id="home.translateButton"
+                  defaultMessage="Translate Subtitles"
+                />
               </Button>
             </div>
           </div>
