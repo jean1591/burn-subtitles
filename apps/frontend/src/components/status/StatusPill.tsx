@@ -1,3 +1,4 @@
+import { FormattedMessage } from "react-intl";
 import { UIStatus } from "../../constants/process-status";
 
 export const StatusPill = ({ status }: { status: string | null }) => {
@@ -28,16 +29,35 @@ const getStatusColor = (status: string | null) => {
 const getStatusText = (status: string | null) => {
   switch (status) {
     case UIStatus.COMPLETED:
-      return "Completed";
+      return (
+        <FormattedMessage
+          id="status.pill.completed"
+          defaultMessage="Completed"
+        />
+      );
     case UIStatus.ZIPPING:
-      return "Creating ZIP";
+      return (
+        <FormattedMessage
+          id="status.pill.zipping"
+          defaultMessage="Creating ZIP"
+        />
+      );
     case UIStatus.STARTED:
-      return "In Progress";
+      return (
+        <FormattedMessage
+          id="status.pill.inProgress"
+          defaultMessage="In Progress"
+        />
+      );
     case UIStatus.QUEUE:
-      return "Queued";
+      return (
+        <FormattedMessage id="status.pill.queued" defaultMessage="Queued" />
+      );
     case UIStatus.ERROR:
-      return "Error";
+      return <FormattedMessage id="status.pill.error" defaultMessage="Error" />;
     default:
-      return "Unknown";
+      return (
+        <FormattedMessage id="status.pill.unknown" defaultMessage="Unknown" />
+      );
   }
 };

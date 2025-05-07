@@ -72,5 +72,32 @@
   "upload.dragAndDrop": "Trascina e rilascia o clicca per sfogliare",
   "upload.selectFiles": "Seleziona File",
   "upload.supportedFormat": "Formato supportato: .srt",
-  "upload.selectedFiles": "File Selezionati ({count})"
+  "upload.selectedFiles": "File Selezionati ({count})",
+
+  "status.title": "Stato della traduzione",
+  "status.translatedFiles": "File tradotti:",
+  "status.noJobs": "Nessun lavoro di traduzione ancora.",
+  "status.translationId": "ID traduzione: {id}",
+  "status.backToHome": "← Torna alla Home",
+  "status.downloadError": "Impossibile scaricare il file. Si prega di riprovare.",
+  "status.downloadErrorMissingId": "Impossibile scaricare: ID batch mancante",
+
+  "status.details.ready": "Le tue traduzioni sono pronte!",
+  "status.details.readyDescription": "Scarica il file zip contenente tutti i tuoi file di sottotitoli tradotti.",
+  "status.details.zipping": "Creazione del download in corso...",
+  "status.details.zippingDescription": "Tutte le traduzioni sono complete. Stiamo impacchettando i tuoi file in un archivio ZIP.",
+  "status.details.queued": "I tuoi file sono in coda",
+  "status.details.queuedDescription": "Posizione attuale: {position} in coda",
+  "status.details.inProgress": "Traduzione in corso",
+  "status.details.progress": "{current} di {total} file completati",
+
+  "status.download.button": "Scarica tutte le traduzioni",
+  "status.download.preparing": "Preparazione del download",
+
+  "status.pill.completed": "Completato",
+  "status.pill.zipping": "Creazione ZIP",
+  "status.pill.inProgress": "In corso",
+  "status.pill.queued": "In coda",
+  "status.pill.error": "Errore",
+  "status.pill.unknown": "Sconosciuto"
 }

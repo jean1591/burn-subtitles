@@ -72,5 +72,32 @@
   "upload.dragAndDrop": "Per Drag & Drop oder klicken zum Durchsuchen",
   "upload.selectFiles": "Dateien auswählen",
   "upload.supportedFormat": "Unterstütztes Format: .srt",
-  "upload.selectedFiles": "Ausgewählte Dateien ({count})"
+  "upload.selectedFiles": "Ausgewählte Dateien ({count})",
+
+  "status.title": "Übersetzungsstatus",
+  "status.translatedFiles": "Übersetzte Dateien:",
+  "status.noJobs": "Noch keine Übersetzungsaufträge.",
+  "status.translationId": "Übersetzungs-ID: {id}",
+  "status.backToHome": "← Zurück zur Startseite",
+  "status.downloadError": "Fehler beim Herunterladen der Datei. Bitte versuchen Sie es erneut.",
+  "status.downloadErrorMissingId": "Herunterladen nicht möglich: Batch-ID fehlt",
+
+  "status.details.ready": "Ihre Übersetzungen sind fertig!",
+  "status.details.readyDescription": "Laden Sie die ZIP-Datei mit allen Ihren übersetzten Untertiteldateien herunter.",
+  "status.details.zipping": "Ihr Download wird erstellt...",
+  "status.details.zippingDescription": "Alle Übersetzungen sind abgeschlossen. Wir packen Ihre Dateien in ein ZIP-Archiv.",
+  "status.details.queued": "Ihre Dateien sind in der Warteschlange",
+  "status.details.queuedDescription": "Aktuelle Position: {position} in der Warteschlange",
+  "status.details.inProgress": "Übersetzung läuft",
+  "status.details.progress": "{current} von {total} Dateien abgeschlossen",
+
+  "status.download.button": "Alle Übersetzungen herunterladen",
+  "status.download.preparing": "Download wird vorbereitet",
+
+  "status.pill.completed": "Abgeschlossen",
+  "status.pill.zipping": "ZIP wird erstellt",
+  "status.pill.inProgress": "In Bearbeitung",
+  "status.pill.queued": "In Warteschlange",
+  "status.pill.error": "Fehler",
+  "status.pill.unknown": "Unbekannt"
 }

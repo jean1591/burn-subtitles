@@ -72,5 +72,32 @@
   "upload.dragAndDrop": "Drag and drop or click to browse",
   "upload.selectFiles": "Select Files",
   "upload.supportedFormat": "Supported format: .srt",
-  "upload.selectedFiles": "Selected Files ({count})"
+  "upload.selectedFiles": "Selected Files ({count})",
+
+  "status.title": "Translation status",
+  "status.translatedFiles": "Translated Files:",
+  "status.noJobs": "No translation jobs yet.",
+  "status.translationId": "Translation ID: {id}",
+  "status.backToHome": "← Back to Home",
+  "status.downloadError": "Failed to download the file. Please try again.",
+  "status.downloadErrorMissingId": "Unable to download: missing batch ID",
+
+  "status.details.ready": "Your translations are ready!",
+  "status.details.readyDescription": "Download the zip file containing all your translated subtitle files.",
+  "status.details.zipping": "Creating your download...",
+  "status.details.zippingDescription": "All translations are complete. We're packaging your files into a ZIP archive.",
+  "status.details.queued": "Your files are in the queue",
+  "status.details.queuedDescription": "Current position: {position} in line",
+  "status.details.inProgress": "Translation in progress",
+  "status.details.progress": "{current} of {total} files completed",
+
+  "status.download.button": "Download All Translations",
+  "status.download.preparing": "Preparing Download",
+
+  "status.pill.completed": "Completed",
+  "status.pill.zipping": "Creating ZIP",
+  "status.pill.inProgress": "In Progress",
+  "status.pill.queued": "Queued",
+  "status.pill.error": "Error",
+  "status.pill.unknown": "Unknown"
 }

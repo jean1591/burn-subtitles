@@ -72,5 +72,32 @@
   "upload.dragAndDrop": "Arrastra y suelta o haz clic para explorar",
   "upload.selectFiles": "Seleccionar Archivos",
   "upload.supportedFormat": "Formato soportado: .srt",
-  "upload.selectedFiles": "Archivos Seleccionados ({count})"
+  "upload.selectedFiles": "Archivos Seleccionados ({count})",
+
+  "status.title": "Estado de la traducción",
+  "status.translatedFiles": "Archivos traducidos:",
+  "status.noJobs": "No hay trabajos de traducción aún.",
+  "status.translationId": "ID de traducción: {id}",
+  "status.backToHome": "← Volver al inicio",
+  "status.downloadError": "Error al descargar el archivo. Por favor, inténtalo de nuevo.",
+  "status.downloadErrorMissingId": "No se puede descargar: ID de lote faltante",
+
+  "status.details.ready": "¡Tus traducciones están listas!",
+  "status.details.readyDescription": "Descarga el archivo zip que contiene todos tus archivos de subtítulos traducidos.",
+  "status.details.zipping": "Creando tu descarga...",
+  "status.details.zippingDescription": "Todas las traducciones están completas. Estamos empaquetando tus archivos en un archivo ZIP.",
+  "status.details.queued": "Tus archivos están en la cola",
+  "status.details.queuedDescription": "Posición actual: {position} en la línea",
+  "status.details.inProgress": "Traducción en progreso",
+  "status.details.progress": "{current} de {total} archivos completados",
+
+  "status.download.button": "Descargar todas las traducciones",
+  "status.download.preparing": "Preparando la descarga",
+
+  "status.pill.completed": "Completado",
+  "status.pill.zipping": "Creando ZIP",
+  "status.pill.inProgress": "En progreso",
+  "status.pill.queued": "En cola",
+  "status.pill.error": "Error",
+  "status.pill.unknown": "Desconocido"
 }

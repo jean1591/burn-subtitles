@@ -1,5 +1,6 @@
 import { AlertCircle, CheckCircle, FileText } from "lucide-react";
 import { DownloadButton, ZippingButton } from "./status/DownloadButton";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   JobStatus,
   ProcessStatus,
@@ -83,6 +84,7 @@ const getStatus = (restStatus: {
 
 export const StatusPage: React.FC = () => {
   const { uuid } = useParams<{ uuid: string }>();
+  const intl = useIntl();
   const { data: restStatus } = useQuery({
     queryKey: ["status", uuid],
     queryFn: async () => {
@@ -258,7 +260,12 @@ export const StatusPage: React.FC = () => {
     const directUrl = generateCorrectZipUrl();
 
     if (!directUrl) {
-      alert("Unable to download: missing batch ID");
+      alert(
+        intl.formatMessage({
+          id: "status.downloadErrorMissingId",
+          defaultMessage: "Unable to download: missing batch ID",
+        })
+      );
       return;
     }
 
@@ -289,7 +296,12 @@ export const StatusPage: React.FC = () => {
       document.body.removeChild(link);
     } catch (error) {
       console.error("Error downloading zip:", error);
-      alert("Failed to download the file. Please try again.");
+      alert(
+        intl.formatMessage({
+          id: "status.downloadError",
+          defaultMessage: "Failed to download the file. Please try again.",
+        })
+      );
     }
   };
 
@@ -300,7 +312,10 @@ export const StatusPage: React.FC = () => {
           {/* Translation Status */}
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-3xl font-semibold text-gray-800">
-              Translation status
+              <FormattedMessage
+                id="status.title"
+                defaultMessage="Translation status"
+              />
             </h1>
 
             <StatusPill status={status} />
@@ -314,12 +329,18 @@ export const StatusPage: React.FC = () => {
           {/* Job Progress List */}
           <div>
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              Translated Files:
+              <FormattedMessage
+                id="status.translatedFiles"
+                defaultMessage="Translated Files:"
+              />
             </h3>
             <ul className="space-y-3">
               {jobs.length === 0 ? (
                 <li className="text-gray-400 text-sm">
-                  No translation jobs yet.
+                  <FormattedMessage
+                    id="status.noJobs"
+                    defaultMessage="No translation jobs yet."
+                  />
                 </li>
               ) : (
                 jobs.map((job) => (
@@ -358,7 +379,13 @@ export const StatusPage: React.FC = () => {
           <div className="h-[1px] bg-gray-100 mt-8" />
 
           <div className="text-sm text-gray-500">
-            <p>Translation ID: {uuid}</p>
+            <p>
+              <FormattedMessage
+                id="status.translationId"
+                defaultMessage="Translation ID: {uuid}"
+                values={{ uuid }}
+              />
+            </p>
           </div>
         </div>
 
@@ -367,7 +394,10 @@ export const StatusPage: React.FC = () => {
             to="/"
             className="text-amber-600 hover:text-amber-700 font-medium"
           >
-            ← Back to Home
+            <FormattedMessage
+              id="status.backToHome"
+              defaultMessage="← Back to Home"
+            />
           </Link>
         </div>
       </div>

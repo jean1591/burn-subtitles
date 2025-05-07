@@ -1,6 +1,7 @@
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { JobStatus, UIStatus } from "../../constants/process-status";
 
+import { FormattedMessage } from "react-intl";
 import { Job } from "../StatusPage";
 
 export const DetailsPanel = ({
@@ -29,13 +30,19 @@ const DonePanel = () => {
     <Alert className="mb-6 bg-green-50 border-green-200">
       <AlertTitle>
         <p className="text-xl font-semibold text-green-800">
-          Your translations are ready!
+          <FormattedMessage
+            id="status.details.ready"
+            defaultMessage="Your translations are ready!"
+          />
         </p>
       </AlertTitle>
 
       <AlertDescription>
         <p className="text-lg text-green-800">
-          Download the zip file containing all your translated subtitle files.
+          <FormattedMessage
+            id="status.details.readyDescription"
+            defaultMessage="Download the zip file containing all your translated subtitle files."
+          />
         </p>
       </AlertDescription>
     </Alert>
@@ -47,14 +54,19 @@ const ZippingPanel = () => {
     <Alert className="mb-6 bg-amber-50 border-amber-200">
       <AlertTitle>
         <p className="text-xl font-semibold text-amber-800">
-          Creating your download...
+          <FormattedMessage
+            id="status.details.zipping"
+            defaultMessage="Creating your download..."
+          />
         </p>
       </AlertTitle>
 
       <AlertDescription>
         <p className="text-lg text-amber-800">
-          All translations are complete. We're packaging your files into a ZIP
-          archive.
+          <FormattedMessage
+            id="status.details.zippingDescription"
+            defaultMessage="All translations are complete. We're packaging your files into a ZIP archive."
+          />
         </p>
       </AlertDescription>
     </Alert>
@@ -66,12 +78,21 @@ const QueuePanel = () => {
     <Alert className="mb-6 bg-amber-50 border-amber-200">
       <AlertTitle>
         <p className="text-xl font-semibold text-amber-800">
-          Your files are in the queue
+          <FormattedMessage
+            id="status.details.queued"
+            defaultMessage="Your files are in the queue"
+          />
         </p>
       </AlertTitle>
 
       <AlertDescription>
-        <p className="text-lg text-amber-800">Current position: 3 in line</p>
+        <p className="text-lg text-amber-800">
+          <FormattedMessage
+            id="status.details.queuedDescription"
+            defaultMessage="Current position: {position} in line"
+            values={{ position: 3 }}
+          />
+        </p>
       </AlertDescription>
     </Alert>
   );
@@ -84,7 +105,10 @@ const InProgressPanel = ({ jobs }: { jobs: Job[] }) => {
     <Alert className="mb-6 bg-amber-50 border-amber-200">
       <AlertTitle>
         <p className="text-xl font-semibold text-amber-800">
-          Translation in progress
+          <FormattedMessage
+            id="status.details.inProgress"
+            defaultMessage="Translation in progress"
+          />
         </p>
       </AlertTitle>
 
@@ -97,7 +121,11 @@ const InProgressPanel = ({ jobs }: { jobs: Job[] }) => {
         </div>
         <div className="w-full flex items-center justify-end">
           <p className="text-right mt-2 text-amber-800">
-            {current} of {total} files completed
+            <FormattedMessage
+              id="status.details.progress"
+              defaultMessage="{current} of {total} files completed"
+              values={{ current, total }}
+            />
           </p>
         </div>
       </AlertDescription>
