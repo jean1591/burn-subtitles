@@ -99,5 +99,17 @@
   "status.pill.inProgress": "In corso",
   "status.pill.queued": "In coda",
   "status.pill.error": "Errore",
-  "status.pill.unknown": "Sconosciuto"
+  "status.pill.unknown": "Sconosciuto",
+
+  "privacy.title": "Informativa sulla Privacy",
+  "privacy.intro.title": "Introduzione",
+  "privacy.intro.content": "Questa Informativa sulla Privacy spiega come gestiamo i tuoi dati quando utilizzi il nostro servizio di traduzione dei sottotitoli. Ci impegniamo per la trasparenza e la protezione della tua privacy.",
+  "privacy.cookies.title": "Cookie e Preferenze Linguistiche",
+  "privacy.cookies.content": "Utilizziamo i cookie esclusivamente per memorizzare le tue preferenze linguistiche e migliorare la tua esperienza. Questi cookie sono essenziali per il funzionamento di base del nostro servizio e non tracciano il tuo comportamento di navigazione.",
+  "privacy.thirdParty.title": "Contenuti di Terze Parti",
+  "privacy.thirdParty.content": "Il nostro servizio può contenere link a siti web di terze parti. Non siamo responsabili delle pratiche sulla privacy o del contenuto di questi siti esterni. Ti incoraggiamo a consultare le loro informative sulla privacy.",
+  "privacy.changes.title": "Modifiche a Questa Informativa",
+  "privacy.changes.content": "Potremmo aggiornare questa Informativa sulla Privacy di tanto in tanto. Eventuali modifiche saranno pubblicate su questa pagina con una data di revisione aggiornata. Ti incoraggiamo a consultare periodicamente questa informativa.",
+  "privacy.contact.title": "Contatti",
+  "privacy.contact.content": "Se hai domande su questa Informativa sulla Privacy o sulle nostre pratiche, contattaci attraverso i nostri canali di supporto."
 }

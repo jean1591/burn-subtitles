@@ -99,5 +99,17 @@
   "status.pill.inProgress": "In Progress",
   "status.pill.queued": "Queued",
   "status.pill.error": "Error",
-  "status.pill.unknown": "Unknown"
+  "status.pill.unknown": "Unknown",
+
+  "privacy.title": "Privacy Policy",
+  "privacy.intro.title": "Introduction",
+  "privacy.intro.content": "This Privacy Policy outlines how we manage information in connection with your use of our subtitle translation service. Our goal is to provide a seamless, multilingual experience while respecting your privacy and minimizing data collection. This policy explains what limited information we do use, how it is handled, and your rights as a user of the platform.",
+  "privacy.cookies.title": "Cookies and Language Preferences",
+  "privacy.cookies.content": "We use a minimal number of essential cookies strictly to remember your selected language and interface preferences. These cookies ensure that your experience on the site remains consistent as you navigate between pages and return to the service. No cookies are used for tracking, advertising, or analytics purposes. You may disable cookies through your browser settings, but doing so may affect how the service performs, especially in maintaining your language settings.",
+  "privacy.thirdParty.title": "Third-Party Content",
+  "privacy.thirdParty.content": "While our platform is self-contained, it may occasionally include links to third-party websites—for example, external documentation or open-source resources. These sites operate independently, and we are not responsible for their content, data policies, or practices. We recommend that users review the privacy policies of any third-party services they choose to visit through external links.",
+  "privacy.changes.title": "Changes to This Policy",
+  "privacy.changes.content": "We may revise this Privacy Policy to reflect changes to the service or in compliance requirements. All updates will be clearly posted on this page with the most recent revision date. Continuing to use the service after changes are published constitutes your agreement to the updated policy.",
+  "privacy.contact.title": "Contact",
+  "privacy.contact.content": "If you have any questions or concerns about this Privacy Policy, or if you need clarification on how we handle data and cookies, please reach out to us through our official support channels. We're committed to providing transparent and respectful communication."
 }

@@ -99,5 +99,17 @@
   "status.pill.inProgress": "In Bearbeitung",
   "status.pill.queued": "In Warteschlange",
   "status.pill.error": "Fehler",
-  "status.pill.unknown": "Unbekannt"
+  "status.pill.unknown": "Unbekannt",
+
+  "privacy.title": "Datenschutzerklärung",
+  "privacy.intro.title": "Einführung",
+  "privacy.intro.content": "Diese Datenschutzerklärung erläutert, wie wir mit Ihren Daten umgehen, wenn Sie unseren Untertitel-Übersetzungsdienst nutzen. Wir verpflichten uns zu Transparenz und zum Schutz Ihrer Privatsphäre.",
+  "privacy.cookies.title": "Cookies und Spracheinstellungen",
+  "privacy.cookies.content": "Wir verwenden Cookies ausschließlich zur Speicherung Ihrer Spracheinstellungen und zur Verbesserung Ihres Nutzererlebnisses. Diese Cookies sind für die grundlegende Funktionalität unseres Dienstes unerlässlich und verfolgen nicht Ihr Surfverhalten.",
+  "privacy.thirdParty.title": "Drittanbieter-Inhalte",
+  "privacy.thirdParty.content": "Unser Dienst kann Links zu Websites Dritter enthalten. Wir sind nicht verantwortlich für die Datenschutzpraktiken oder Inhalte dieser externen Websites. Wir empfehlen Ihnen, deren Datenschutzrichtlinien zu überprüfen.",
+  "privacy.changes.title": "Änderungen dieser Richtlinie",
+  "privacy.changes.content": "Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Alle Änderungen werden auf dieser Seite mit einem aktualisierten Revisionsdatum veröffentlicht. Wir empfehlen Ihnen, diese Richtlinie regelmäßig zu überprüfen.",
+  "privacy.contact.title": "Kontakt",
+  "privacy.contact.content": "Wenn Sie Fragen zu dieser Datenschutzerklärung oder unseren Praktiken haben, kontaktieren Sie uns bitte über unsere Support-Kanäle."
 }

@@ -99,5 +99,17 @@
   "status.pill.inProgress": "En progreso",
   "status.pill.queued": "En cola",
   "status.pill.error": "Error",
-  "status.pill.unknown": "Desconocido"
+  "status.pill.unknown": "Desconocido",
+
+  "privacy.title": "Política de Privacidad",
+  "privacy.intro.title": "Introducción",
+  "privacy.intro.content": "Esta Política de Privacidad explica cómo manejamos sus datos cuando utiliza nuestro servicio de traducción de subtítulos. Estamos comprometidos con la transparencia y la protección de su privacidad.",
+  "privacy.cookies.title": "Cookies y Preferencias de Idioma",
+  "privacy.cookies.content": "Utilizamos cookies únicamente para almacenar sus preferencias de idioma y mejorar su experiencia. Estas cookies son esenciales para la funcionalidad básica de nuestro servicio y no rastrean su comportamiento de navegación.",
+  "privacy.thirdParty.title": "Contenido de Terceros",
+  "privacy.thirdParty.content": "Nuestro servicio puede contener enlaces a sitios web de terceros. No somos responsables de las prácticas de privacidad o el contenido de estos sitios externos. Le recomendamos revisar sus políticas de privacidad.",
+  "privacy.changes.title": "Cambios en Esta Política",
+  "privacy.changes.content": "Podemos actualizar esta Política de Privacidad de vez en cuando. Cualquier cambio se publicará en esta página con una fecha de revisión actualizada. Le recomendamos revisar esta política periódicamente.",
+  "privacy.contact.title": "Contacto",
+  "privacy.contact.content": "Si tiene alguna pregunta sobre esta Política de Privacidad o nuestras prácticas, contáctenos a través de nuestros canales de soporte."
 }

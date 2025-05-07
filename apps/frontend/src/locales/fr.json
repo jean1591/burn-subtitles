@@ -99,5 +99,17 @@
   "status.pill.inProgress": "En cours",
   "status.pill.queued": "En attente",
   "status.pill.error": "Erreur",
-  "status.pill.unknown": "Inconnu"
+  "status.pill.unknown": "Inconnu",
+
+  "privacy.title": "Politique de Confidentialité",
+  "privacy.intro.title": "Introduction",
+  "privacy.intro.content": "Cette Politique de Confidentialité explique comment nous traitons vos données lorsque vous utilisez notre service de traduction de sous-titres. Nous nous engageons à la transparence et à la protection de votre vie privée.",
+  "privacy.cookies.title": "Cookies et Préférences de Langue",
+  "privacy.cookies.content": "Nous utilisons des cookies uniquement pour stocker vos préférences de langue et améliorer votre expérience. Ces cookies sont essentiels au fonctionnement de base de notre service et ne suivent pas votre comportement de navigation.",
+  "privacy.thirdParty.title": "Contenu Tiers",
+  "privacy.thirdParty.content": "Notre service peut contenir des liens vers des sites web tiers. Nous ne sommes pas responsables des pratiques de confidentialité ou du contenu de ces sites externes. Nous vous encourageons à consulter leurs politiques de confidentialité.",
+  "privacy.changes.title": "Modifications de Cette Politique",
+  "privacy.changes.content": "Nous pouvons mettre à jour cette Politique de Confidentialité de temps à autre. Toute modification sera publiée sur cette page avec une date de révision mise à jour. Nous vous encourageons à consulter cette politique périodiquement.",
+  "privacy.contact.title": "Contact",
+  "privacy.contact.content": "Si vous avez des questions concernant cette Politique de Confidentialité ou nos pratiques, veuillez nous contacter via nos canaux de support."
 }
