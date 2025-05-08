@@ -18,23 +18,8 @@ jobs:
           DEPLOY_SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "Checking if secret is set..."
-          if [ -z "$DEPLOY_SSH_PRIVATE_KEY" ]; then
-            echo "Error: DEPLOY_SSH_PRIVATE_KEY is empty"
-            exit 1
-          fi
-          echo "Secret is set, length: ${#DEPLOY_SSH_PRIVATE_KEY}"
-          echo "First 10 chars of secret: ${DEPLOY_SSH_PRIVATE_KEY:0:10}"
           echo "$DEPLOY_SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          echo "Key file permissions:"
-          ls -l ~/.ssh/deploy_key
-          echo "Key file size:"
-          wc -l ~/.ssh/deploy_key
-          echo "First few characters of key file:"
-          head -n 1 ~/.ssh/deploy_key
-          echo "Last few characters of key file:"
-          tail -n 1 ~/.ssh/deploy_key
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
