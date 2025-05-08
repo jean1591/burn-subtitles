@@ -18,6 +18,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "$DEPLOY_SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
+          echo "Key file permissions:"
+          ls -l ~/.ssh/deploy_key
+          echo "First few characters of key file:"
+          head -n 1 ~/.ssh/deploy_key
+          echo "Last few characters of key file:"
+          tail -n 1 ~/.ssh/deploy_key
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
