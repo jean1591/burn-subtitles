@@ -1,0 +1,66 @@
+---
+description: 
+globs: *.tsx
+alwaysApply: false
+---
+# Overview
+This documentation outlines the structure and functionality of the frontend for the "Titro" application. The frontend is built using React with TypeScript and styled using TailwindCSS. It interacts with the backend via REST APIs for uploading `.srt` subtitle files and tracks translation progress in real time through WebSocket events.
+
+# Technologies Used
+- React with TypeScript for type-safe development
+- Vite as the build tool and development server
+- TailwindCSS for utility-first styling
+- Axios for HTTP requests
+- WebSocket for real-time updates
+- React Router for navigation
+- i18next for internationalization
+- React Context for state management
+
+# Project Structure
+```
+src/
+├── assets/         # Static assets like images and fonts
+├── components/     # Reusable UI components
+├── constants/      # Application constants and configuration
+├── contexts/       # React Context providers
+├── lib/           # Utility functions and shared logic
+├── locales/       # Internationalization files
+├── routes/        # Route definitions and layouts
+├── screens/       # Page components
+├── main.tsx       # Application entry point
+└── index.css      # Global styles
+```
+
+# File Upload Component
+## Purpose:
+Allows users to upload one or more `.srt` subtitle files and select the target translation languages (currently: English, Spanish, Portuguese, Italian, and German). The component handles upload validation, sends the request to the backend, and initiates a WebSocket connection to monitor the translation progress.
+
+## Component Overview:
+Includes a file input accepting only `.srt` files (up to 10 files, 5MB each), a multi-select dropdown for target languages, and a submit button. Once uploaded, users are redirected to a status page based on the returned `batchId`.
+
+# WebSocket Integration for Real-Time Updates
+## Purpose:
+The frontend uses WebSockets to monitor translation progress for each uploaded subtitle file in a batch. It listens for translation job updates and notifies the user when all translations are complete and the ZIP file is ready for download.
+
+## WebSocket Events:
+- `jobDone`: Indicates a single file-language translation is complete.
+- `batchComplete`: Signals that all translations in the batch have finished.
+- `zipReady`: Indicates that the ZIP archive has been created and is ready to download.
+
+## Behavior:
+The WebSocket client connects to the server using the batch ID as context and listens for the above events. As translations complete, the UI updates in real time to reflect progress, show per-file language completion, and finally present a download link when the ZIP is available.
+
+# User Interface (UI)
+## Layout:
+A clean, responsive landing page allows users to upload files and select translation languages. After submission, users are redirected to a status page showing translation progress. TailwindCSS ensures fast development and consistent styling across components.
+
+## Features:
+- File Upload with validation and multi-language support
+- Real-time translation progress tracking with WebSocket updates
+- Clear status indicators for each subtitle file and language combination
+- Download link for the ZIP archive once all translations are complete
+- TailwindCSS-powered modern and responsive design
+- Internationalization support for multiple languages
+- Context-based state management for global application state
+- Client-side routing with React Router
+

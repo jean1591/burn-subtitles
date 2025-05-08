@@ -1,0 +1,128 @@
+---
+description: 
+globs: apps/backend/**/*.ts
+alwaysApply: false
+---
+This backend handles uploading `.srt` subtitle files, scheduling translations to one or more target languages using a job queue, and returning a `.zip` file of translated subtitles when complete. Built with NestJS and deployed using Docker.
+
+## 📁 File Upload Rules
+- Accept only `.srt` files.
+- Store uploaded files in a structured directory: `uploads/<batch_id>/original/`.
+- Each batch of files gets a unique `batch_id` (UUID).
+- Enforce max file count (e.g., 10) and max file size (e.g., 5MB per file).
+
+## 📄 Translation Job Rules
+- For each file × target language combination, create a translation job.
+- Each job must track:
+    - `batch_id`
+    - `file_path` (original)
+    - `source_lang` (optional, autodetect if blank)
+    - `target_lang`
+    - `status`: queued, in_progress, done, error
+    - `output_path` (set when done)
+- Persist job records in Redis.
+- Jobs are idempotent: same input should yield same output if reprocessed.
+
+## 🧵 Queue Rules
+- All translation jobs are enqueued using the existing event queue.
+- One job is created per file × target language.
+- After each translation job completes, it must:
+    - Update its own status to done
+    - Call `checkAndQueueZipJob(batch_id)`
+- `checkAndQueueZipJob(batch_id)` performs:
+    - A query to count how many translation jobs for that batch are still not done
+    - If all jobs are done, it enqueues a single zip job for that batch_id
+- The zip job collects all translated `.srt` files for the batch and creates `results.zip`
+- The zip file is stored in `uploads/<batch_id>/results.zip`
+
+## 📦 Zip File Rules
+- Once all translations are complete:
+    - Generate a .zip file: `uploads/<batch_id>/results.zip`
+    - Include translated files named like `originalname.lang.srt`
+- Store final zip under `uploads/<batch_id>/results.zip`.
+
+## 🌐 API Rules
+- `POST /upload`
+    - Accepts multipart upload of `.srt` files + target languages
+    - Returns batch_id and status endpoint
+- `GET /status/:batch_id`
+    - Returns job statuses and zip URL (if available)
+
+## ✅ Validation Rules
+- Reject empty uploads or missing target languages
+- Ensure no duplicate file names in a batch
+- Sanitize filenames for filesystem safety
+- Validate language codes using ISO 639-1 format
+
+## Project structure:
+```
+src/
+├── app.module.ts
+├── main.ts
+├── upload/
+│   ├── upload.controller.ts
+│   ├── upload.service.ts
+│   └── dto/
+├── queue/
+│   ├── queue.module.ts
+│   ├── bullmq.provider.ts
+│   ├── translation.processor.ts
+│   └── zip.processor.ts
+├── gateway/
+│   └── status.gateway.ts
+├── redis/
+│   └── redis.module.ts
+├── constants/
+│   └── index.ts
+├── utils/
+│   └── srt.util.ts
+└── services/
+    ├── file.service.ts
+    ├── translation.service.ts
+    └── language.service.ts
+```
+
+## Step by step implementation
+### Step 1: Upload Endpoint
+- `upload.controller.ts` handles:
+    - Accepting files + target languages
+    - Creating a batch ID
+    - Saving files to `uploads/<batch_id>/original/`
+    - Publishing job metadata to Redis
+    - Enqueuing translation jobs via BullMQ
+
+### Step 2: Translation Processor
+- `translation.processor.ts` handles:
+    - Listening to translation queue
+    - Detecting language (once per file)
+    - Translating using OpenAI API
+    - Writing translated files to uploads/<batch_id>/
+    - Updating Redis job status
+    - Calling checkAndQueueZipJob(batch_id)
+
+### Step 3: Zip Processor
+- `zip.processor.ts` handles:
+    - Zipping all translated `.srt` files for a batch_id
+    - Saving to `uploads/<batch_id>/results.zip`
+    - Publishing a WebSocket event via StatusGateway
+
+### Step 4: WebSocket Gateway
+- `status.gateway.ts`:
+    - Uses `@WebSocketGateway` with `@SubscribeMessage`
+    - Listens to Redis Pub/Sub or job completion hooks
+    - Emits jobDone, batchComplete, zipReady
+
+### ✅ Final Touches
+- Serve `uploads/` via `ServeStaticModule`
+- Add Bull Board UI for `/admin/queues`
+- Create utility functions:
+  - `checkAndQueueZipJob(batchId)`
+  - `detectLanguage(lines: string[])`
+  - `translateSrt(lines: string[], targetLang)`
+
+## Deployment
+The application is containerized using Docker and can be deployed using docker-compose. The deployment includes:
+- NestJS backend service
+- Redis for job queue and caching
+- Nginx for serving static files and reverse proxy
+- SSL/TLS support via Let's Encrypt
