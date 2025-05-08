@@ -7,6 +7,8 @@
   "home.freeServiceNote": "Free service: Files are processed in order of submission. You'll receive a unique link to track your file's status in the queue.",
   "home.translateButton": "Translate Subtitles",
 
+  "legal.translationDisclaimer": "This is the official English version of this document. All other translations are AI-generated and provided for convenience only. Only the English version is legally binding.",
+
   "features.title": "Why Choose Our Subtitle Translator",
   "features.subtitle": "Fast, accurate, and easy-to-use subtitle translation for all your needs",
   "features.multipleLanguages.title": "Multiple Languages",

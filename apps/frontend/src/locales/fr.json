@@ -7,6 +7,8 @@
   "home.freeServiceNote": "Service gratuit : Les fichiers sont traités dans l'ordre de soumission. Vous recevrez un lien unique pour suivre l'état de votre fichier dans la file d'attente.",
   "home.translateButton": "Traduire les sous-titres",
 
+  "legal.translationDisclaimer": "Ceci est une traduction de la version officielle en anglais de ce document. Toutes les traductions sont générées par IA et fournies uniquement pour des raisons de commodité. Seule la version anglaise est juridiquement valide.",
+
   "features.title": "Pourquoi choisir notre traducteur de sous-titres",
   "features.subtitle": "Traduction de sous-titres rapide, précise et facile à utiliser pour tous vos besoins",
   "features.multipleLanguages.title": "Plusieurs langues",

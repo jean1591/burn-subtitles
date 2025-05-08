@@ -4,6 +4,12 @@ export function PrivacyPolicy() {
   return (
     <div className="bg-[#FDF8F3]">
       <div className="max-w-4xl mx-auto py-8 px-4">
+        <p className="text-sm text-gray-500 mb-8 italic">
+          <FormattedMessage
+            id="legal.translationDisclaimer"
+            defaultMessage="This is the official English version of this document. All other translations are AI-generated and provided for convenience only. Only the English version is legally binding."
+          />
+        </p>
         <h1 className="text-2xl font-bold mb-8">
           <FormattedMessage
             id="privacy.title"

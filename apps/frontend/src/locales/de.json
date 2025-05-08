@@ -7,6 +7,8 @@
   "home.freeServiceNote": "Kostenloser Service: Dateien werden in der Reihenfolge des Eingangs verarbeitet. Sie erhalten einen eindeutigen Link, um den Status Ihrer Datei in der Warteschlange zu verfolgen.",
   "home.translateButton": "Untertitel übersetzen",
 
+  "legal.translationDisclaimer": "Dies ist eine Übersetzung der offiziellen englischen Version dieses Dokuments. Alle Übersetzungen werden von KI generiert und nur zur Bequemlichkeit bereitgestellt. Nur die englische Version ist rechtlich bindend.",
+
   "features.title": "Warum Sie unseren Untertitel-Übersetzer wählen sollten",
   "features.subtitle": "Schnelle, präzise und benutzerfreundliche Untertitelübersetzung für alle Ihre Bedürfnisse",
   "features.multipleLanguages.title": "Mehrere Sprachen",
