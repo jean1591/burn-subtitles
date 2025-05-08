@@ -111,5 +111,27 @@
   "privacy.changes.title": "Changes to This Policy",
   "privacy.changes.content": "We may revise this Privacy Policy to reflect changes to the service or in compliance requirements. All updates will be clearly posted on this page with the most recent revision date. Continuing to use the service after changes are published constitutes your agreement to the updated policy.",
   "privacy.contact.title": "Contact",
-  "privacy.contact.content": "If you have any questions or concerns about this Privacy Policy, or if you need clarification on how we handle data and cookies, please reach out to us through our official support channels. We're committed to providing transparent and respectful communication."
+  "privacy.contact.content": "If you have any questions or concerns about this Privacy Policy, or if you need clarification on how we handle data and cookies, please reach out to us through our official support channels. We're committed to providing transparent and respectful communication.",
+
+  "terms.title": "Terms of Service",
+  "terms.intro.title": "Welcome",
+  "terms.intro.content": "Welcome to our subtitle translation platform. By accessing or using this service, you agree to be bound by the following Terms of Service. Please read them carefully.",
+  "terms.acceptance.title": "1. Acceptance of Terms",
+  "terms.acceptance.content": "By using this website, you confirm that you understand and agree to these Terms of Service. If you do not agree, please do not use the platform.",
+  "terms.service.title": "2. Description of the Service",
+  "terms.service.content": "This service provides tools for translating and localizing subtitles and other user-provided text. It is designed to support multiple languages through a user-friendly interface, with language switching and internationalization powered by react-intl.",
+  "terms.responsibilities.title": "3. User Responsibilities",
+  "terms.responsibilities.content": "You agree to use the platform in a lawful and respectful manner. You must not upload or use content that is illegal, harmful, or infringes on the rights of others. You are responsible for any content you submit for translation or display through the platform.",
+  "terms.intellectualProperty.title": "4. Intellectual Property",
+  "terms.intellectualProperty.content": "All original content, design, and functionality of the site are the property of the platform owner. Any user-submitted content remains the property of the original author. By submitting content, you grant us a non-exclusive license to process and display that content within the context of the translation features.",
+  "terms.warranty.title": "5. No Warranty",
+  "terms.warranty.content": "The service is provided 'as is' and 'as available' without warranties of any kind. While we aim for accuracy and stability, we make no guarantees that translations are error-free or that the service will be uninterrupted or secure.",
+  "terms.liability.title": "6. Limitation of Liability",
+  "terms.liability.content": "To the maximum extent permitted by law, we are not liable for any damages or losses arising from your use of the platform. This includes indirect or consequential damages, lost profits, or lost data.",
+  "terms.modifications.title": "7. Modifications to the Terms",
+  "terms.modifications.content": "We may update these Terms of Service from time to time. When we do, the new version will be posted on this page with the updated effective date. Continued use of the service means you accept the updated terms.",
+  "terms.governingLaw.title": "8. Governing Law",
+  "terms.governingLaw.content": "These Terms are governed by the laws of [Insert Jurisdiction], without regard to conflict of law principles.",
+  "terms.contact.title": "9. Contact",
+  "terms.contact.content": "If you have any questions about these Terms of Service, please contact us through our official support channel or contact form."
 }

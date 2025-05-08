@@ -111,5 +111,27 @@
   "privacy.changes.title": "Modifiche a Questa Informativa",
   "privacy.changes.content": "Potremmo aggiornare questa Informativa sulla Privacy di tanto in tanto. Eventuali modifiche saranno pubblicate su questa pagina con una data di revisione aggiornata. Ti incoraggiamo a consultare periodicamente questa informativa.",
   "privacy.contact.title": "Contatti",
-  "privacy.contact.content": "Se hai domande su questa Informativa sulla Privacy o sulle nostre pratiche, contattaci attraverso i nostri canali di supporto."
+  "privacy.contact.content": "Se hai domande su questa Informativa sulla Privacy o sulle nostre pratiche, contattaci attraverso i nostri canali di supporto.",
+
+  "terms.title": "Termini di Servizio",
+  "terms.intro.title": "Benvenuto",
+  "terms.intro.content": "Benvenuto nella nostra piattaforma di traduzione dei sottotitoli. Accedendo o utilizzando questo servizio, accetti di essere vincolato dai seguenti Termini di Servizio. Ti preghiamo di leggerli attentamente.",
+  "terms.acceptance.title": "1. Accettazione dei Termini",
+  "terms.acceptance.content": "Utilizzando questo sito web, confermi di comprendere e accettare questi Termini di Servizio. Se non sei d'accordo, ti preghiamo di non utilizzare la piattaforma.",
+  "terms.service.title": "2. Descrizione del Servizio",
+  "terms.service.content": "Questo servizio fornisce strumenti per tradurre e localizzare sottotitoli e altri testi forniti dall'utente. È progettato per supportare più lingue attraverso un'interfaccia user-friendly, con cambio lingua e internazionalizzazione alimentati da react-intl.",
+  "terms.responsibilities.title": "3. Responsabilità dell'Utente",
+  "terms.responsibilities.content": "Accetti di utilizzare la piattaforma in modo legale e rispettoso. Non devi caricare o utilizzare contenuti illegali, dannosi o che violano i diritti di altri. Sei responsabile di qualsiasi contenuto che invii per la traduzione o la visualizzazione attraverso la piattaforma.",
+  "terms.intellectualProperty.title": "4. Proprietà Intellettuale",
+  "terms.intellectualProperty.content": "Tutto il contenuto originale, il design e le funzionalità del sito sono di proprietà del proprietario della piattaforma. Qualsiasi contenuto inviato dall'utente rimane di proprietà dell'autore originale. Inviando contenuti, ci concedi una licenza non esclusiva per elaborare e visualizzare tale contenuto nel contesto delle funzionalità di traduzione.",
+  "terms.warranty.title": "5. Nessuna Garanzia",
+  "terms.warranty.content": "Il servizio è fornito 'così com'è' e 'secondo disponibilità' senza garanzie di alcun tipo. Sebbene miriamo all'accuratezza e alla stabilità, non garantiamo che le traduzioni siano prive di errori o che il servizio sia ininterrotto o sicuro.",
+  "terms.liability.title": "6. Limitazione di Responsabilità",
+  "terms.liability.content": "Nella massima misura consentita dalla legge, non siamo responsabili per eventuali danni o perdite derivanti dall'uso della piattaforma. Questo include danni o perdite indirette o consequenziali, profitti persi o dati persi.",
+  "terms.modifications.title": "7. Modifiche ai Termini",
+  "terms.modifications.content": "Possiamo aggiornare questi Termini di Servizio di volta in volta. Quando lo facciamo, la nuova versione sarà pubblicata su questa pagina con la data di efficacia aggiornata. L'uso continuato del servizio significa che accetti i termini aggiornati.",
+  "terms.governingLaw.title": "8. Legge Applicabile",
+  "terms.governingLaw.content": "Questi Termini sono regolati dalle leggi di [Inserire Giurisdizione], senza tener conto dei principi di conflitto di leggi.",
+  "terms.contact.title": "9. Contatto",
+  "terms.contact.content": "Se hai domande su questi Termini di Servizio, ti preghiamo di contattarci attraverso il nostro canale di supporto ufficiale o il modulo di contatto."
 }

@@ -111,5 +111,27 @@
   "privacy.changes.title": "Änderungen dieser Richtlinie",
   "privacy.changes.content": "Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Alle Änderungen werden auf dieser Seite mit einem aktualisierten Revisionsdatum veröffentlicht. Wir empfehlen Ihnen, diese Richtlinie regelmäßig zu überprüfen.",
   "privacy.contact.title": "Kontakt",
-  "privacy.contact.content": "Wenn Sie Fragen zu dieser Datenschutzerklärung oder unseren Praktiken haben, kontaktieren Sie uns bitte über unsere Support-Kanäle."
+  "privacy.contact.content": "Wenn Sie Fragen zu dieser Datenschutzerklärung oder unseren Praktiken haben, kontaktieren Sie uns bitte über unsere Support-Kanäle.",
+
+  "terms.title": "Nutzungsbedingungen",
+  "terms.intro.title": "Willkommen",
+  "terms.intro.content": "Willkommen auf unserer Untertitel-Übersetzungsplattform. Durch den Zugriff auf oder die Nutzung dieses Dienstes stimmen Sie den folgenden Nutzungsbedingungen zu. Bitte lesen Sie diese sorgfältig durch.",
+  "terms.acceptance.title": "1. Annahme der Bedingungen",
+  "terms.acceptance.content": "Durch die Nutzung dieser Website bestätigen Sie, dass Sie diese Nutzungsbedingungen verstehen und akzeptieren. Wenn Sie nicht einverstanden sind, nutzen Sie bitte die Plattform nicht.",
+  "terms.service.title": "2. Beschreibung des Dienstes",
+  "terms.service.content": "Dieser Dienst bietet Tools zur Übersetzung und Lokalisierung von Untertiteln und anderen benutzerbereitgestellten Texten. Er ist für die Unterstützung mehrerer Sprachen durch eine benutzerfreundliche Oberfläche konzipiert, mit Sprachumschaltung und Internationalisierung, die von react-intl unterstützt werden.",
+  "terms.responsibilities.title": "3. Benutzerverantwortung",
+  "terms.responsibilities.content": "Sie stimmen zu, die Plattform auf rechtmäßige und respektvolle Weise zu nutzen. Sie dürfen keine illegalen, schädlichen oder die Rechte anderer verletzenden Inhalte hochladen oder verwenden. Sie sind für alle Inhalte verantwortlich, die Sie zur Übersetzung oder Anzeige über die Plattform einreichen.",
+  "terms.intellectualProperty.title": "4. Geistiges Eigentum",
+  "terms.intellectualProperty.content": "Alle Originalinhalte, Designs und Funktionen der Website sind Eigentum des Plattformbetreibers. Alle von Benutzern eingereichten Inhalte bleiben Eigentum des ursprünglichen Autors. Durch die Einreichung von Inhalten gewähren Sie uns eine nicht-exklusive Lizenz zur Verarbeitung und Anzeige dieser Inhalte im Rahmen der Übersetzungsfunktionen.",
+  "terms.warranty.title": "5. Keine Gewährleistung",
+  "terms.warranty.content": "Der Dienst wird 'wie er ist' und 'wie verfügbar' ohne Gewährleistungen jeglicher Art bereitgestellt. Obwohl wir auf Genauigkeit und Stabilität abzielen, garantieren wir nicht, dass Übersetzungen fehlerfrei sind oder dass der Dienst ununterbrochen oder sicher sein wird.",
+  "terms.liability.title": "6. Haftungsbeschränkung",
+  "terms.liability.content": "Im gesetzlich zulässigen Umfang haften wir nicht für Schäden oder Verluste, die sich aus Ihrer Nutzung der Plattform ergeben. Dies schließt indirekte oder Folgeschäden, entgangene Gewinne oder verlorene Daten ein.",
+  "terms.modifications.title": "7. Änderungen der Bedingungen",
+  "terms.modifications.content": "Wir können diese Nutzungsbedingungen von Zeit zu Zeit aktualisieren. Wenn wir dies tun, wird die neue Version auf dieser Seite mit dem aktualisierten Gültigkeitsdatum veröffentlicht. Die weitere Nutzung des Dienstes bedeutet, dass Sie die aktualisierten Bedingungen akzeptieren.",
+  "terms.governingLaw.title": "8. Geltendes Recht",
+  "terms.governingLaw.content": "Diese Bedingungen unterliegen den Gesetzen von [Jurisdiktion einfügen], ohne Berücksichtigung von Kollisionsnormen.",
+  "terms.contact.title": "9. Kontakt",
+  "terms.contact.content": "Wenn Sie Fragen zu diesen Nutzungsbedingungen haben, kontaktieren Sie uns bitte über unseren offiziellen Support-Kanal oder das Kontaktformular."
 }

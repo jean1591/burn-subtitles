@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 
 import { HomePage } from "../screens/Home";
 import { PrivacyPolicy } from "../screens/PrivacyPolicy";
+import { TermsOfService } from "../screens/TermsOfService";
 
 const StatusPage = lazy(() =>
   import("@/components/StatusPage").then((m) => ({ default: m.StatusPage }))
@@ -14,6 +15,7 @@ export const AppRouter = () => (
       <Route path="/" element={<HomePage />} />
       <Route path="/status/:uuid" element={<StatusPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
     </Routes>
   </Suspense>
 );
