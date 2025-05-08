@@ -135,5 +135,12 @@
   "terms.governingLaw.title": "8. Ley Aplicable",
   "terms.governingLaw.content": "Estos Términos se rigen por las leyes de [Insertar Jurisdicción], sin tener en cuenta los principios de conflicto de leyes.",
   "terms.contact.title": "9. Contacto",
-  "terms.contact.content": "Si tiene alguna pregunta sobre estos Términos de Servicio, por favor contáctenos a través de nuestro canal de soporte oficial o formulario de contacto."
+  "terms.contact.content": "Si tiene alguna pregunta sobre estos Términos de Servicio, por favor contáctenos a través de nuestro canal de soporte oficial o formulario de contacto.",
+
+  "language.en": "Inglés",
+  "language.fr": "Francés",
+  "language.pt": "Portugués",
+  "language.es": "Español",
+  "language.de": "Alemán",
+  "language.it": "Italiano"
 }

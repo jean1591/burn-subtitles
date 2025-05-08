@@ -135,5 +135,12 @@
   "terms.governingLaw.title": "8. Loi Applicable",
   "terms.governingLaw.content": "Ces Conditions sont régies par les lois de [Insérer la Juridiction], sans tenir compte des principes de conflit de lois.",
   "terms.contact.title": "9. Contact",
-  "terms.contact.content": "Si vous avez des questions concernant ces Conditions d'Utilisation, veuillez nous contacter via notre canal de support officiel ou notre formulaire de contact."
+  "terms.contact.content": "Si vous avez des questions concernant ces Conditions d'Utilisation, veuillez nous contacter via notre canal de support officiel ou notre formulaire de contact.",
+
+  "language.en": "Anglais",
+  "language.fr": "Français",
+  "language.pt": "Portugais",
+  "language.es": "Espagnol",
+  "language.de": "Allemand",
+  "language.it": "Italien"
 }

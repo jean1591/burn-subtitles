@@ -135,5 +135,12 @@
   "terms.governingLaw.title": "8. Governing Law",
   "terms.governingLaw.content": "These Terms are governed by the laws of [Insert Jurisdiction], without regard to conflict of law principles.",
   "terms.contact.title": "9. Contact",
-  "terms.contact.content": "If you have any questions about these Terms of Service, please contact us through our official support channel or contact form."
+  "terms.contact.content": "If you have any questions about these Terms of Service, please contact us through our official support channel or contact form.",
+
+  "language.en": "English",
+  "language.fr": "French",
+  "language.pt": "Portuguese",
+  "language.es": "Spanish",
+  "language.de": "German",
+  "language.it": "Italian"
 }

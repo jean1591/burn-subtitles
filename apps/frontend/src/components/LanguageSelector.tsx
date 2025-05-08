@@ -1,6 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { FormattedMessage } from "react-intl";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 
@@ -48,7 +49,10 @@ export function LanguageSelector({
             htmlFor={language.id}
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            {language.name}
+            <FormattedMessage
+              id={`language.${language.id}`}
+              defaultMessage={language.name}
+            />
           </Label>
         </div>
       ))}

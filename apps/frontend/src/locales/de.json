@@ -135,5 +135,12 @@
   "terms.governingLaw.title": "8. Geltendes Recht",
   "terms.governingLaw.content": "Diese Bedingungen unterliegen den Gesetzen von [Jurisdiktion einfügen], ohne Berücksichtigung von Kollisionsnormen.",
   "terms.contact.title": "9. Kontakt",
-  "terms.contact.content": "Wenn Sie Fragen zu diesen Nutzungsbedingungen haben, kontaktieren Sie uns bitte über unseren offiziellen Support-Kanal oder das Kontaktformular."
+  "terms.contact.content": "Wenn Sie Fragen zu diesen Nutzungsbedingungen haben, kontaktieren Sie uns bitte über unseren offiziellen Support-Kanal oder das Kontaktformular.",
+
+  "language.en": "Englisch",
+  "language.fr": "Französisch",
+  "language.pt": "Portugiesisch",
+  "language.es": "Spanisch",
+  "language.de": "Deutsch",
+  "language.it": "Italienisch"
 }
