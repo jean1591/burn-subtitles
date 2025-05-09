@@ -3,15 +3,27 @@ description:
 globs: apps/backend/**/*.ts
 alwaysApply: false
 ---
-This backend handles uploading `.srt` subtitle files, scheduling translations to one or more target languages using a job queue, and returning a `.zip` file of translated subtitles when complete. Built with NestJS and deployed using Docker.
+This backend handles uploading `.srt` subtitle files, scheduling translations to one or more target languages using a job queue, and returning a `.zip` file of translated subtitles when complete. Built with NestJS and deployed using Docker
+
+## 🛡️ Authentication
+
+- Uses Passport.js for local strategy authentication (email + password)
+- User data is stored in a PostgreSQL database
+- Tokens are used to authenticate and link users between backend and frontend
+- Prisma is used as the ORM for managing entities and interacting with the PostgreSQL database
 
 ## 📁 File Upload Rules
+
 - Accept only `.srt` files.
 - Store uploaded files in a structured directory: `uploads/<batch_id>/original/`.
 - Each batch of files gets a unique `batch_id` (UUID).
 - Enforce max file count (e.g., 10) and max file size (e.g., 5MB per file).
+- Unauthenticated users may only upload one file and select one target language per batch
+- Authenticated users can upload multiple files and multiple target languages
+- Upload is rejected if the authenticated user lacks enough credits to cover all file × language combinations
 
 ## 📄 Translation Job Rules
+
 - For each file × target language combination, create a translation job.
 - Each job must track:
     - `batch_id`
@@ -22,8 +34,10 @@ This backend handles uploading `.srt` subtitle files, scheduling translations to
     - `output_path` (set when done)
 - Persist job records in Redis.
 - Jobs are idempotent: same input should yield same output if reprocessed.
+- For unauthenticated users, job creation is allowed only if a single file and one language are present
 
 ## 🧵 Queue Rules
+
 - All translation jobs are enqueued using the existing event queue.
 - One job is created per file × target language.
 - After each translation job completes, it must:
@@ -36,26 +50,36 @@ This backend handles uploading `.srt` subtitle files, scheduling translations to
 - The zip file is stored in `uploads/<batch_id>/results.zip`
 
 ## 📦 Zip File Rules
+
 - Once all translations are complete:
     - Generate a .zip file: `uploads/<batch_id>/results.zip`
     - Include translated files named like `originalname.lang.srt`
 - Store final zip under `uploads/<batch_id>/results.zip`.
 
 ## 🌐 API Rules
+
 - `POST /upload`
     - Accepts multipart upload of `.srt` files + target languages
     - Returns batch_id and status endpoint
+    - Rejects unauthenticated users attempting to upload more than one file or language
+    - Requires authentication for multiple files or languages
+    - Authenticated users must have enough credits (files × languages) to proceed
 - `GET /status/:batch_id`
     - Returns job statuses and zip URL (if available)
 
 ## ✅ Validation Rules
+
 - Reject empty uploads or missing target languages
 - Ensure no duplicate file names in a batch
 - Sanitize filenames for filesystem safety
 - Validate language codes using ISO 639-1 format
+- Enforce paywall limits:
+    - Unauthenticated users may not bypass 1 file and 1 language limit
+    - Authenticated users must have sufficient credits or the request is rejected
 
 ## Project structure:
-```
+
+```text
 src/
 ├── app.module.ts
 ├── main.ts
@@ -72,6 +96,13 @@ src/
 │   └── status.gateway.ts
 ├── redis/
 │   └── redis.module.ts
+├── auth/
+│   ├── auth.module.ts
+│   ├── auth.service.ts
+│   ├── auth.controller.ts
+│   ├── local.strategy.ts
+│   ├── jwt.strategy.ts
+│   └── user.entity.ts
 ├── constants/
 │   └── index.ts
 ├── utils/
@@ -82,47 +113,12 @@ src/
     └── language.service.ts
 ```
 
-## Step by step implementation
-### Step 1: Upload Endpoint
-- `upload.controller.ts` handles:
-    - Accepting files + target languages
-    - Creating a batch ID
-    - Saving files to `uploads/<batch_id>/original/`
-    - Publishing job metadata to Redis
-    - Enqueuing translation jobs via BullMQ
-
-### Step 2: Translation Processor
-- `translation.processor.ts` handles:
-    - Listening to translation queue
-    - Detecting language (once per file)
-    - Translating using OpenAI API
-    - Writing translated files to uploads/<batch_id>/
-    - Updating Redis job status
-    - Calling checkAndQueueZipJob(batch_id)
-
-### Step 3: Zip Processor
-- `zip.processor.ts` handles:
-    - Zipping all translated `.srt` files for a batch_id
-    - Saving to `uploads/<batch_id>/results.zip`
-    - Publishing a WebSocket event via StatusGateway
-
-### Step 4: WebSocket Gateway
-- `status.gateway.ts`:
-    - Uses `@WebSocketGateway` with `@SubscribeMessage`
-    - Listens to Redis Pub/Sub or job completion hooks
-    - Emits jobDone, batchComplete, zipReady
-
-### ✅ Final Touches
-- Serve `uploads/` via `ServeStaticModule`
-- Add Bull Board UI for `/admin/queues`
-- Create utility functions:
-  - `checkAndQueueZipJob(batchId)`
-  - `detectLanguage(lines: string[])`
-  - `translateSrt(lines: string[], targetLang)`
-
 ## Deployment
+
 The application is containerized using Docker and can be deployed using docker-compose. The deployment includes:
+
 - NestJS backend service
 - Redis for job queue and caching
+- PostgreSQL for storing user accounts and credits
 - Nginx for serving static files and reverse proxy
 - SSL/TLS support via Let's Encrypt

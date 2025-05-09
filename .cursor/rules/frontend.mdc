@@ -47,6 +47,24 @@ The frontend uses WebSockets to monitor translation progress for each uploaded s
 - `batchComplete`: Signals that all translations in the batch have finished.
 - `zipReady`: Indicates that the ZIP archive has been created and is ready to download.
 
+## Authentication Flow:
+- Users can register and log in using their email and password
+- JWT tokens are stored in localStorage and used for authenticated API requests
+- Upon login or registration, user data including available credits is returned by the backend
+- The /logout endpoint clears session state and removes the token
+
+## Credit Display:
+- Logged-in users see their current credit count displayed in the navbar
+- When the landing page (upload component) loads, the frontend fetches the current user profile and credits
+- Credits are not cached in context at this stage but retrieved fresh on page load
+
+## Authenticated and Unauthenticated users
+- Unauthenticated users can upload only one .srt file and select only one target language
+- If more than one file or language is selected while unauthenticated, the "Translate" button is disabled
+- A visible message informs the user that uploading more than one file or selecting multiple languages is a feature available to logged-in users with credits
+- For authenticated users, the button remains disabled if the selected file-language combinations exceed their available credits
+- An error message is displayed above the button when the button is disabled due to insufficient credits
+
 ## Behavior:
 The WebSocket client connects to the server using the batch ID as context and listens for the above events. As translations complete, the UI updates in real time to reflect progress, show per-file language completion, and finally present a download link when the ZIP is available.
 
