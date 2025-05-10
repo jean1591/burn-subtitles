@@ -1,6 +1,6 @@
 # apps/backend/Dockerfile
 
-FROM node:18-slim AS builder
+FROM node:20 AS builder
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ RUN npm run build
 RUN ls -la dist || echo "dist directory not found"
 
 # Production stage
-FROM node:18-slim
+FROM node:20
 
 WORKDIR /app
 
@@ -38,3 +38,5 @@ EXPOSE 3000
 
 # Start the application
 CMD ["node", "dist/src/main.js"]
+
+# TODO: why do I have 2 FROM ... stages ?
