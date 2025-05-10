@@ -11,7 +11,11 @@
     "start:dev": "nest start --watch",
     "start:prod": "node dist/src/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "start-ws": "ts-node src/utils/test-socketio-client.ts"
+    "start-ws": "ts-node src/utils/test-socketio-client.ts",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:generate": "npm run typeorm migration:generate -- -d src/database/data-source.ts",
+    "migration:run": "npm run typeorm migration:run -- -d src/database/data-source.ts",
+    "migration:revert": "npm run typeorm migration:revert -- -d src/database/data-source.ts"
   },
   "dependencies": {
     "@nestjs/bull": "^11.0.2",
@@ -21,13 +25,18 @@
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/platform-socket.io": "^11.1.0",
     "@nestjs/serve-static": "^5.0.3",
+    "@nestjs/typeorm": "^11.0.0",
     "@nestjs/websockets": "^11.1.0",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
     "class-validator": "^0.14.1",
     "openai": "^4.96.2",
+    "pg": "^8.15.6",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
+    "typeorm": "^0.3.23",
     "uuid": "^11.1.0",
     "zip-a-folder": "^3.1.9"
   },
