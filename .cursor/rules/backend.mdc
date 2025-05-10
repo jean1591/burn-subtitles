@@ -10,7 +10,7 @@ This backend handles uploading `.srt` subtitle files, scheduling translations to
 - Uses Passport.js for local strategy authentication (email + password)
 - User data is stored in a PostgreSQL database
 - Tokens are used to authenticate and link users between backend and frontend
-- Prisma is used as the ORM for managing entities and interacting with the PostgreSQL database
+- Typeorm is used as the ORM for managing entities and interacting with the PostgreSQL database
 
 ## 📁 File Upload Rules
 

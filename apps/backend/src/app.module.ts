@@ -1,3 +1,4 @@
+import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { Module } from '@nestjs/common';
@@ -21,6 +22,7 @@ import { join } from 'path';
     UploadModule,
     QueueModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [StatusGateway],

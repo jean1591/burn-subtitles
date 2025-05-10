@@ -17,7 +17,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ type: 'int', default: 0 })
+  @Column({ default: 0 })
   credits: number;
 
   @CreateDateColumn()
