@@ -142,5 +142,32 @@
   "language.pt": "Portugués",
   "language.es": "Español",
   "language.de": "Alemán",
-  "language.it": "Italiano"
+  "language.it": "Italiano",
+
+  "userDropdown.account": "Mi cuenta",
+  "userDropdown.dashboard": "Dashboard",
+  "userDropdown.buyCredits": "Comprar créditos",
+  "userDropdown.logout": "Cerrar sesión",
+  "userDropdown.creditsLabel": "{credits} créditos",
+
+  "header.credits": "{credits} créditos",
+  "header.login": "Iniciar sesión",
+  "header.register": "Registrarse",
+  "header.logout": "Cerrar sesión",
+
+  "auth.login.title": "Inicia sesión en tu cuenta",
+  "auth.login.noAccount": "¿No tienes una cuenta?",
+  "auth.login.register": "Registrarse",
+  "auth.login.loading": "Iniciando sesión...",
+  "auth.login.submit": "Iniciar sesión",
+
+  "auth.register.title": "Crea tu cuenta",
+  "auth.register.haveAccount": "¿Ya tienes una cuenta?",
+  "auth.register.login": "Iniciar sesión",
+  "auth.register.loading": "Creando cuenta...",
+  "auth.register.submit": "Crear cuenta",
+
+  "auth.email": "Correo electrónico",
+  "auth.password": "Contraseña",
+  "auth.confirmPassword": "Confirmar contraseña"
 }

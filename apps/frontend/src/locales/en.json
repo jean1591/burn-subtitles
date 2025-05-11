@@ -42,6 +42,10 @@
   "header.nav.features": "Features",
   "header.nav.howItWorks": "How It Works",
   "header.nav.testimonials": "Testimonials",
+  "header.credits": "{credits} credits",
+  "header.login": "Login",
+  "header.register": "Register",
+  "header.logout": "Logout",
 
   "howItWorks.title": "How It Works",
   "howItWorks.subtitle": "Translate your subtitle files in just a few simple steps",
@@ -142,5 +146,27 @@
   "language.pt": "Portuguese",
   "language.es": "Spanish",
   "language.de": "German",
-  "language.it": "Italian"
+  "language.it": "Italian",
+
+  "auth.login.title": "Sign in to your account",
+  "auth.login.noAccount": "Don't have an account?",
+  "auth.login.register": "Register",
+  "auth.login.loading": "Signing in...",
+  "auth.login.submit": "Sign in",
+
+  "auth.register.title": "Create your account",
+  "auth.register.haveAccount": "Already have an account?",
+  "auth.register.login": "Sign in",
+  "auth.register.loading": "Creating account...",
+  "auth.register.submit": "Create account",
+
+  "auth.email": "Email address",
+  "auth.password": "Password",
+  "auth.confirmPassword": "Confirm password",
+
+  "userDropdown.account": "My Account",
+  "userDropdown.dashboard": "Dashboard",
+  "userDropdown.buyCredits": "Buy Credits",
+  "userDropdown.logout": "Logout",
+  "userDropdown.creditsLabel": "{credits} credits"
 }
