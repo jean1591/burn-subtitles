@@ -110,6 +110,12 @@ export class AuthService {
   async validateUserByCredentials(email: string, password: string) {
     const user = await this.usersRepository.findOne({
       where: { email },
+      select: {
+        id: true,
+        email: true,
+        credits: true,
+        password: true,
+      },
     });
 
     if (!user) {
