@@ -1,0 +1,59 @@
+name: titro-app
+
+services:
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes # Enable persistence
+
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile.dev
+    container_name: backend
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./apps/backend/uploads:/app/uploads
+      - ./apps/backend/src:/app/src
+      - ./apps/backend/package.json:/app/package.json
+      - ./apps/backend/tsconfig.json:/app/tsconfig.json
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_APP_API_URL=http://localhost:3000 # Local backend URL
+    container_name: frontend
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - backend
+    environment:
+      - VITE_APP_API_URL=http://localhost:3000 # Ensure the frontend is pointing to the local backend
+    ports:
+      - "5173:80" # Expose frontend on a different port (5173) to avoid conflict
+
+  nginx-proxy:
+    profiles: ["disabled"]
+
+  letsencrypt:
+    profiles: ["disabled"]
+
+volumes:
+  redis-data: # Persistent volume for Redis data
