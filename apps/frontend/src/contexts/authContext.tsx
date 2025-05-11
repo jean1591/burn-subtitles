@@ -6,6 +6,8 @@ import {
   useState,
 } from "react";
 
+import { fetchApi } from "@/lib/api";
+
 interface User {
   email: string;
   credits: number;
@@ -21,8 +23,6 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const apiUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3000";
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,15 +31,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch(`${apiUrl}/auth/me`, {
-          credentials: "include",
-        });
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData.user);
+        const token = localStorage.getItem("token");
+
+        if (token) {
+          const userData = await fetchApi("/auth/me");
+          setUser(userData);
         }
       } catch (error) {
         console.error("Auth check failed:", error);
+        localStorage.removeItem("token");
       } finally {
         setIsLoading(false);
       }
@@ -49,48 +49,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const response = await fetch(`${apiUrl}/auth/login`, {
+    const data = await fetchApi("/auth/login", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
       body: JSON.stringify({ email, password }),
     });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Login failed");
-    }
-
-    const userData = await response.json();
-    setUser(userData.user);
+    localStorage.setItem("token", data.token);
+    setUser(data.user);
   };
 
   const register = async (email: string, password: string) => {
-    const response = await fetch(`${apiUrl}/auth/register`, {
+    const data = await fetchApi("/auth/register", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
       body: JSON.stringify({ email, password }),
     });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Registration failed");
-    }
-
-    const userData = await response.json();
-    setUser(userData.user);
+    localStorage.setItem("token", data.token);
+    setUser(data.user);
   };
 
   const logout = async () => {
-    await fetch(`${apiUrl}/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
+    localStorage.removeItem("token");
     setUser(null);
   };
 
