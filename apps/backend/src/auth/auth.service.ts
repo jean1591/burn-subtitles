@@ -63,6 +63,12 @@ export class AuthService {
     // Find user
     const user = await this.usersRepository.findOne({
       where: { email },
+      select: {
+        id: true,
+        email: true,
+        credits: true,
+        password: true,
+      },
     });
 
     if (!user) {
@@ -89,7 +95,7 @@ export class AuthService {
     };
   }
 
-  async validateUser(id: string) {
+  async validateUser(id: string): Promise<User | null> {
     const user = await this.usersRepository.findOne({
       where: { id },
     });
@@ -98,11 +104,7 @@ export class AuthService {
       throw new UnauthorizedException('User not found');
     }
 
-    return {
-      id: user.id,
-      email: user.email,
-      credits: user.credits,
-    };
+    return user;
   }
 
   async validateUserByCredentials(email: string, password: string) {

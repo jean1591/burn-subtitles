@@ -12,27 +12,26 @@ import {
   ProcessStatus,
   ZipStatus,
 } from '../constants/process-status';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class UploadService {
-  private readonly MAX_FILES = 10;
-  private readonly MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+  private readonly MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
 
   constructor(
     @InjectQueue('translation') private translationQueue: Queue,
     private readonly redisService: RedisService,
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
   ) {}
 
-  async processUpload(files: File[], targetLangs: string): Promise<string> {
-    // Validate input
-    if (!files || files.length === 0) {
-      throw new BadRequestException('No files uploaded');
-    }
-
-    if (files.length > this.MAX_FILES) {
-      throw new BadRequestException(`Maximum ${this.MAX_FILES} files allowed`);
-    }
-
+  async processUpload(
+    files: File[],
+    targetLangs: string,
+    user: User | null,
+  ): Promise<string> {
     // Validate file types and sizes
     const filenames = new Set<string>();
     for (const file of files) {
@@ -86,6 +85,7 @@ export class UploadService {
           targetLang,
           status: JobStatus.QUEUED,
           outputPath,
+          userId: user?.id,
         };
 
         // Store job in Redis
@@ -121,10 +121,21 @@ export class UploadService {
         createdAt: Date.now(),
         targetLangs,
         totalJobs: jobs.length,
+        userId: user?.id,
       });
     } catch (error) {
       console.error('Error storing batch metadata:', error);
       throw error;
+    }
+
+    // If user is authenticated, deduct credits after all jobs are queued
+    if (user && user.credits > 0) {
+      const requiredCredits = files.length * targetLanguages.length;
+      await this.usersRepository.decrement(
+        { id: user.id },
+        'credits',
+        requiredCredits,
+      );
     }
 
     return batchId;
