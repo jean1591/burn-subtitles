@@ -40,10 +40,16 @@ export const HomePage = () => {
     formData.append("targetLangs", selectedLanguages.join(","));
 
     try {
-      // Make the API call
+      // Get the token from localStorage
+      const token = localStorage.getItem("token");
+
+      // Make the API call with the token in headers
       const response = await fetch(`${apiUrl}/upload`, {
         method: "POST",
         body: formData,
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
       });
 
       if (!response.ok) {
