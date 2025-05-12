@@ -1,4 +1,11 @@
-import { CheckCircle, Clock, Download, Globe, Shield } from "lucide-react";
+import {
+  CheckCircle,
+  Clock,
+  CreditCard,
+  Download,
+  Globe,
+  Shield,
+} from "lucide-react";
 
 import { FormattedMessage } from "react-intl";
 
@@ -103,19 +110,17 @@ export function Features() {
           </div>
 
           <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
-            <div className="h-10 w-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-800 font-bold mb-4">
-              $0
-            </div>
+            <CreditCard className="h-10 w-10 text-amber-500 mb-4" />
             <h3 className="text-xl font-medium mb-2">
               <FormattedMessage
-                id="features.freeService.title"
-                defaultMessage="Free Service"
+                id="features.pricing.title"
+                defaultMessage="Flexible Pricing"
               />
             </h3>
             <p className="text-neutral-600">
               <FormattedMessage
-                id="features.freeService.description"
-                defaultMessage="No registration or payment required. Just upload and translate."
+                id="features.pricing.description"
+                defaultMessage="Pay only for what you need with our credit-based system."
               />
             </p>
           </div>

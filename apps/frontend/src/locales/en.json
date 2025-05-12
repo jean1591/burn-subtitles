@@ -21,8 +21,8 @@
   "features.easyDownload.description": "Download all your translated subtitle files in a convenient zip package.",
   "features.privacyFirst.title": "Privacy First",
   "features.privacyFirst.description": "Your subtitle files are processed securely and deleted after 7 days.",
-  "features.freeService.title": "Free Service",
-  "features.freeService.description": "No registration or payment required. Just upload and translate.",
+  "features.pricing.title": "Flexible Pricing",
+  "features.pricing.description": "Pay only for what you need with our credit-based system.",
 
   "footer.appName": "SubtitlePro",
   "footer.description": "Automatically add subtitles to your videos in multiple languages. Free, no login required.",
