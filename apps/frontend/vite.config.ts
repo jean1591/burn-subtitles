@@ -13,4 +13,11 @@ export default defineConfig({
       "@": path.resolve(dirname(fileURLToPath(import.meta.url)), "src"),
     },
   },
+  server: {
+    host: true, // needed for Docker
+    port: 5173,
+    watch: {
+      usePolling: true, // needed for Docker
+    },
+  },
 });

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FileText } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { UserOrLogin } from "./header/UserOrLogin";
 
 export function Header() {
   const location = useLocation();
@@ -74,6 +75,8 @@ export function Header() {
               defaultMessage="Testimonials"
             />
           </Link>
+
+          <UserOrLogin />
           <LanguageSwitcher />
         </nav>
       </div>

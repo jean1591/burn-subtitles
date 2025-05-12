@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="py-12 md:py-16 lg:py-20">
-      <div className="container">
+      <div className="container mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-neutral-900">
             <FormattedMessage

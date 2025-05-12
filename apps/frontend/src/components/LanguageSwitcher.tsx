@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,6 +9,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLanguage, type Language } from "@/contexts/languageContext";
+
+const languageFlags: Record<Language, string> = {
+  en: "🇬🇧",
+  es: "🇪🇸",
+  fr: "🇫🇷",
+  it: "🇮🇹",
+  de: "🇩🇪",
+};
 
 export function LanguageSwitcher() {
   const { locale, setLocale, languages } = useLanguage();
@@ -24,7 +31,7 @@ export function LanguageSwitcher() {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
-          <Globe className="h-5 w-5" />
+          <span className="text-lg">{languageFlags[locale]}</span>
           <span className="sr-only">Switch language</span>
         </Button>
       </DropdownMenuTrigger>
@@ -35,6 +42,7 @@ export function LanguageSwitcher() {
             onClick={() => handleSelect(code as Language)}
             className={locale === code ? "bg-amber-50 font-medium" : ""}
           >
+            <span className="mr-2">{languageFlags[code as Language]}</span>
             {name}
           </DropdownMenuItem>
         ))}

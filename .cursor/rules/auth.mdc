@@ -1,0 +1,40 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Step 0: Add PostgreSQL and User Entity
+Install and configure PostgreSQL as the persistent database. Use TypeORM with NestJS to connect to PostgreSQL. Define a User entity with at least the following fields: id (UUID), email (unique), password (hashed), and credits (integer). You may also include createdAt and updatedAt timestamps. Set up the TypeORM module in app.module.ts or a new database.module.ts and test that the connection works. Use PostgreSQL volumes for Docker development.
+
+# Step 1: Add auth module to backend
+Generate a new auth module that handles user registration and login. Use Passport.js with the passport-local strategy to validate credentials. On login, validate user credentials using a LocalStrategy provider. On registration, check that email is unique and hash the password using bcrypt before saving. Return a JWT token and user payload on successful login. Set up AuthService to generate and sign tokens with @nestjs/jwt. Add global or route-specific guards to protect authenticated endpoints using the JwtStrategy.
+
+# Step 2: Implement JWT-based authentication
+Configure JWT via JwtModule.register using a secret and token expiry. Create a JwtStrategy to validate JWTs and extract the user payload. Add a /me endpoint to return current user information and credits when the JWT is valid. Expose the JWT token as an HTTP-only cookie in the response to the frontend during login. Enable @UseGuards(AuthGuard('jwt')) on protected routes, such as the upload route. Ensure the decoded token includes userId and credits where applicable.
+
+# Step 3: Secure upload route with auth guard
+In upload.controller.ts, detect whether the request has a valid JWT. If not, enforce stricter rules in the request validation logic: allow only one file and one target language. If the request is authenticated, verify that the user has enough credits: multiply number of files by number of target languages and compare to user’s credit balance. If insufficient, return an error. Update job queue logic to subtract credits only after all jobs are queued. Associate batchId with the userId in Redis or persist it in PostgreSQL if needed.
+
+# Step 4: Update frontend to support auth flow
+Create React components for login and registration forms. Send credentials to /login and /register endpoints using Axios. On login, store the JWT token in a secure cookie (using withCredentials: true and backend CORS config). Create an AuthContext that tracks current user state and credit balance. Provide a useAuth hook to expose login, logout, and user data throughout the app. On logout, clear the stored user state and remove the cookie.
+
+# Step 5: Fetch user info and credits on page load
+On landing page (upload screen) load, check whether the user is authenticated by calling /me. If successful, update the user context with email and credits. This allows UI elements to conditionally render based on auth state. Avoid caching this beyond the session; always refetch on reload for now. Consider showing a loading spinner or skeleton while waiting for /me to resolve.
+
+# Step 6: Enforce upload limits on frontend
+In the upload component, disable the translate button if:
+- The user is not logged in and has selected more than one file or more than one language
+- The user is logged in but the required credits exceed their balance: Display a visible warning or tooltip above the translate button explaining the Pro limitation. This should not block UI interactions but clearly indicate the requirement. Add visual cues (e.g., dimmed button, red border, or icon).
+
+# Step 7: Dynamically validate credit usage
+Add client-side logic to calculate required credits as file count × language count. In the authenticated state, compare this number to the user's credit balance. If it exceeds, disable the translate button and show a message like “Not enough credits to perform this translation. Please reduce files or target languages.” Re-enable the button automatically when the selection returns to a valid state. This feedback must be instant and reactive to changes in selection.
+
+# Step 8: Show credit balance in navbar
+Update the global Navbar component to show the current user's credit balance once logged in. If no user is authenticated, show login and register buttons instead. Display the credit count as a numeric badge or simple text (e.g., “Credits: 12”). Style it prominently but unobtrusively. Consider fetching this info from context, which is hydrated at app load via the /me endpoint.
+
+# Step 9: Link uploaded jobs to the user
+In the backend upload.service.ts or queue logic, include the userId from the JWT payload in the metadata for each queued translation job. This way, translations can be associated with a user for future admin features or audit. If job metadata is stored in Redis, extend it to hold userId. If using a database for persistence, add a userId foreign key to the job record. Credits should only be deducted after all jobs are successfully queued.
+
+# Step 10: Add migration or seeding for initial users
+Create a database seeder or migration script that populates one or more test users with defined credit amounts. This is useful for staging or local development. Include a user with no credits, one with exactly enough for one batch, and one with abundant credits. Hash passwords properly and ensure emails are unique. This allows frontend testing without needing to register accounts manually.
+

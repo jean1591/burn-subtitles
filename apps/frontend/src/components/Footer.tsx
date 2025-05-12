@@ -20,7 +20,7 @@ export function Footer() {
             <p className="text-gray-600">
               <FormattedMessage
                 id="footer.description"
-                defaultMessage="Automatically add subtitles to your videos in multiple languages. Free, no login required."
+                defaultMessage="Automatically add subtitles to your videos in multiple languages."
               />
             </p>
           </div>

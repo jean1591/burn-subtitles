@@ -9,7 +9,7 @@
     "spec": false
   },
   "compilerOptions": {
-    "manualRestart": true,
+    "manualRestart": false,
     "tsConfigPath": "./tsconfig.build.json",
     "webpack": false,
     "deleteOutDir": true,

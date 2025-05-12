@@ -2,7 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
 import { HomePage } from "../screens/Home";
+import { Login } from "../screens/Login";
 import { PrivacyPolicy } from "../screens/PrivacyPolicy";
+import { Register } from "../screens/Register";
 import { TermsOfService } from "../screens/TermsOfService";
 
 const StatusPage = lazy(() =>
@@ -16,6 +18,8 @@ export const AppRouter = () => (
       <Route path="/status/:uuid" element={<StatusPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   </Suspense>
 );
