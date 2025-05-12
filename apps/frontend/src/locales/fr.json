@@ -169,5 +169,41 @@
 
   "auth.email": "Adresse e-mail",
   "auth.password": "Mot de passe",
-  "auth.confirmPassword": "Confirmez le mot de passe"
+  "auth.confirmPassword": "Confirmez le mot de passe",
+
+  "pricing.title": "Tarification Simple et Transparente",
+  "pricing.description": "Payez uniquement ce dont vous avez besoin avec notre système basé sur les crédits. Un crédit équivaut à un fichier traduit dans une langue.",
+  "pricing.starter.title": "Starter",
+  "pricing.starter.price": "€9",
+  "pricing.starter.credits": "pour 30 crédits",
+  "pricing.starter.description": "Parfait pour les petits projets",
+  "pricing.starter.features.1": "30 traductions de sous-titres",
+  "pricing.starter.features.2": "Toutes les langues supportées",
+  "pricing.starter.features.3": "Validité de 30 jours",
+  "pricing.starter.button": "Commencer",
+
+  "pricing.professional.title": "Professional",
+  "pricing.professional.price": "€25",
+  "pricing.professional.credits": "pour 125 crédits",
+  "pricing.professional.description": "Meilleur rapport qualité-prix pour un usage régulier",
+  "pricing.professional.features.1": "125 traductions de sous-titres",
+  "pricing.professional.features.2": "Toutes les langues supportées",
+  "pricing.professional.features.3": "Validité de 60 jours",
+  "pricing.professional.features.4": "Traitement prioritaire",
+  "pricing.professional.button": "Commencer",
+  "pricing.professional.badge": "Le Plus Populaire",
+
+  "pricing.enterprise.title": "Enterprise",
+  "pricing.enterprise.price": "€100",
+  "pricing.enterprise.credits": "pour 1000 crédits",
+  "pricing.enterprise.description": "Pour les besoins à grand volume",
+  "pricing.enterprise.features.1": "1000 traductions de sous-titres",
+  "pricing.enterprise.features.2": "Toutes les langues supportées",
+  "pricing.enterprise.features.3": "Validité de 90 jours",
+  "pricing.enterprise.features.4": "Traitement prioritaire",
+  "pricing.enterprise.features.5": "Support dédié",
+  "pricing.enterprise.button": "Commencer",
+
+  "pricing.custom.title": "Besoin d'un plan personnalisé pour votre entreprise ?",
+  "pricing.custom.button": "Contactez nous"
 }

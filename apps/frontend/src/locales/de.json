@@ -169,5 +169,41 @@
 
   "auth.email": "E-Mail-Adresse",
   "auth.password": "Passwort",
-  "auth.confirmPassword": "Passwort bestätigen"
+  "auth.confirmPassword": "Passwort bestätigen",
+
+  "pricing.title": "Einfache, Transparente Preise",
+  "pricing.description": "Zahlen Sie nur für das, was Sie mit unserem kreditbasierten System benötigen. Ein Kredit entspricht einer Datei, die in eine Sprache übersetzt wird.",
+  "pricing.starter.title": "Starter",
+  "pricing.starter.price": "€9",
+  "pricing.starter.credits": "für 30 Credits",
+  "pricing.starter.description": "Perfekt für kleine Projekte",
+  "pricing.starter.features.1": "30 Untertitel-Übersetzungen",
+  "pricing.starter.features.2": "Alle unterstützten Sprachen",
+  "pricing.starter.features.3": "30 Tage Gültigkeit",
+  "pricing.starter.button": "Jetzt Starten",
+
+  "pricing.professional.title": "Professional",
+  "pricing.professional.price": "€25",
+  "pricing.professional.credits": "für 125 Credits",
+  "pricing.professional.description": "Bester Wert für regelmäßige Nutzung",
+  "pricing.professional.features.1": "125 Untertitel-Übersetzungen",
+  "pricing.professional.features.2": "Alle unterstützten Sprachen",
+  "pricing.professional.features.3": "60 Tage Gültigkeit",
+  "pricing.professional.features.4": "Prioritätsverarbeitung",
+  "pricing.professional.button": "Jetzt Starten",
+  "pricing.professional.badge": "Am Beliebtesten",
+
+  "pricing.enterprise.title": "Enterprise",
+  "pricing.enterprise.price": "€100",
+  "pricing.enterprise.credits": "für 1000 Credits",
+  "pricing.enterprise.description": "Für hohe Volumen",
+  "pricing.enterprise.features.1": "1000 Untertitel-Übersetzungen",
+  "pricing.enterprise.features.2": "Alle unterstützten Sprachen",
+  "pricing.enterprise.features.3": "90 Tage Gültigkeit",
+  "pricing.enterprise.features.4": "Prioritätsverarbeitung",
+  "pricing.enterprise.features.5": "Dedizierter Support",
+  "pricing.enterprise.button": "Jetzt Starten",
+
+  "pricing.custom.title": "Benötigen Sie einen individuellen Plan für Ihr Unternehmen?",
+  "pricing.custom.button": "Vertrieb kontaktieren"
 }

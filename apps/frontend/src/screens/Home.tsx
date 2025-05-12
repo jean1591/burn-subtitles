@@ -1,6 +1,7 @@
 import { Features } from "@/components/Features";
 import { FormattedMessage } from "react-intl";
 import { HowItWorks } from "@/components/HowItWorks";
+import { PricingSection } from "@/components/Pricing";
 import { Upload } from "@/components/Upload";
 
 export const HomePage = () => {
@@ -44,6 +45,7 @@ export const HomePage = () => {
 
         <Features />
         <HowItWorks />
+        <PricingSection />
       </main>
     </div>
   );

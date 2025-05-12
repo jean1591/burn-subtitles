@@ -169,5 +169,41 @@
 
   "auth.email": "Correo electrónico",
   "auth.password": "Contraseña",
-  "auth.confirmPassword": "Confirmar contraseña"
+  "auth.confirmPassword": "Confirmar contraseña",
+
+  "pricing.title": "Precios Simples y Transparentes",
+  "pricing.description": "Paga solo por lo que necesitas con nuestro sistema basado en créditos. Un crédito equivale a un archivo traducido a un idioma.",
+  "pricing.starter.title": "Starter",
+  "pricing.starter.price": "€9",
+  "pricing.starter.credits": "por 30 créditos",
+  "pricing.starter.description": "Perfecto para proyectos pequeños",
+  "pricing.starter.features.1": "30 traducciones de subtítulos",
+  "pricing.starter.features.2": "Todos los idiomas soportados",
+  "pricing.starter.features.3": "Validez de 30 días",
+  "pricing.starter.button": "Comenzar",
+
+  "pricing.professional.title": "Professional",
+  "pricing.professional.price": "€25",
+  "pricing.professional.credits": "por 125 créditos",
+  "pricing.professional.description": "Mejor valor para uso regular",
+  "pricing.professional.features.1": "125 traducciones de subtítulos",
+  "pricing.professional.features.2": "Todos los idiomas soportados",
+  "pricing.professional.features.3": "Validez de 60 días",
+  "pricing.professional.features.4": "Procesamiento prioritario",
+  "pricing.professional.button": "Comenzar",
+  "pricing.professional.badge": "Más Popular",
+
+  "pricing.enterprise.title": "Enterprise",
+  "pricing.enterprise.price": "€100",
+  "pricing.enterprise.credits": "por 1000 créditos",
+  "pricing.enterprise.description": "Para necesidades de alto volumen",
+  "pricing.enterprise.features.1": "1000 traducciones de subtítulos",
+  "pricing.enterprise.features.2": "Todos los idiomas soportados",
+  "pricing.enterprise.features.3": "Validez de 90 días",
+  "pricing.enterprise.features.4": "Procesamiento prioritario",
+  "pricing.enterprise.features.5": "Soporte dedicado",
+  "pricing.enterprise.button": "Comenzar",
+
+  "pricing.custom.title": "¿Necesitas un plan personalizado para tu empresa?",
+  "pricing.custom.button": "Contacta con Ventas"
 }

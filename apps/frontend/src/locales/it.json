@@ -169,5 +169,41 @@
 
   "auth.email": "Indirizzo email",
   "auth.password": "Password",
-  "auth.confirmPassword": "Conferma password"
+  "auth.confirmPassword": "Conferma password",
+
+  "pricing.title": "Prezzi Semplici e Trasparenti",
+  "pricing.description": "Paga solo per ciò di cui hai bisogno con il nostro sistema basato su crediti. Un credito equivale a un file tradotto in una lingua.",
+  "pricing.starter.title": "Starter",
+  "pricing.starter.price": "€9",
+  "pricing.starter.credits": "per 30 crediti",
+  "pricing.starter.description": "Perfetto per progetti piccoli",
+  "pricing.starter.features.1": "30 traduzioni di sottotitoli",
+  "pricing.starter.features.2": "Tutte le lingue supportate",
+  "pricing.starter.features.3": "Validità di 30 giorni",
+  "pricing.starter.button": "Inizia",
+
+  "pricing.professional.title": "Professional",
+  "pricing.professional.price": "€25",
+  "pricing.professional.credits": "per 125 crediti",
+  "pricing.professional.description": "Miglior valore per uso regolare",
+  "pricing.professional.features.1": "125 traduzioni di sottotitoli",
+  "pricing.professional.features.2": "Tutte le lingue supportate",
+  "pricing.professional.features.3": "Validità di 60 giorni",
+  "pricing.professional.features.4": "Elaborazione prioritaria",
+  "pricing.professional.button": "Inizia",
+  "pricing.professional.badge": "Più Popolare",
+
+  "pricing.enterprise.title": "Enterprise",
+  "pricing.enterprise.price": "€100",
+  "pricing.enterprise.credits": "per 1000 crediti",
+  "pricing.enterprise.description": "Per necessità di alto volume",
+  "pricing.enterprise.features.1": "1000 traduzioni di sottotitoli",
+  "pricing.enterprise.features.2": "Tutte le lingue supportate",
+  "pricing.enterprise.features.3": "Validità di 90 giorni",
+  "pricing.enterprise.features.4": "Elaborazione prioritaria",
+  "pricing.enterprise.features.5": "Supporto dedicato",
+  "pricing.enterprise.button": "Inizia",
+
+  "pricing.custom.title": "Hai bisogno di un piano personalizzato per la tua azienda?",
+  "pricing.custom.button": "Contatta Vendite"
 }
