@@ -79,7 +79,7 @@
   "status.title": "Estado de la traducción",
   "status.translatedFiles": "Archivos traducidos:",
   "status.noJobs": "No hay trabajos de traducción aún.",
-  "status.translationId": "ID de traducción: {id}",
+  "status.translationId": "ID de traducción: {uuid}",
   "status.backToHome": "← Volver al inicio",
   "status.downloadError": "Error al descargar el archivo. Por favor, inténtalo de nuevo.",
   "status.downloadErrorMissingId": "No se puede descargar: ID de lote faltante",

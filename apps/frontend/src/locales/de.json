@@ -79,7 +79,7 @@
   "status.title": "Übersetzungsstatus",
   "status.translatedFiles": "Übersetzte Dateien:",
   "status.noJobs": "Noch keine Übersetzungsaufträge.",
-  "status.translationId": "Übersetzungs-ID: {id}",
+  "status.translationId": "Übersetzungs-ID: {uuid}",
   "status.backToHome": "← Zurück zur Startseite",
   "status.downloadError": "Fehler beim Herunterladen der Datei. Bitte versuchen Sie es erneut.",
   "status.downloadErrorMissingId": "Herunterladen nicht möglich: Batch-ID fehlt",

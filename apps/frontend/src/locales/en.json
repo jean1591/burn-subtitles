@@ -83,7 +83,7 @@
   "status.title": "Translation status",
   "status.translatedFiles": "Translated Files:",
   "status.noJobs": "No translation jobs yet.",
-  "status.translationId": "Translation ID: {id}",
+  "status.translationId": "Translation ID: {uuid}",
   "status.backToHome": "← Back to Home",
   "status.downloadError": "Failed to download the file. Please try again.",
   "status.downloadErrorMissingId": "Unable to download: missing batch ID",

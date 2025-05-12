@@ -79,7 +79,7 @@
   "status.title": "Stato della traduzione",
   "status.translatedFiles": "File tradotti:",
   "status.noJobs": "Nessun lavoro di traduzione ancora.",
-  "status.translationId": "ID traduzione: {id}",
+  "status.translationId": "ID traduzione: {uuid}",
   "status.backToHome": "← Torna alla Home",
   "status.downloadError": "Impossibile scaricare il file. Si prega di riprovare.",
   "status.downloadErrorMissingId": "Impossibile scaricare: ID batch mancante",

@@ -79,7 +79,7 @@
   "status.title": "État de la traduction",
   "status.translatedFiles": "Fichiers traduits :",
   "status.noJobs": "Aucune traduction en cours.",
-  "status.translationId": "ID de traduction : {id}",
+  "status.translationId": "ID de traduction : {uuid}",
   "status.backToHome": "← Retour à l'accueil",
   "status.downloadError": "Échec du téléchargement du fichier. Veuillez réessayer.",
   "status.downloadErrorMissingId": "Impossible de télécharger : ID manquant",
