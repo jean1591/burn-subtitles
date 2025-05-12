@@ -5,7 +5,7 @@ import { Upload } from "@/components/Upload";
 
 export const HomePage = () => {
   return (
-    <div className="flex min-h-screen flex-col bg-[#FDF8F3]">
+    <div className="px-4 sm:px-0 flex min-h-screen flex-col bg-[#FDF8F3]">
       <main className="flex-1">
         <section className="mx-auto container py-12 md:py-16 lg:py-20">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">

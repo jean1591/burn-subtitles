@@ -6,7 +6,7 @@ export function Features() {
   return (
     <section id="features" className="bg-amber-50 py-12 md:py-16 lg:py-20">
       <div className="container mx-auto">
-        <div className="text-center max-w-3xl mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-neutral-900">
             <FormattedMessage
               id="features.title"
