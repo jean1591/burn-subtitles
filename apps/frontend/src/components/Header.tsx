@@ -77,7 +77,6 @@ export function Header() {
           </Link>
 
           <UserOrLogin />
-
           <LanguageSwitcher />
         </nav>
       </div>
