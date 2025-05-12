@@ -33,19 +33,25 @@ export function Upload() {
       }
     } else {
       const requiredCredits = files.length * selectedLanguages.length;
-      if (requiredCredits > user.credits) {
+
+      if (requiredCredits > 1 && requiredCredits > user.credits) {
         return "Not enough credits to perform this translation. Please reduce the number of files or target languages.";
       }
     }
+
     return null;
   };
 
   const isTranslateDisabled = () => {
     if (files.length === 0 || selectedLanguages.length === 0) return true;
+
     if (!user) {
       return files.length > 1 || selectedLanguages.length > 1;
     }
-    return files.length * selectedLanguages.length > user.credits;
+
+    const requiredCredits = files.length * selectedLanguages.length;
+
+    return requiredCredits > 1 && requiredCredits > user.credits;
   };
 
   const handleTranslate = async () => {
