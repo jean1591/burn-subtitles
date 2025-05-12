@@ -15,7 +15,7 @@ export function Upload() {
   const [files, setFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const navigate = useNavigate();
 
   const updateFiles = (newFiles: File[]) => {
@@ -75,6 +75,12 @@ export function Upload() {
       }
 
       const data = await response.json();
+
+      // Refresh user data to update credits
+      if (user) {
+        await refreshUser();
+      }
+
       navigate(`/status/${data.batchId}`);
     } catch (error) {
       console.error("Upload error:", error);
