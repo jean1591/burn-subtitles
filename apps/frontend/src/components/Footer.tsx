@@ -1,8 +1,38 @@
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { FormattedMessage } from "react-intl";
-import { Link } from "react-router-dom";
 import { Subtitles } from "lucide-react";
 
 export function Footer() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleScrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
+    e.preventDefault();
+
+    // If we're not on the home page, navigate to home first
+    if (location.pathname !== "/") {
+      navigate("/");
+      // Use setTimeout to ensure the navigation has completed
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+      return;
+    }
+
+    // If we're already on home page, just scroll
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <footer className="mx-auto bg-white border-t border-amber-100">
       <div className="container px-4 md:px-6 py-12">
@@ -11,10 +41,7 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <Subtitles className="h-6 w-6 text-amber-600" />
               <span className="text-xl font-semibold text-gray-800">
-                <FormattedMessage
-                  id="footer.appName"
-                  defaultMessage="SubtitlePro"
-                />
+                <FormattedMessage id="footer.appName" defaultMessage="Titro" />
               </span>
             </div>
             <p className="text-gray-600">
@@ -36,6 +63,7 @@ export function Footer() {
               <li>
                 <Link
                   to="#features"
+                  onClick={(e) => handleScrollToSection(e, "features")}
                   className="text-gray-600 hover:text-amber-600"
                 >
                   <FormattedMessage
@@ -47,6 +75,7 @@ export function Footer() {
               <li>
                 <Link
                   to="#how-it-works"
+                  onClick={(e) => handleScrollToSection(e, "how-it-works")}
                   className="text-gray-600 hover:text-amber-600"
                 >
                   <FormattedMessage
@@ -57,12 +86,13 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  to="#testimonials"
+                  to="#pricing"
+                  onClick={(e) => handleScrollToSection(e, "pricing")}
                   className="text-gray-600 hover:text-amber-600"
                 >
                   <FormattedMessage
-                    id="footer.resources.testimonials"
-                    defaultMessage="Testimonials"
+                    id="footer.resources.pricing"
+                    defaultMessage="Pricing"
                   />
                 </Link>
               </li>
@@ -107,7 +137,7 @@ export function Footer() {
           <p className="text-sm text-gray-600">
             <FormattedMessage
               id="footer.copyright"
-              defaultMessage="© {year} SubtitlePro. All rights reserved."
+              defaultMessage="© {year} Titro. All rights reserved."
               values={{ year: new Date().getFullYear() }}
             />
           </p>

@@ -30,7 +30,11 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9 rounded-full hover:cursor-pointer"
+        >
           <span className="text-lg">{languageFlags[locale]}</span>
           <span className="sr-only">Switch language</span>
         </Button>

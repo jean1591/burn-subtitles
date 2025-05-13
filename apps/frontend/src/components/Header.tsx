@@ -66,13 +66,13 @@ export function Header() {
             />
           </Link>
           <Link
-            to="/#testimonials"
-            onClick={(e) => handleScrollToSection(e, "testimonials")}
+            to="/#pricing"
+            onClick={(e) => handleScrollToSection(e, "pricing")}
             className="text-sm font-medium text-neutral-700 hover:text-amber-600 transition-colors"
           >
             <FormattedMessage
-              id="header.nav.testimonials"
-              defaultMessage="Testimonials"
+              id="header.nav.pricing"
+              defaultMessage="Pricing"
             />
           </Link>
 

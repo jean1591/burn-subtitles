@@ -20,7 +20,7 @@ export function Testimonials() {
           <p className="max-w-[700px] text-gray-600 md:text-lg">
             <FormattedMessage
               id="testimonials.subtitle"
-              defaultMessage="Don't just take our word for it. Here's what content creators are saying about SubtitlePro."
+              defaultMessage="Don't just take our word for it. Here's what content creators are saying about Titro."
             />
           </p>
         </div>
@@ -55,7 +55,7 @@ export function Testimonials() {
             <p className="text-gray-700">
               <FormattedMessage
                 id="testimonials.testimonial1.content"
-                defaultMessage="SubtitlePro has been a game-changer for my YouTube channel. I can now reach a global audience without spending hours on manual subtitling."
+                defaultMessage="Titro has been a game-changer for my YouTube channel. I can now reach a global audience without spending hours on manual subtitling."
               />
             </p>
           </div>
@@ -89,7 +89,7 @@ export function Testimonials() {
             <p className="text-gray-700">
               <FormattedMessage
                 id="testimonials.testimonial2.content"
-                defaultMessage="The accuracy of the subtitles is impressive. I've tried other tools, but SubtitlePro consistently delivers the best results for my documentary films."
+                defaultMessage="The accuracy of the subtitles is impressive. I've tried other tools, but Titro consistently delivers the best results for my documentary films."
               />
             </p>
           </div>
@@ -123,7 +123,7 @@ export function Testimonials() {
             <p className="text-gray-700">
               <FormattedMessage
                 id="testimonials.testimonial3.content"
-                defaultMessage="Our marketing videos now reach audiences in multiple countries thanks to SubtitlePro. The process is so simple, and the results are fantastic."
+                defaultMessage="Our marketing videos now reach audiences in multiple countries thanks to Titro. The process is so simple, and the results are fantastic."
               />
             </p>
           </div>

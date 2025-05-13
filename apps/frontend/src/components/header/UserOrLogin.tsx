@@ -14,12 +14,12 @@ export const UserOrLogin = () => {
       ) : (
         <div className="flex items-center gap-2">
           <Link to="/login">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" className="hover:cursor-pointer">
               <FormattedMessage id="header.login" defaultMessage="Login" />
             </Button>
           </Link>
           <Link to="/register">
-            <Button size="sm">
+            <Button size="sm" className="hover:cursor-pointer">
               <FormattedMessage
                 id="header.register"
                 defaultMessage="Register"
