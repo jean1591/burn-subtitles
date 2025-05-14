@@ -4,7 +4,6 @@
   "home.description": "Upload your subtitle files and get accurate translations in minutes. No manual work needed.",
   "home.queueNote": "Note: Your files will be processed in order of submission. You'll be able to track your position in the queue.",
   "home.selectLanguages": "Select subtitle languages:",
-  "home.queueNote": "Files are processed in order of submission. You'll receive a unique link to track your file's status in the queue.",
   "home.translateButton": "Translate Subtitles",
 
   "legal.translationDisclaimer": "This is the official English version of this document. All other translations are AI-generated and provided for convenience only. Only the English version is legally binding.",
@@ -204,5 +203,38 @@
   "userDropdown.dashboard": "Dashboard",
   "userDropdown.buyCredits": "Buy Credits",
   "userDropdown.logout": "Logout",
-  "userDropdown.creditsLabel": "{credits} credits"
+  "userDropdown.creditsLabel": "{credits} credits",
+
+  "dashboard.title": "Dashboard",
+  "dashboard.creditBalance.title": "Credit Balance",
+  "dashboard.creditBalance.description": "Your available translation credits",
+  "dashboard.creditBalance.available": "Available credits",
+  "dashboard.creditBalance.purchase": "Purchase Credits",
+  "dashboard.quickStats.title": "Quick Stats",
+  "dashboard.quickStats.description": "Your translation activity",
+  "dashboard.quickStats.totalTranslations": "Total Translations",
+  "dashboard.quickStats.creditsUsed": "Credits Used",
+  "dashboard.history.title": "Translation History",
+  "dashboard.history.description": "Your recent translation jobs",
+  "dashboard.history.newTranslation": "New Translation",
+  "dashboard.history.noJobs": "No translation jobs yet.",
+  "dashboard.history.fileName": "File Name",
+  "dashboard.history.languages": "Languages",
+  "dashboard.history.date": "Date",
+  "dashboard.history.status": "Status",
+  "dashboard.history.credits": "Credits",
+  "dashboard.history.actions": "Actions",
+  "dashboard.history.view": "View",
+
+  "languages.en": "English",
+  "languages.es": "Spanish",
+  "languages.pt": "Portuguese",
+  "languages.it": "Italian",
+  "languages.de": "German",
+  "languages.fr": "French",
+
+  "date.justNow": "Just now",
+  "date.minutesAgo": "{minutes} minute{minutes, plural, one {} other {s}} ago",
+  "date.hoursAgo": "{hours} hour{hours, plural, one {} other {s}} ago",
+  "date.daysAgo": "{days} day{days, plural, one {} other {s}} ago"
 }

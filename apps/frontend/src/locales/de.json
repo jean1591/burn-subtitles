@@ -4,7 +4,6 @@
   "home.description": "Laden Sie Ihre Untertiteldateien hoch und erhalten Sie präzise Übersetzungen in wenigen Minuten. Keine manuelle Arbeit erforderlich.",
   "home.queueNote": "Hinweis: Ihre Dateien werden in der Reihenfolge des Eingangs verarbeitet. Sie können Ihre Position in der Warteschlange verfolgen.",
   "home.selectLanguages": "Wählen Sie die Untertitelsprachen:",
-  "home.queueNote": "Dateien werden in der Reihenfolge des Eingangs verarbeitet. Sie erhalten einen eindeutigen Link, um den Status Ihrer Datei in der Warteschlange zu verfolgen.",
   "home.translateButton": "Untertitel übersetzen",
 
   "legal.translationDisclaimer": "Dies ist eine Übersetzung der offiziellen englischen Version dieses Dokuments. Alle Übersetzungen werden von KI generiert und nur zur Bequemlichkeit bereitgestellt. Nur die englische Version ist rechtlich bindend.",
@@ -148,7 +147,7 @@
   "userDropdown.dashboard": "Dashboard",
   "userDropdown.buyCredits": "Credits kaufen",
   "userDropdown.logout": "Abmelden",
-  "userDropdown.creditsLabel": "{credits} Credits",
+  "userDropdown.creditsLabel": "{credits} Guthaben",
 
   "header.credits": "{credits} Credits",
   "header.login": "Anmelden",
@@ -205,5 +204,38 @@
   "pricing.enterprise.button": "Jetzt Starten",
 
   "pricing.custom.title": "Benötigen Sie einen individuellen Plan für Ihr Unternehmen?",
-  "pricing.custom.button": "Vertrieb kontaktieren"
+  "pricing.custom.button": "Vertrieb kontaktieren",
+
+  "dashboard.title": "Dashboard",
+  "dashboard.creditBalance.title": "Guthaben",
+  "dashboard.creditBalance.description": "Ihre verfügbaren Übersetzungsguthaben",
+  "dashboard.creditBalance.available": "Verfügbares Guthaben",
+  "dashboard.creditBalance.purchase": "Guthaben Kaufen",
+  "dashboard.quickStats.title": "Schnellstatistik",
+  "dashboard.quickStats.description": "Ihre Übersetzungsaktivität",
+  "dashboard.quickStats.totalTranslations": "Gesamtübersetzungen",
+  "dashboard.quickStats.creditsUsed": "Verwendetes Guthaben",
+  "dashboard.history.title": "Übersetzungshistorie",
+  "dashboard.history.description": "Ihre kürzlich durchgeführten Übersetzungen",
+  "dashboard.history.newTranslation": "Neue Übersetzung",
+  "dashboard.history.noJobs": "Noch keine Übersetzungsaufträge.",
+  "dashboard.history.fileName": "Dateiname",
+  "dashboard.history.languages": "Sprachen",
+  "dashboard.history.date": "Datum",
+  "dashboard.history.status": "Status",
+  "dashboard.history.credits": "Guthaben",
+  "dashboard.history.actions": "Aktionen",
+  "dashboard.history.view": "Ansehen",
+
+  "languages.en": "Englisch",
+  "languages.es": "Spanisch",
+  "languages.pt": "Portugiesisch",
+  "languages.it": "Italienisch",
+  "languages.de": "Deutsch",
+  "languages.fr": "Französisch",
+
+  "date.justNow": "Gerade eben",
+  "date.minutesAgo": "vor {minutes} Minute{minutes, plural, one {} other {n}}",
+  "date.hoursAgo": "vor {hours} Stunde{hours, plural, one {} other {n}}",
+  "date.daysAgo": "vor {days} Tag{days, plural, one {} other {en}}"
 }

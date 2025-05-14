@@ -4,7 +4,6 @@
   "home.description": "Sube tus archivos de subtítulos y obtén traducciones precisas en minutos. Sin trabajo manual necesario.",
   "home.queueNote": "Nota: Tus archivos se procesarán en orden de envío. Podrás seguir tu posición en la cola.",
   "home.selectLanguages": "Selecciona los idiomas de los subtítulos:",
-  "home.queueNote": "Los archivos se procesan en orden de envío. Recibirás un enlace único para seguir el estado de tu archivo en la cola.",
   "home.translateButton": "Traducir Subtítulos",
 
   "legal.translationDisclaimer": "Esta es una traducción de la versión oficial en inglés de este documento. Todas las traducciones son generadas por IA y se proporcionan únicamente por conveniencia. Solo la versión en inglés es legalmente vinculante.",
@@ -205,5 +204,38 @@
   "pricing.enterprise.button": "Comenzar",
 
   "pricing.custom.title": "¿Necesitas un plan personalizado para tu empresa?",
-  "pricing.custom.button": "Contacta con Ventas"
+  "pricing.custom.button": "Contacta con Ventas",
+
+  "dashboard.title": "Panel de Control",
+  "dashboard.creditBalance.title": "Saldo de Créditos",
+  "dashboard.creditBalance.description": "Tus créditos de traducción disponibles",
+  "dashboard.creditBalance.available": "Créditos disponibles",
+  "dashboard.creditBalance.purchase": "Comprar Créditos",
+  "dashboard.quickStats.title": "Estadísticas Rápidas",
+  "dashboard.quickStats.description": "Tu actividad de traducción",
+  "dashboard.quickStats.totalTranslations": "Total de Traducciones",
+  "dashboard.quickStats.creditsUsed": "Créditos Usados",
+  "dashboard.history.title": "Historial de Traducciones",
+  "dashboard.history.description": "Tus trabajos de traducción recientes",
+  "dashboard.history.newTranslation": "Nueva Traducción",
+  "dashboard.history.noJobs": "Aún no hay trabajos de traducción.",
+  "dashboard.history.fileName": "Nombre del Archivo",
+  "dashboard.history.languages": "Idiomas",
+  "dashboard.history.date": "Fecha",
+  "dashboard.history.status": "Estado",
+  "dashboard.history.credits": "Créditos",
+  "dashboard.history.actions": "Acciones",
+  "dashboard.history.view": "Ver",
+
+  "languages.en": "Inglés",
+  "languages.es": "Español",
+  "languages.pt": "Portugués",
+  "languages.it": "Italiano",
+  "languages.de": "Alemán",
+  "languages.fr": "Francés",
+
+  "date.justNow": "Ahora mismo",
+  "date.minutesAgo": "hace {minutes} minuto{minutes, plural, one {} other {s}}",
+  "date.hoursAgo": "hace {hours} hora{hours, plural, one {} other {s}}",
+  "date.daysAgo": "hace {days} día{days, plural, one {} other {s}}"
 }

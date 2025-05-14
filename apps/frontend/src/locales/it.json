@@ -4,7 +4,6 @@
   "home.description": "Carica i tuoi file di sottotitoli e ottieni traduzioni precise in pochi minuti. Nessun lavoro manuale necessario.",
   "home.queueNote": "Nota: I tuoi file verranno elaborati in ordine di invio. Potrai monitorare la tua posizione nella coda.",
   "home.selectLanguages": "Seleziona le lingue dei sottotitoli:",
-  "home.queueNote": "I file vengono elaborati in ordine di invio. Riceverai un link univoco per monitorare lo stato del tuo file nella coda.",
   "home.translateButton": "Traduci Sottotitoli",
 
   "legal.translationDisclaimer": "Questa è una traduzione della versione ufficiale in inglese di questo documento. Tutte le traduzioni sono generate dall'IA e fornite solo per comodità. Solo la versione inglese è legalmente vincolante.",
@@ -205,5 +204,38 @@
   "pricing.enterprise.button": "Inizia",
 
   "pricing.custom.title": "Hai bisogno di un piano personalizzato per la tua azienda?",
-  "pricing.custom.button": "Contatta Vendite"
+  "pricing.custom.button": "Contatta Vendite",
+
+  "dashboard.title": "Dashboard",
+  "dashboard.creditBalance.title": "Saldo Crediti",
+  "dashboard.creditBalance.description": "I tuoi crediti di traduzione disponibili",
+  "dashboard.creditBalance.available": "Crediti disponibili",
+  "dashboard.creditBalance.purchase": "Acquista Crediti",
+  "dashboard.quickStats.title": "Statistiche Rapide",
+  "dashboard.quickStats.description": "La tua attività di traduzione",
+  "dashboard.quickStats.totalTranslations": "Totale Traduzioni",
+  "dashboard.quickStats.creditsUsed": "Crediti Utilizzati",
+  "dashboard.history.title": "Cronologia Traduzioni",
+  "dashboard.history.description": "I tuoi lavori di traduzione recenti",
+  "dashboard.history.newTranslation": "Nuova Traduzione",
+  "dashboard.history.noJobs": "Nessun lavoro di traduzione ancora.",
+  "dashboard.history.fileName": "Nome File",
+  "dashboard.history.languages": "Lingue",
+  "dashboard.history.date": "Data",
+  "dashboard.history.status": "Stato",
+  "dashboard.history.credits": "Crediti",
+  "dashboard.history.actions": "Azioni",
+  "dashboard.history.view": "Visualizza",
+
+  "languages.en": "Inglese",
+  "languages.es": "Spagnolo",
+  "languages.pt": "Portoghese",
+  "languages.it": "Italiano",
+  "languages.de": "Tedesco",
+  "languages.fr": "Francese",
+
+  "date.justNow": "Proprio ora",
+  "date.minutesAgo": "{minutes} minuto{minutes, plural, one {} other {i}} fa",
+  "date.hoursAgo": "{hours} ora{hours, plural, one {} other {e}} fa",
+  "date.daysAgo": "{days} giorno{days, plural, one {} other {i}} fa"
 }

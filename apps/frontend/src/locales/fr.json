@@ -4,7 +4,6 @@
   "home.description": "Téléchargez vos fichiers de sous-titres et obtenez des traductions précises en quelques minutes. Pas de travail manuel nécessaire.",
   "home.queueNote": "Note : Vos fichiers seront traités dans l'ordre de soumission. Vous pourrez suivre votre position dans la file d'attente.",
   "home.selectLanguages": "Sélectionnez les langues des sous-titres :",
-  "home.queueNote": "Les fichiers sont traités dans l'ordre de soumission. Vous recevrez un lien unique pour suivre l'état de votre fichier dans la file d'attente.",
   "home.translateButton": "Traduire les sous-titres",
 
   "legal.translationDisclaimer": "Ceci est une traduction de la version officielle en anglais de ce document. Toutes les traductions sont générées par IA et fournies uniquement pour des raisons de commodité. Seule la version anglaise est juridiquement valide.",
@@ -205,5 +204,38 @@
   "pricing.enterprise.button": "Commencer",
 
   "pricing.custom.title": "Besoin d'un plan personnalisé pour votre entreprise ?",
-  "pricing.custom.button": "Contactez nous"
+  "pricing.custom.button": "Contactez nous",
+
+  "dashboard.title": "Tableau de Bord",
+  "dashboard.creditBalance.title": "Solde de Crédits",
+  "dashboard.creditBalance.description": "Vos crédits de traduction disponibles",
+  "dashboard.creditBalance.available": "Crédits disponibles",
+  "dashboard.creditBalance.purchase": "Acheter des Crédits",
+  "dashboard.quickStats.title": "Statistiques Rapides",
+  "dashboard.quickStats.description": "Votre activité de traduction",
+  "dashboard.quickStats.totalTranslations": "Total des Traductions",
+  "dashboard.quickStats.creditsUsed": "Crédits Utilisés",
+  "dashboard.history.title": "Historique des Traductions",
+  "dashboard.history.description": "Vos travaux de traduction récents",
+  "dashboard.history.newTranslation": "Nouvelle Traduction",
+  "dashboard.history.noJobs": "Aucun travail de traduction pour le moment.",
+  "dashboard.history.fileName": "Nom du Fichier",
+  "dashboard.history.languages": "Langues",
+  "dashboard.history.date": "Date",
+  "dashboard.history.status": "Statut",
+  "dashboard.history.credits": "Crédits",
+  "dashboard.history.actions": "Actions",
+  "dashboard.history.view": "Voir",
+
+  "languages.en": "Anglais",
+  "languages.es": "Espagnol",
+  "languages.pt": "Portugais",
+  "languages.it": "Italien",
+  "languages.de": "Allemand",
+  "languages.fr": "Français",
+
+  "date.justNow": "À l'instant",
+  "date.minutesAgo": "il y a {minutes} minute{minutes, plural, one {} other {s}}",
+  "date.hoursAgo": "il y a {hours} heure{hours, plural, one {} other {s}}",
+  "date.daysAgo": "il y a {days} jour{days, plural, one {} other {s}}"
 }
