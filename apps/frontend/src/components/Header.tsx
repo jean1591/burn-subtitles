@@ -37,7 +37,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-amber-100 bg-amber-50/80 backdrop-blur-sm">
-      <div className="container flex h-16 items-center justify-between px-4 md:px-6 mx-auto">
+      <div className="container flex h-16 items-center justify-between px-4 sm:px-0 mx-auto">
         <Link to="/" className="flex items-center gap-2">
           <FileText className="h-6 w-6 text-amber-500" />
           <span className="text-xl font-bold">

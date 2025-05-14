@@ -1,9 +1,19 @@
 import { FormattedMessage } from "react-intl";
 import { UIStatus } from "../../constants/process-status";
 
-export const StatusPill = ({ status }: { status: string | null }) => {
+export const StatusPill = ({
+  className,
+  status,
+}: {
+  className?: string;
+  status: string | null;
+}) => {
   return (
-    <div className={`px-4 py-1 rounded-full ${getStatusColor(status)}`}>
+    <div
+      className={`px-4 py-1 rounded-full ${getStatusColor(
+        status
+      )} ${className}`}
+    >
       <p className="font-medium">{getStatusText(status)}</p>
     </div>
   );

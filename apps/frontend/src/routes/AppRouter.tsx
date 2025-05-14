@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
+import { Dashboard } from "../screens/Dashboard";
 import { HomePage } from "../screens/Home";
 import { Login } from "../screens/Login";
 import { PrivacyPolicy } from "../screens/PrivacyPolicy";
@@ -20,6 +21,7 @@ export const AppRouter = () => (
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   </Suspense>
 );
