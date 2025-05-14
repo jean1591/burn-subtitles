@@ -26,7 +26,7 @@ export const HomePage = () => {
               <p className="text-lg text-neutral-600 md:text-xl">
                 <FormattedMessage
                   id="home.description"
-                  defaultMessage="Upload your subtitle files and get accurate translations in minutes. No manual work needed. No login required."
+                  defaultMessage="Upload your subtitle files and get accurate translations in minutes. No manual work needed."
                 />
               </p>
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-amber-800">

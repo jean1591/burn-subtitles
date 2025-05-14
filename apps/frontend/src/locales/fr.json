@@ -1,10 +1,10 @@
 {
   "home.automaticTranslation": "Traduction Automatique",
   "home.title": "Traduisez vos sous-titres en plusieurs langues",
-  "home.description": "Téléchargez vos fichiers de sous-titres et obtenez des traductions précises en quelques minutes. Pas de travail manuel nécessaire. Pas de connexion requise.",
+  "home.description": "Téléchargez vos fichiers de sous-titres et obtenez des traductions précises en quelques minutes. Pas de travail manuel nécessaire.",
   "home.queueNote": "Note : Vos fichiers seront traités dans l'ordre de soumission. Vous pourrez suivre votre position dans la file d'attente.",
   "home.selectLanguages": "Sélectionnez les langues des sous-titres :",
-  "home.freeServiceNote": "Service gratuit : Les fichiers sont traités dans l'ordre de soumission. Vous recevrez un lien unique pour suivre l'état de votre fichier dans la file d'attente.",
+  "home.queueNote": "Les fichiers sont traités dans l'ordre de soumission. Vous recevrez un lien unique pour suivre l'état de votre fichier dans la file d'attente.",
   "home.translateButton": "Traduire les sous-titres",
 
   "legal.translationDisclaimer": "Ceci est une traduction de la version officielle en anglais de ce document. Toutes les traductions sont générées par IA et fournies uniquement pour des raisons de commodité. Seule la version anglaise est juridiquement valide.",

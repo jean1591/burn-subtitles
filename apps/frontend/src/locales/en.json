@@ -1,10 +1,10 @@
 {
   "home.automaticTranslation": "Automatic Translation",
   "home.title": "Translate Subtitles in Multiple Languages",
-  "home.description": "Upload your subtitle files and get accurate translations in minutes. No manual work needed. No login required.",
+  "home.description": "Upload your subtitle files and get accurate translations in minutes. No manual work needed.",
   "home.queueNote": "Note: Your files will be processed in order of submission. You'll be able to track your position in the queue.",
   "home.selectLanguages": "Select subtitle languages:",
-  "home.freeServiceNote": "Free service: Files are processed in order of submission. You'll receive a unique link to track your file's status in the queue.",
+  "home.queueNote": "Files are processed in order of submission. You'll receive a unique link to track your file's status in the queue.",
   "home.translateButton": "Translate Subtitles",
 
   "legal.translationDisclaimer": "This is the official English version of this document. All other translations are AI-generated and provided for convenience only. Only the English version is legally binding.",
