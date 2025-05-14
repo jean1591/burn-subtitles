@@ -10,36 +10,45 @@ export class TranslationsService {
     private translationsRepository: Repository<Translation>,
   ) {}
 
-  async create(translation: Partial<Translation>): Promise<Translation> {
-    const newTranslation = this.translationsRepository.create(translation);
+  async createTranslation(
+    batchId: string,
+    fileName: string,
+    selectedLanguages: string,
+    creditsUsed: number,
+    userId: string,
+  ): Promise<Translation> {
+    const newTranslation = this.translationsRepository.create({
+      batchId,
+      fileName,
+      selectedLanguages,
+      creditsUsed,
+      userId,
+      status: TranslationStatus.QUEUED,
+    });
+
     return this.translationsRepository.save(newTranslation);
   }
 
-  async findByUserId(userId: string): Promise<Translation[]> {
-    return this.translationsRepository.find({
-      where: { userId },
-      order: { createdAt: 'DESC' },
-    });
-  }
-
-  async findByBatchId(batchId: string): Promise<Translation[]> {
-    return this.translationsRepository.find({
-      where: { batchId },
-    });
-  }
-
-  async updateStatus(
+  async updateStatusByBatchId(
     batchId: string,
     status: TranslationStatus,
   ): Promise<void> {
     await this.translationsRepository.update({ batchId }, { status });
   }
 
+  async getTranslationsByUser(userId: string): Promise<Translation[]> {
+    return this.translationsRepository.find({
+      where: { userId },
+      order: { createdAt: 'DESC' },
+    });
+  }
+
   async getTranslationStats(userId: string): Promise<{
     totalFiles: number;
     totalCreditsUsed: number;
   }> {
-    const translations = await this.findByUserId(userId);
+    const translations = await this.getTranslationsByUser(userId);
+
     return {
       totalFiles: translations.length,
       totalCreditsUsed: translations.reduce((sum, t) => sum + t.creditsUsed, 0),

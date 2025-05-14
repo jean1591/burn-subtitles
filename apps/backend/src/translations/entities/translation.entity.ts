@@ -19,29 +19,30 @@ export class Translation {
   id: string;
 
   @Index()
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', name: 'batch_id' })
   batchId: string;
 
-  @Column()
+  @Column({ name: 'file_name' })
   fileName: string;
 
-  @Column()
+  @Column({ name: 'selected_languages' })
   selectedLanguages: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @Column({
     type: 'enum',
     enum: TranslationStatus,
     default: TranslationStatus.QUEUED,
+    name: 'status',
   })
   status: TranslationStatus;
 
-  @Column()
+  @Column({ name: 'credits_used' })
   creditsUsed: number;
 
   @Index()
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', name: 'user_id' })
   userId: string;
 }
