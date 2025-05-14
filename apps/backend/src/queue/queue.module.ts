@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { RedisService } from '../redis/redis.service';
 import { StatusGateway } from '../gateway/status.gateway';
 import { TranslationProcessor } from './translation.processor';
+import { TranslationsModule } from 'src/translations/translations.module';
 import { ZipProcessor } from './zip.processor';
 
 @Module({
@@ -27,6 +28,7 @@ import { ZipProcessor } from './zip.processor';
     BullModule.registerQueue({
       name: 'zip',
     }),
+    TranslationsModule,
   ],
   providers: [TranslationProcessor, ZipProcessor, RedisService, StatusGateway],
   exports: [BullModule],

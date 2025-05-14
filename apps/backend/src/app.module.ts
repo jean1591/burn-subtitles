@@ -1,5 +1,6 @@
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { DatabaseModule } from './database/database.module';
 import { Module } from '@nestjs/common';
 import { QueueModule } from './queue/queue.module';
@@ -23,6 +24,7 @@ import { join } from 'path';
     QueueModule,
     UsersModule,
     AuthModule,
+    DashboardModule,
   ],
   controllers: [],
   providers: [StatusGateway],

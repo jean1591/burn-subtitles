@@ -15,6 +15,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
+import { TranslationsService } from '../translations/translations.service';
 
 @Injectable()
 export class UploadService {
@@ -25,6 +26,7 @@ export class UploadService {
     private readonly redisService: RedisService,
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private readonly translationsService: TranslationsService,
   ) {}
 
   async processUpload(
@@ -59,6 +61,19 @@ export class UploadService {
     // Save files and create jobs
     const jobs: string[] = [];
     const targetLanguages = targetLangs.split(',');
+
+    // If user is authenticated, create translation records for each file
+    if (user) {
+      for (const file of files) {
+        await this.translationsService.createTranslation(
+          batchId,
+          file.originalname,
+          targetLangs,
+          targetLanguages.length,
+          user.id,
+        );
+      }
+    }
 
     for (const file of files) {
       const sanitizedFilename = sanitizeFilename(file.originalname);

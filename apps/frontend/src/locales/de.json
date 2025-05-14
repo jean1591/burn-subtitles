@@ -1,10 +1,10 @@
 {
   "home.automaticTranslation": "Automatische Übersetzung",
   "home.title": "Übersetzen Sie Ihre Untertitel in mehrere Sprachen",
-  "home.description": "Laden Sie Ihre Untertiteldateien hoch und erhalten Sie präzise Übersetzungen in wenigen Minuten. Keine manuelle Arbeit erforderlich. Keine Anmeldung nötig.",
+  "home.description": "Laden Sie Ihre Untertiteldateien hoch und erhalten Sie präzise Übersetzungen in wenigen Minuten. Keine manuelle Arbeit erforderlich.",
   "home.queueNote": "Hinweis: Ihre Dateien werden in der Reihenfolge des Eingangs verarbeitet. Sie können Ihre Position in der Warteschlange verfolgen.",
   "home.selectLanguages": "Wählen Sie die Untertitelsprachen:",
-  "home.freeServiceNote": "Kostenloser Service: Dateien werden in der Reihenfolge des Eingangs verarbeitet. Sie erhalten einen eindeutigen Link, um den Status Ihrer Datei in der Warteschlange zu verfolgen.",
+  "home.queueNote": "Dateien werden in der Reihenfolge des Eingangs verarbeitet. Sie erhalten einen eindeutigen Link, um den Status Ihrer Datei in der Warteschlange zu verfolgen.",
   "home.translateButton": "Untertitel übersetzen",
 
   "legal.translationDisclaimer": "Dies ist eine Übersetzung der offiziellen englischen Version dieses Dokuments. Alle Übersetzungen werden von KI generiert und nur zur Bequemlichkeit bereitgestellt. Nur die englische Version ist rechtlich bindend.",

@@ -7,6 +7,8 @@ import { Process, Processor } from '@nestjs/bull';
 import { Job } from 'bull';
 import { RedisService } from '../redis/redis.service';
 import { StatusGateway } from '../gateway/status.gateway';
+import { TranslationStatus } from '../translations/entities/translation.entity';
+import { TranslationsService } from '../translations/translations.service';
 import { ZipStatus } from '../constants/process-status';
 import { zip } from 'zip-a-folder';
 
@@ -18,6 +20,7 @@ export class ZipProcessor {
   constructor(
     private readonly statusGateway: StatusGateway,
     private readonly redisService: RedisService,
+    private readonly translationsService: TranslationsService,
   ) {}
 
   @Process()
@@ -56,6 +59,22 @@ export class ZipProcessor {
       await this.redisService.hset(`batch:${batch_id}`, {
         zipStatus: ZipStatus.DONE,
       });
+
+      // Update translation records if they exist (for authenticated users)
+      try {
+        await this.translationsService.updateStatusByBatchId(
+          batch_id,
+          TranslationStatus.DONE,
+        );
+        this.logger.log(
+          `Updated translation status to DONE for batch ${batch_id}`,
+        );
+      } catch (err) {
+        // If no translation records exist (unauthenticated user), just log and continue
+        this.logger.debug(
+          `No translation records found for batch ${batch_id} (likely unauthenticated user)`,
+        );
+      }
 
       this.logger.log(`Created zip for batch ${batch_id} at ${zipUrl}`);
       // Notify via WebSocket

@@ -56,6 +56,21 @@ This backend handles uploading `.srt` subtitle files, scheduling translations to
     - Include translated files named like `originalname.lang.srt`
 - Store final zip under `uploads/<batch_id>/results.zip`.
 
+## 📊 Dashboard Rules
+- The Dashboard page allows users to track their translation activity and view related stats.
+- Entities:
+    - Translation History: Contains one record per uploaded file and its associated translation.
+    - Credits: Display the user's remaining credits and provide a link to buy more.
+
+### 🧑‍💼 Translation History Rules:
+For each user, track the following information for each uploaded file:
+- `file_name`: The original name of the uploaded file.
+- `target_languages`: The list of selected languages for translation.
+- `credits_used`: Number of credits consumed (equal to the number of target languages selected).
+- `status`: The current status of the translation job (e.g., pending, completed, failed).
+- `created_at`: Timestamp when the file was uploaded.
+- `updated_at`: Timestamp when the translation job was last updated.
+
 ## 🌐 API Rules
 
 - `POST /upload`
@@ -66,6 +81,9 @@ This backend handles uploading `.srt` subtitle files, scheduling translations to
     - Authenticated users must have enough credits (files × languages) to proceed
 - `GET /status/:batch_id`
     - Returns job statuses and zip URL (if available)
+
+- `GET /dashboard`
+    - Returns the user's credit balance, translation stats (e.g., number of completed translations), and a table of their translation history.
 
 ## ✅ Validation Rules
 

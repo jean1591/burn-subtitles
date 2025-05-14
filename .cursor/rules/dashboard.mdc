@@ -1,0 +1,24 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+1. Generate a new translations module using the NestJS CLI or manually. This module will manage the persistence of translation records.
+
+2. Inside the translations module, create a Translation entity. It should include the following fields: id (UUID), batchId (UUID), fileName (string), selectedLanguages (string), createdAt (timestamp with default value), status (string or enum: queued, in_progress, done, error), creditsUsed (integer), and userId (UUID foreign key to the user table). Add indexes on userId and batchId.
+
+3. Create a translations.service.ts to handle translation persistence logic. This service will expose methods such as createTranslation, updateStatusByBatchId, and getTranslationsByUser.
+
+4. Update the upload service to persist a translation record for each uploaded file when a user starts a new batch. For each file, call the createTranslation method with batchId, fileName, selectedLanguages, creditsUsed (equal to selectedLanguages.length), and userId.
+
+5. Modify the zip processor in zip.processor.ts to notify the translation service when a batch is complete. After verifying that all jobs are done and the zip is created, call updateStatusByBatchId to set the status of all related translation records to "done".
+
+6. Create a new dashboard module. This module will expose an authenticated GET /dashboard endpoint.
+
+7. Implement a dashboard.service.ts that contains the business logic for assembling dashboard data. This service will query the translations table for a given userId and compute the total number of translated files, the total number of used credits, and return the full translation history sorted by date.
+
+8. Implement the dashboard.controller.ts inside the dashboard module. This controller will use the dashboard service and handle the request by extracting the user from the auth context and calling getDashboardData(userId).
+
+9. Add a TypeORM migration to create the translations table in the PostgreSQL database with the appropriate columns and constraints.
+
+10. Test the end-to-end flow by uploading files, processing a batch, and querying the dashboard endpoint to confirm that data is stored and displayed correctly.

@@ -237,8 +237,8 @@ export function Upload() {
           <div className="mt-6 text-sm text-neutral-600">
             <p>
               <FormattedMessage
-                id="home.freeServiceNote"
-                defaultMessage="Free service: Files are processed in order of submission. You'll receive a unique link to track your file's status in the queue."
+                id="home.queueNote"
+                defaultMessage="Files are processed in order of submission. You'll receive a unique link to track your file's status in the queue."
               />
             </p>
           </div>
