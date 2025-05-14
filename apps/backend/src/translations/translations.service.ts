@@ -47,11 +47,16 @@ export class TranslationsService {
     totalFiles: number;
     totalCreditsUsed: number;
   }> {
-    const translations = await this.getTranslationsByUser(userId);
+    const stats = await this.translationsRepository
+      .createQueryBuilder('translation')
+      .select('COUNT(*)', 'totalFiles')
+      .addSelect('SUM(translation.creditsUsed)', 'totalCreditsUsed')
+      .where('translation.userId = :userId', { userId })
+      .getRawOne();
 
     return {
-      totalFiles: translations.length,
-      totalCreditsUsed: translations.reduce((sum, t) => sum + t.creditsUsed, 0),
+      totalFiles: Number(stats.totalFiles) || 0,
+      totalCreditsUsed: Number(stats.totalCreditsUsed) || 0,
     };
   }
 }
