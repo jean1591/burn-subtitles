@@ -75,7 +75,7 @@
 
   "upload.title": "Upload subtitle files",
   "upload.dragAndDrop": "Drag and drop or click to browse",
-  "upload.selectFiles": "Select Files",
+  "upload.selectFiles": "Select Files (max 10)",
   "upload.supportedFormat": "Supported format: .srt",
   "upload.selectedFiles": "Selected Files ({count})",
   "upload.creditCalculation": "{files} file(s) x {languages} language(s) = {credits} credits",

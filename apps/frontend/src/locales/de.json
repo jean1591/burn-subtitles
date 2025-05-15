@@ -71,7 +71,7 @@
 
   "upload.title": "Untertiteldateien hochladen",
   "upload.dragAndDrop": "Per Drag & Drop oder klicken zum Durchsuchen",
-  "upload.selectFiles": "Dateien auswählen",
+  "upload.selectFiles": "Dateien auswählen (max 10)",
   "upload.supportedFormat": "Unterstütztes Format: .srt",
   "upload.selectedFiles": "Ausgewählte Dateien ({count})",
   "upload.creditCalculation": "{files} Datei(en) x {languages} Sprache(n) = {credits} Guthaben",

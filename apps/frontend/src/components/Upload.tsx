@@ -27,6 +27,10 @@ export function Upload() {
   };
 
   const getValidationError = () => {
+    if (files.length > 10) {
+      return "Maximum 10 files can be uploaded at once.";
+    }
+
     if (!user) {
       if (files.length > 1 || selectedLanguages.length > 1) {
         return "Upgrade to Pro by logging in to upload multiple files or select multiple languages.";
@@ -43,15 +47,11 @@ export function Upload() {
   };
 
   const isTranslateDisabled = () => {
-    if (files.length === 0 || selectedLanguages.length === 0) return true;
+    const isValidationError = getValidationError() !== null;
 
-    if (!user) {
-      return files.length > 1 || selectedLanguages.length > 1;
-    }
-
-    const requiredCredits = files.length * selectedLanguages.length;
-
-    return requiredCredits > 1 && requiredCredits > user.credits;
+    return (
+      files.length === 0 || selectedLanguages.length === 0 || isValidationError
+    );
   };
 
   const handleTranslate = async () => {
@@ -169,7 +169,7 @@ export function Upload() {
             >
               <FormattedMessage
                 id="upload.selectFiles"
-                defaultMessage="Select Files"
+                defaultMessage="Select Files (max 10)"
               />
             </Button>
             <input

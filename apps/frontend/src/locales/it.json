@@ -71,7 +71,7 @@
 
   "upload.title": "Carica file di sottotitoli",
   "upload.dragAndDrop": "Trascina e rilascia o clicca per sfogliare",
-  "upload.selectFiles": "Seleziona File",
+  "upload.selectFiles": "Seleziona File (max 10)",
   "upload.supportedFormat": "Formato supportato: .srt",
   "upload.selectedFiles": "File Selezionati ({count})",
   "upload.creditCalculation": "{files} file x {languages} lingua/e = {credits} crediti",
