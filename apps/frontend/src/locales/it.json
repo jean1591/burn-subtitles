@@ -74,6 +74,8 @@
   "upload.selectFiles": "Seleziona File",
   "upload.supportedFormat": "Formato supportato: .srt",
   "upload.selectedFiles": "File Selezionati ({count})",
+  "upload.creditCalculation": "{files} file x {languages} lingua/e = {credits} crediti",
+  "upload.userCredits": "(Hai {credits} crediti)",
 
   "status.title": "Stato della traduzione",
   "status.translatedFiles": "File tradotti:",

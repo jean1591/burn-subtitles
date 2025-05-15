@@ -219,7 +219,7 @@ export function Upload() {
           </div>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <h3 className="text-base font-medium mb-3">
             <FormattedMessage
               id="home.selectLanguages"
@@ -234,17 +234,32 @@ export function Upload() {
             </div>
           )}
 
-          <div className="mt-6 text-sm text-neutral-600">
+          <div className="font-medium text-sm text-neutral-600 flex items-center justify-start gap-2">
             <p>
               <FormattedMessage
-                id="home.queueNote"
-                defaultMessage="Files are processed in order of submission. You'll receive a unique link to track your file's status in the queue."
+                id="upload.creditCalculation"
+                defaultMessage="{files} file(s) x {languages} language(s) = {credits} credits"
+                values={{
+                  files: files.length,
+                  languages: selectedLanguages.length,
+                  credits: files.length * selectedLanguages.length,
+                }}
               />
             </p>
+
+            {user ? (
+              <p className="font-normal">
+                <FormattedMessage
+                  id="upload.userCredits"
+                  defaultMessage="(You have {credits} credits)"
+                  values={{ credits: user.credits }}
+                />
+              </p>
+            ) : null}
           </div>
 
           <Button
-            className="w-full mt-6 bg-amber-500 hover:bg-amber-600 text-white"
+            className="w-full bg-amber-500 hover:bg-amber-600 text-white"
             onClick={handleTranslate}
             disabled={isTranslateDisabled()}
           >
