@@ -85,7 +85,8 @@ const QueuePanel = () => {
         </p>
       </AlertTitle>
 
-      <AlertDescription>
+      {/* TODO: Add queue position */}
+      {/* <AlertDescription>
         <p className="text-lg text-amber-800">
           <FormattedMessage
             id="status.details.queuedDescription"
@@ -93,7 +94,7 @@ const QueuePanel = () => {
             values={{ position: 3 }}
           />
         </p>
-      </AlertDescription>
+      </AlertDescription> */}
     </Alert>
   );
 };

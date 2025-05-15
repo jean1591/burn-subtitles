@@ -12,6 +12,7 @@ const languages = [
   { id: "es", name: "Spanish" },
   { id: "de", name: "German" },
   { id: "it", name: "Italian" },
+  { id: "zh", name: "Chinese" },
 ];
 
 export function LanguageSelector({

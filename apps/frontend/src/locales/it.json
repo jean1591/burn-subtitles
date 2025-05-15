@@ -142,6 +142,7 @@
   "language.es": "Spagnolo",
   "language.de": "Tedesco",
   "language.it": "Italiano",
+  "language.zh": "Cinese (Sperimentale)",
 
   "userDropdown.account": "Il mio account",
   "userDropdown.dashboard": "Dashboard",
@@ -233,6 +234,7 @@
   "languages.it": "Italiano",
   "languages.de": "Tedesco",
   "languages.fr": "Francese",
+  "languages.zh": "Cinese",
 
   "date.justNow": "Proprio ora",
   "date.minutesAgo": "{minutes} minuto{minutes, plural, one {} other {i}} fa",

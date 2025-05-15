@@ -1,13 +1,10 @@
-import { CreditCard, ExternalLink, FileText, Plus } from "lucide-react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
-import {
-  TranslationStatus,
-  mapTranslationStatusToUI,
-} from "../utils/status-mapper";
+import { CreditCard, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { StatusPill } from "@/components/status/StatusPill";
+import { FormattedMessage } from "react-intl";
+import { HistoryTable } from "@/components/dashboard/HistoryTable";
+import { TranslationStatus } from "../utils/status-mapper";
 import { fetchApi } from "@/lib/api";
 import { useAuth } from "@/contexts/authContext";
 import { useNavigate } from "react-router-dom";
@@ -30,33 +27,9 @@ interface DashboardData {
   };
 }
 
-// Helper to format date as relative time
-function formatRelativeDate(dateString: string, intl: IntlShape): string {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diff = (now.getTime() - date.getTime()) / 1000; // in seconds
-
-  if (diff < 60) return intl.formatMessage({ id: "date.justNow" });
-  if (diff < 3600) {
-    const mins = Math.floor(diff / 60);
-    return intl.formatMessage({ id: "date.minutesAgo" }, { minutes: mins });
-  }
-  if (diff < 86400) {
-    const hours = Math.floor(diff / 3600);
-    return intl.formatMessage({ id: "date.hoursAgo" }, { hours });
-  }
-  if (diff < 604800) {
-    const days = Math.floor(diff / 86400);
-    return intl.formatMessage({ id: "date.daysAgo" }, { days });
-  }
-  // Fallback to locale date string
-  return date.toLocaleDateString(intl.locale);
-}
-
 export function Dashboard() {
   const { user, isLoading } = useAuth();
   const navigate = useNavigate();
-  const intl = useIntl();
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -222,125 +195,7 @@ export function Dashboard() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead>
-                <tr className="text-gray-500 border-b">
-                  <th className="py-4 text-left font-medium">
-                    <FormattedMessage
-                      id="dashboard.history.fileName"
-                      defaultMessage="File Name"
-                    />
-                  </th>
-                  <th className="py-4 text-left font-medium">
-                    <FormattedMessage
-                      id="dashboard.history.languages"
-                      defaultMessage="Languages"
-                    />
-                  </th>
-                  <th className="py-4 text-left font-medium">
-                    <FormattedMessage
-                      id="dashboard.history.date"
-                      defaultMessage="Date"
-                    />
-                  </th>
-                  <th className="py-4 text-left font-medium">
-                    <FormattedMessage
-                      id="dashboard.history.status"
-                      defaultMessage="Status"
-                    />
-                  </th>
-                  <th className="py-4 text-left font-medium">
-                    <FormattedMessage
-                      id="dashboard.history.credits"
-                      defaultMessage="Credits"
-                    />
-                  </th>
-                  <th className="py-4 text-left font-medium">
-                    <FormattedMessage
-                      id="dashboard.history.actions"
-                      defaultMessage="Actions"
-                    />
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.translations.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="text-center text-gray-400 py-8">
-                      <FormattedMessage
-                        id="dashboard.history.noJobs"
-                        defaultMessage="No translation jobs yet."
-                      />
-                    </td>
-                  </tr>
-                ) : (
-                  data.translations.map((t) => (
-                    <tr
-                      key={t.id}
-                      className="border-b last:border-b-0 hover:bg-gray-50"
-                    >
-                      <td className="py-4 font-medium text-gray-800">
-                        <div className="flex gap-2 justify-start items-center">
-                          <FileText className="w-4 h-4 text-gray-500" />
-                          <p>{t.fileName}</p>
-                        </div>
-                      </td>
-
-                      <td className="py-4">
-                        <div className="flex gap-2 items-center flex-wrap">
-                          {t.selectedLanguages
-                            .split(",")
-                            .map((lang: string) => {
-                              const code = lang.trim();
-                              return (
-                                <span
-                                  key={code}
-                                  className="font-medium bg-gray-100 rounded-full px-2 py-0.5 text-xs"
-                                >
-                                  <FormattedMessage
-                                    id={`languages.${code}`}
-                                    defaultMessage={code.toUpperCase()}
-                                  />
-                                </span>
-                              );
-                            })}
-                        </div>
-                      </td>
-
-                      <td className="py-4">
-                        {formatRelativeDate(t.createdAt, intl)}
-                      </td>
-
-                      <td className="py-4 flex">
-                        <StatusPill
-                          className="text-xs border border-gray-200"
-                          status={mapTranslationStatusToUI(t.status)}
-                        />
-                      </td>
-
-                      <td className="py-4 text-left">{t.creditsUsed}</td>
-
-                      <td className="py-4">
-                        <Button
-                          className="rounded-sm flex gap-4 items-center p-4 hover:cursor-pointer"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => navigate(`/status/${t.batchId}`)}
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          <p>
-                            <FormattedMessage
-                              id="dashboard.history.view"
-                              defaultMessage="View"
-                            />
-                          </p>
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+            <HistoryTable translations={data.translations} />
           </div>
         </div>
       </div>

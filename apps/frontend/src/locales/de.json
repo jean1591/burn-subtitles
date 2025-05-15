@@ -142,6 +142,7 @@
   "language.es": "Spanisch",
   "language.de": "Deutsch",
   "language.it": "Italienisch",
+  "language.zh": "Chinesisch (Experimentell)",
 
   "userDropdown.account": "Mein Konto",
   "userDropdown.dashboard": "Dashboard",
@@ -233,6 +234,7 @@
   "languages.it": "Italienisch",
   "languages.de": "Deutsch",
   "languages.fr": "Französisch",
+  "languages.zh": "Chinesisch",
 
   "date.justNow": "Gerade eben",
   "date.minutesAgo": "vor {minutes} Minute{minutes, plural, one {} other {n}}",
