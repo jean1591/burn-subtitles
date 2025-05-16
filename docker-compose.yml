@@ -36,18 +36,18 @@ services:
       - redis
       - postgres
     environment:
-      - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
+      - LETSENCRYPT_EMAIL=jr.nginx@mailo.com
       - LETSENCRYPT_HOST=api.titro.app
-      - VIRTUAL_HOST=api.titro.app
-      - REDIS_HOST=redis
-      - VIRTUAL_PORT=3000
+      - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_HOST=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_PORT=5432
       - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    ports:
-      - "3000:3000"
+      - REDIS_HOST=redis
+      - VIRTUAL_HOST=api.titro.app
+      - VIRTUAL_PORT=3000
+    networks:
+      - nginx-proxy
 
   frontend:
     build:
@@ -62,45 +62,19 @@ services:
     depends_on:
       - backend
     environment:
-      - LETSENCRYPT_EMAIL=jr.titro.app@mailo.com
+      - LETSENCRYPT_EMAIL=jr.nginx@mailo.com
       - LETSENCRYPT_HOST=titro.app,www.titro.app
       - VIRTUAL_HOST=titro.app,www.titro.app
       - VIRTUAL_PORT=80
     volumes:
       - ./apps/frontend/nginx.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - "${FRONTEND_PORT:-5173}:80"
-
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./certs:/etc/nginx/certs
-      - ./vhost.d:/etc/nginx/vhost.d
-      - ./html:/usr/share/nginx/html
-      - ./apps/backend/uploads:/app/uploads
-    environment:
-      - DEFAULT_HOST=titro.app
-
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: nginx-proxy-le
-    restart: always
-    environment:
-      - NGINX_PROXY_CONTAINER=nginx-proxy
-      - DEFAULT_EMAIL=jr.titro.app@mailo.com
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./certs:/etc/nginx/certs
-      - ./vhost.d:/etc/nginx/vhost.d
-      - ./html:/usr/share/nginx/html
-      - ./acme:/etc/acme.sh
+    networks:
+      - nginx-proxy
 
 volumes:
   redis-data: # Persistent volume for Redis data
   postgres-data: # Persistent volume for PostgreSQL data
+
+networks:
+  nginx-proxy:
+    external: true
