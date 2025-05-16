@@ -3,7 +3,7 @@ name: titro-app
 services:
   postgres:
     image: postgres:16
-    container_name: postgres
+    container_name: titro-postgres
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -18,7 +18,7 @@ services:
 
   redis:
     image: redis:7
-    container_name: redis
+    container_name: titro-redis
     restart: always
     volumes:
       - redis-data:/data
@@ -30,7 +30,7 @@ services:
     build:
       context: ./apps/backend
       dockerfile: Dockerfile
-    container_name: backend
+    container_name: titro-backend
     restart: always
     env_file:
       - .env
@@ -60,7 +60,7 @@ services:
       dockerfile: Dockerfile
       args:
         - VITE_APP_API_URL=${VITE_APP_API_URL:-http://localhost:3000}
-    container_name: frontend
+    container_name: titro-frontend
     restart: always
     env_file:
       - .env
