@@ -13,6 +13,8 @@ services:
       - postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - titro-internal
 
   redis:
     image: redis:7
@@ -21,6 +23,8 @@ services:
     volumes:
       - redis-data:/data
     command: redis-server --appendonly yes # Enable persistence
+    networks:
+      - titro-internal
 
   backend:
     build:
@@ -47,6 +51,7 @@ services:
       - VIRTUAL_HOST=api.titro.app
       - VIRTUAL_PORT=3000
     networks:
+      - titro-internal
       - nginx-proxy
 
   frontend:
@@ -69,6 +74,7 @@ services:
     volumes:
       - ./apps/frontend/nginx.conf:/etc/nginx/conf.d/default.conf
     networks:
+      - titro-internal
       - nginx-proxy
 
 volumes:
@@ -78,3 +84,4 @@ volumes:
 networks:
   nginx-proxy:
     external: true
+  titro-internal:
