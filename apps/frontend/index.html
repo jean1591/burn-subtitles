@@ -9,11 +9,18 @@
       name="description"
       content="Upload your subtitle files and get accurate translations in minutes. Support for multiple languages."
     />
-    <script
-      defer
-      src="https://analytics.rb2.fr/script.js"
-      data-website-id="11a7f3ca-81b1-4088-8eb4-f1ff759e30d9"
-    ></script>
+    <script type="module">
+      if (import.meta.env.PROD) {
+        const script = document.createElement("script");
+        script.defer = true;
+        script.src = "https://analytics.rb2.fr/script.js";
+        script.setAttribute(
+          "data-website-id",
+          "11a7f3ca-81b1-4088-8eb4-f1ff759e30d9"
+        );
+        document.head.appendChild(script);
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
