@@ -1,6 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { FileText } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { UserOrLogin } from "./header/UserOrLogin";
@@ -39,7 +38,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-amber-100 bg-amber-50/80 backdrop-blur-sm">
       <div className="container flex h-16 items-center justify-between px-4 sm:px-0 mx-auto">
         <Link to="/" className="flex items-center gap-2">
-          <FileText className="h-6 w-6 text-amber-500" />
+          <img src="/icon.webp" alt="Titro" className="h-6 w-6" />
           <span className="text-xl font-bold">
             <FormattedMessage id="header.appName" defaultMessage="Titro" />
           </span>
