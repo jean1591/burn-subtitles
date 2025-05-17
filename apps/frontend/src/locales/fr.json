@@ -229,6 +229,7 @@
   "dashboard.history.credits": "Crédits",
   "dashboard.history.actions": "Actions",
   "dashboard.history.view": "Voir",
+  "dashboard.history.deletedTooltip": "Cette traduction a été supprimée",
 
   "languages.en": "Anglais",
   "languages.es": "Espagnol",

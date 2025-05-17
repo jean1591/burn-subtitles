@@ -15,6 +15,7 @@ interface Translation {
   createdAt: string;
   status: TranslationStatus;
   creditsUsed: number;
+  isDeleted?: boolean;
 }
 
 function formatRelativeDate(dateString: string, intl: IntlShape): string {
@@ -147,21 +148,46 @@ export const HistoryTable = ({
 
               <td className="py-4 text-left w-24">{t.creditsUsed}</td>
 
-              <td className="py-4 w-32">
-                <Button
-                  className="rounded-sm flex gap-4 items-center p-4 hover:cursor-pointer"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => navigate(`/status/${t.batchId}`)}
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  <p>
-                    <FormattedMessage
-                      id="dashboard.history.view"
-                      defaultMessage="View"
-                    />
-                  </p>
-                </Button>
+              <td className="py-4 w-32 overflow-visible">
+                {t.isDeleted ? (
+                  <div className="relative group">
+                    <Button
+                      className="rounded-sm flex gap-4 items-center p-4 opacity-50 cursor-not-allowed"
+                      variant="outline"
+                      size="sm"
+                      disabled
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <p>
+                        <FormattedMessage
+                          id="dashboard.history.view"
+                          defaultMessage="View"
+                        />
+                      </p>
+                    </Button>
+                    <div className="absolute hidden group-hover:block bg-gray-900 text-white text-xs rounded py-1 px-2 -top-8 right-0 whitespace-nowrap z-20">
+                      <FormattedMessage
+                        id="dashboard.history.deletedTooltip"
+                        defaultMessage="This translation has been deleted"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <Button
+                    className="rounded-sm flex gap-4 items-center p-4 hover:cursor-pointer"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate(`/status/${t.batchId}`)}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <p>
+                      <FormattedMessage
+                        id="dashboard.history.view"
+                        defaultMessage="View"
+                      />
+                    </p>
+                  </Button>
+                )}
               </td>
             </tr>
           ))
