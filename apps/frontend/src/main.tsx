@@ -9,7 +9,6 @@ import { Footer } from "./components/Footer.tsx";
 import { Header } from "./components/Header.tsx";
 import { LanguageProvider } from "./contexts/languageContext.tsx";
 import { StrictMode } from "react";
-import { UmamiScript } from "./components/UmamiScript.tsx";
 import { createRoot } from "react-dom/client";
 
 const queryClient = new QueryClient();
@@ -27,7 +26,6 @@ createRoot(document.getElementById("root")!).render(
               </div>
               <Footer />
             </div>
-            <UmamiScript />
           </AuthProvider>
         </QueryClientProvider>
       </LanguageProvider>
