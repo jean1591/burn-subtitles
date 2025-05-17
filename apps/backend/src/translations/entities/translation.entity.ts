@@ -45,4 +45,14 @@ export class Translation {
   @Index()
   @Column({ type: 'uuid', name: 'user_id' })
   userId: string;
+
+  @Column({
+    name: 'deletion_date',
+    type: 'timestamp with time zone',
+    nullable: true,
+  })
+  deletionDate: Date;
+
+  @Column({ name: 'is_deleted', type: 'boolean', default: false })
+  isDeleted: boolean;
 }

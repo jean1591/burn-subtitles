@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Translation, TranslationStatus } from './entities/translation.entity';
+import { Translation } from './entities/translation.entity';
+import { TranslationStatus } from './entities/translation.entity';
 
 @Injectable()
 export class TranslationsService {
@@ -24,6 +25,7 @@ export class TranslationsService {
       creditsUsed,
       userId,
       status: TranslationStatus.QUEUED,
+      deletionDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
     });
 
     return this.translationsRepository.save(newTranslation);
@@ -58,5 +60,20 @@ export class TranslationsService {
       totalFiles: Number(stats.totalFiles) || 0,
       totalCreditsUsed: Number(stats.totalCreditsUsed) || 0,
     };
+  }
+
+  async getExpiredBatches(): Promise<string[]> {
+    const result = await this.translationsRepository
+      .createQueryBuilder('translation')
+      .select('DISTINCT translation.batchId')
+      .where('translation.deletionDate <= :now', { now: new Date() })
+      .andWhere('translation.isDeleted = :isDeleted', { isDeleted: false })
+      .getRawMany();
+
+    return result.map((r) => r.batch_id);
+  }
+
+  async markAsDeleted(batchId: string): Promise<void> {
+    await this.translationsRepository.update({ batchId }, { isDeleted: true });
   }
 }
