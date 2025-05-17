@@ -78,4 +78,16 @@ export class RedisService {
       throw error;
     }
   }
+
+  async del(key: string): Promise<void> {
+    try {
+      await this.redis.del(key);
+    } catch (error) {
+      this.logger.error(
+        `Redis del error for key ${key}: ${error.message}`,
+        error.stack,
+      );
+      throw error;
+    }
+  }
 }
