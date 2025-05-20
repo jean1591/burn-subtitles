@@ -1,16 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { FormattedMessage } from "react-intl";
+import { useNavigate } from "react-router-dom";
 
-interface PricingSectionProps {
-  onSelectPlan?: (plan: "starter" | "professional" | "enterprise") => void;
-  isProcessing?: boolean;
-}
+export function HomePricingSection() {
+  const navigate = useNavigate();
 
-export function PricingSection({
-  onSelectPlan,
-  isProcessing,
-}: PricingSectionProps) {
   return (
     <section id="pricing" className="bg-amber-50 py-12 md:py-16 lg:py-20">
       <div className="container mx-auto">
@@ -63,8 +58,7 @@ export function PricingSection({
             </ul>
             <Button
               className="w-full bg-amber-500 hover:bg-amber-600 text-white"
-              onClick={() => onSelectPlan?.("starter")}
-              disabled={isProcessing}
+              onClick={() => navigate("/register")}
             >
               <FormattedMessage id="pricing.starter.button" />
             </Button>
@@ -118,8 +112,7 @@ export function PricingSection({
             </ul>
             <Button
               className="w-full bg-amber-500 hover:bg-amber-600 text-white"
-              onClick={() => onSelectPlan?.("professional")}
-              disabled={isProcessing}
+              onClick={() => navigate("/register")}
             >
               <FormattedMessage id="pricing.professional.button" />
             </Button>
@@ -176,8 +169,7 @@ export function PricingSection({
             </ul>
             <Button
               className="w-full bg-amber-500 hover:bg-amber-600 text-white"
-              onClick={() => onSelectPlan?.("enterprise")}
-              disabled={isProcessing}
+              onClick={() => navigate("/register")}
             >
               <FormattedMessage id="pricing.enterprise.button" />
             </Button>

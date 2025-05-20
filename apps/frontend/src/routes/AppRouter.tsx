@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
+import { BuyCredits } from "../screens/BuyCredits";
 import { Dashboard } from "../screens/Dashboard";
 import { HomePage } from "../screens/Home";
 import { Login } from "../screens/Login";
@@ -22,6 +23,7 @@ export const AppRouter = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/buy-credits" element={<BuyCredits />} />
     </Routes>
   </Suspense>
 );
