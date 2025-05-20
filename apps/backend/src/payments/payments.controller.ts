@@ -1,7 +1,6 @@
 import { Controller, Header, Post, Req, UseGuards, Body } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { User } from '../users/entities/user.entity';
 import { PaymentsService } from './payments.service';
 
 @Controller('payments')
@@ -11,22 +10,33 @@ export class PaymentsController {
   @UseGuards(JwtAuthGuard)
   @Post('create-checkout-session')
   async createCheckoutSession(
-    @Req() req: Request,
+    @Req() req,
     @Body() body: { plan: 'starter' | 'professional' | 'enterprise' },
   ) {
+    const userId = req.user?.sub;
+
+    if (!userId) {
+      throw new Error('User ID not found in request');
+    }
+
     const url = await this.paymentsService.createCheckoutSession(
-      (req.user as User).id,
+      userId,
       body.plan,
     );
+
     return { url };
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('create-portal-session')
-  async createPortalSession(@Req() req: Request) {
-    const url = await this.paymentsService.createPortalSession(
-      (req.user as User).id,
-    );
+  async createPortalSession(@Req() req) {
+    const userId = req.user?.sub;
+
+    if (!userId) {
+      throw new Error('User ID not found in request');
+    }
+
+    const url = await this.paymentsService.createPortalSession(userId);
     return { url };
   }
 
