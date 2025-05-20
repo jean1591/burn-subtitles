@@ -20,6 +20,9 @@ export class User {
   @Column({ default: 0 })
   credits: number;
 
+  @Column({ nullable: true })
+  stripeCustomerId: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

@@ -1,3 +1,7 @@
+import * as bodyParser from 'body-parser';
+
+import { json, urlencoded } from 'express';
+
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 
@@ -16,8 +20,15 @@ async function bootstrap() {
     ],
     methods: ['GET', 'POST'],
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'stripe-signature'],
   });
+
+  // Add raw body parser for Stripe webhook
+  app.use('/payments/webhook', bodyParser.raw({ type: 'application/json' }));
+
+  // Use standard JSON parser for all other routes
+  app.use(json());
+  app.use(urlencoded({ extended: true }));
 
   await app.listen(process.env.PORT || 3000);
 }
