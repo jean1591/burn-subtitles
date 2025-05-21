@@ -108,18 +108,18 @@ export function Dashboard() {
               </div>
             </div>
 
-            <Button
-              className="mt-2 w-full bg-amber-500 hover:bg-amber-600 hover:cursor-pointer rounded-sm"
-              onClick={() => navigate("/buy-credits")}
-            >
-              <Plus className="w-4 h-4" />
-              <p>
+            <div className="flex flex-col gap-2">
+              <Button
+                className="w-full bg-amber-500 hover:bg-amber-600 hover:cursor-pointer rounded-sm"
+                onClick={() => navigate("/buy-credits")}
+              >
+                <Plus className="w-4 h-4 mr-2" />
                 <FormattedMessage
                   id="dashboard.creditBalance.purchase"
                   defaultMessage="Purchase Credits"
                 />
-              </p>
-            </Button>
+              </Button>
+            </div>
           </div>
 
           {/* Quick Stats */}
