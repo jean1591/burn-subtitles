@@ -1,10 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { FormattedMessage } from "react-intl";
+import { useAuth } from "@/contexts/authContext";
 import { useNavigate } from "react-router-dom";
 
 export function HomePricingSection() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const handlePlanClick = () => {
+    if (user) {
+      navigate("/buy-credits");
+    } else {
+      navigate("/register");
+    }
+  };
 
   return (
     <section id="pricing" className="bg-amber-50 py-12 md:py-16 lg:py-20">
@@ -65,7 +75,7 @@ export function HomePricingSection() {
             </ul>
             <Button
               className="w-full bg-amber-500 hover:bg-amber-600 text-white"
-              onClick={() => navigate("/register")}
+              onClick={handlePlanClick}
             >
               <FormattedMessage id="pricing.starter.button" />
             </Button>
@@ -120,7 +130,7 @@ export function HomePricingSection() {
             </ul>
             <Button
               className="w-full bg-amber-500 hover:bg-amber-600 text-white"
-              onClick={() => navigate("/register")}
+              onClick={handlePlanClick}
             >
               <FormattedMessage id="pricing.professional.button" />
             </Button>
@@ -172,7 +182,7 @@ export function HomePricingSection() {
             </ul>
             <Button
               className="w-full bg-amber-500 hover:bg-amber-600 text-white"
-              onClick={() => navigate("/register")}
+              onClick={handlePlanClick}
             >
               <FormattedMessage id="pricing.enterprise.button" />
             </Button>
