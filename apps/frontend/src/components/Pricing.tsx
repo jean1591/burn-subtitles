@@ -60,6 +60,12 @@ export function PricingSection({
                   <FormattedMessage id="pricing.starter.features.3" />
                 </span>
               </li>
+              <li className="flex items-start">
+                <Check className="h-5 w-5 text-green-500 mr-2 shrink-0" />
+                <span className="text-sm">
+                  <FormattedMessage id="pricing.enterprise.features.4" />
+                </span>
+              </li>
             </ul>
             <Button
               className="w-full bg-amber-500 hover:bg-amber-600 text-white"
@@ -70,6 +76,7 @@ export function PricingSection({
             </Button>
           </div>
 
+          {/* Professional Plan */}
           <div className="bg-white p-6 rounded-xl border-2 border-amber-500 shadow-md flex flex-col relative">
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium">
               <FormattedMessage id="pricing.professional.badge" />
@@ -112,7 +119,7 @@ export function PricingSection({
               <li className="flex items-start">
                 <Check className="h-5 w-5 text-green-500 mr-2 shrink-0" />
                 <span className="text-sm">
-                  <FormattedMessage id="pricing.professional.features.4" />
+                  <FormattedMessage id="pricing.enterprise.features.4" />
                 </span>
               </li>
             </ul>
@@ -125,6 +132,7 @@ export function PricingSection({
             </Button>
           </div>
 
+          {/* Enterprise Plan */}
           <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm flex flex-col">
             <div className="mb-6">
               <h3 className="text-xl font-medium mb-2">
@@ -165,12 +173,6 @@ export function PricingSection({
                 <Check className="h-5 w-5 text-green-500 mr-2 shrink-0" />
                 <span className="text-sm">
                   <FormattedMessage id="pricing.enterprise.features.4" />
-                </span>
-              </li>
-              <li className="flex items-start">
-                <Check className="h-5 w-5 text-green-500 mr-2 shrink-0" />
-                <span className="text-sm">
-                  <FormattedMessage id="pricing.enterprise.features.5" />
                 </span>
               </li>
             </ul>
