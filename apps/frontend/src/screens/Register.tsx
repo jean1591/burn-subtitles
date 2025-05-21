@@ -27,7 +27,7 @@ export function Register() {
 
     try {
       await register(email, password);
-      navigate("/");
+      navigate("/buy-credits");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
